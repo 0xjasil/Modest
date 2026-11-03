@@ -46,7 +46,7 @@ export function mapBackendProductToProduct(item: BackendProduct): Product {
     images: item.images || [],
     category:
       item.category?.slug || item.category?.name?.toLowerCase() || "skincare",
-    brand: item.brand?.name || "Moryelle",
+    brand: item.brand?.name || "Modest Studio",
     description: item.description || "",
     variants: item.variants || [],
     variantId: item.variants?.[0]?.id,

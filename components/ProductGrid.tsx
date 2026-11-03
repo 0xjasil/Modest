@@ -16,7 +16,7 @@ export const products: Product[] = (productsData as any[]).map((p: any, i: numbe
   image:         p.image,
   badge:         p.badge ?? undefined,
   category:      (p.category as Product["category"]) ?? "makeup",
-  brand:         p.brand ?? "Moryelle",
+  brand:         p.brand ?? "Modest Studio",
 }));
 
 /* ── Section header ───────────────────────────────────────────── */
@@ -80,7 +80,7 @@ export default function ProductGrid() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
           <div>
             <h2 id="pg-heading" className="font-serif text-2xl sm:text-3xl font-semibold text-mb-text">Featured Curations</h2>
-            <p className="text-sm text-mb-muted mt-1">Authentic luxury beauty, curated by Moryelle Beauté</p>
+            <p className="text-sm text-mb-muted mt-1">Contemporary modest fashion, curated by Modest Studio Kochi</p>
           </div>
           {/* Filter pills */}
           <div role="group" aria-label="Filter by category" className="flex gap-2 flex-wrap">

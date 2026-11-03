@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSearch } from '@/context/SearchContext';
 import Header from '@/components/Header';
@@ -39,50 +40,57 @@ export default function SearchPage() {
 
   return (
     <>
+      <Head>
+        <title>Search {q ? `"${q}"` : "Collection"} | Modest Studio Kochi</title>
+        <meta name="description" content="Search contemporary modest fashion, abayas, and co-ords at Modest Studio Kochi." />
+      </Head>
+
       <Header />
-      <main id="main-content" className="min-h-screen bg-[#F4F4F4]">
-        <div className="mx-auto max-w-content px-4 md:px-6 py-8">
-          {/* Search Bar */}
-          <div className="mb-8">
+      <main id="main-content" className="min-h-screen bg-mb-bg py-8 sm:py-12 border-b border-mb-border">
+        <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
+          
+          {/* Search Bar Strip */}
+          <div className="max-w-xl mx-auto mb-10">
             <SearchBar showSuggestions={true} />
           </div>
 
-          {/* Breadcrumb */}
+          {/* Breadcrumb Navigation */}
           <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-1.5 text-xs text-[#595E63]" role="list">
-              <li role="listitem">
-                <Link href="/" className="hover:text-[#E80071] hover:underline">
+            <ol className="flex items-center gap-2 text-xs font-sans text-mb-muted uppercase tracking-editorial" role="list">
+              <li>
+                <Link href="/" className="hover:text-mb-primary transition-colors">
                   Home
                 </Link>
               </li>
-              <li role="listitem" aria-hidden="true">/</li>
-              <li role="listitem" aria-current="page">
+              <li aria-hidden="true" className="text-mb-border">/</li>
+              <li className="text-mb-primary font-semibold" aria-current="page">
                 Search Results {q && `for "${q}"`}
               </li>
             </ol>
           </nav>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Sidebar: Filters */}
-            <div className="md:col-span-1">
+            <div className="lg:col-span-1">
               <SearchFilters onFiltersChange={handleFiltersApply} />
             </div>
 
             {/* Main: Results */}
-            <div className="md:col-span-3">
+            <div className="lg:col-span-3">
               {/* Header with Sort */}
-              <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-semibold text-[#000000]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-mb-border mb-6 gap-3">
+                <h1 className="font-serif text-2xl sm:text-3xl font-normal text-mb-primary">
                   Search Results
-                  {total > 0 && <span className="text-lg font-normal text-[#595E63]"> ({total})</span>}
+                  {total > 0 && <span className="font-sans text-xs font-normal text-mb-muted ml-2">({total} items)</span>}
                 </h1>
 
-                <div className="flex items-center gap-2">
-                  <label className="text-sm text-[#595E63]">Sort by:</label>
+                <div className="flex items-center gap-2 text-xs font-sans">
+                  <label htmlFor="search-sort" className="uppercase tracking-wider text-mb-muted text-[11px]">Sort by:</label>
                   <select
+                    id="search-sort"
                     value={sortBy}
                     onChange={(e) => handleSortChange(e.target.value as typeof sortBy)}
-                    className="px-3 py-2 border border-[#CDD3D8] rounded-lg text-sm focus:border-[#E80071] focus:outline-none"
+                    className="px-3 py-1.5 border border-mb-border bg-mb-surface text-mb-primary text-xs outline-none focus:border-mb-primary font-medium"
                   >
                     <option value="relevance">Relevance</option>
                     <option value="price-asc">Price: Low to High</option>
@@ -95,50 +103,41 @@ export default function SearchPage() {
 
               {/* Error State */}
               {error && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-sm text-red-700">{error}</p>
+                <div className="mb-6 p-4 bg-red-50/80 border border-red-200">
+                  <p className="text-xs text-red-700">{error}</p>
                 </div>
               )}
 
               {/* Loading State */}
-              {isLoading ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {[...Array(6)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="bg-white rounded-lg p-4 animate-pulse h-64"
-                    />
-                  ))}
+              {isLoading && (
+                <div className="py-16 text-center text-xs font-sans uppercase tracking-widest text-mb-muted">
+                  Curating silhouettes...
                 </div>
-              ) : results.length === 0 ? (
-                <div className="bg-white rounded-lg p-12 text-center border border-[#CDD3D8]">
-                  <p className="text-lg font-semibold text-[#000000] mb-2">No products found</p>
-                  <p className="text-sm text-[#595E63] mb-4">
-                    Try adjusting your search or filters
+              )}
+
+              {/* Empty State */}
+              {!isLoading && results.length === 0 && (
+                <div className="bg-mb-surface border border-mb-border p-12 text-center">
+                  <h3 className="font-serif text-2xl text-mb-primary mb-2 font-normal">No pieces found</h3>
+                  <p className="text-xs font-body text-mb-muted mb-6">
+                    {q ? `No creations matched "${q}". Try searching for abaya, kimono, linen, or wrap.` : 'Enter a search term above.'}
                   </p>
                   <Link
-                    href="/"
-                    className="inline-block px-4 py-2 bg-[#E80071] text-white rounded-lg hover:opacity-90 transition-colors"
+                    href="/category/all"
+                    className="luxury-btn-primary inline-block px-8 py-3 text-xs tracking-editorial"
                   >
-                    Browse All Products
+                    Explore Complete Catalog
                   </Link>
                 </div>
-              ) : (
-                <>
-                  {/* Product Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-                    {results.map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
+              )}
 
-                  {/* Pagination Info */}
-                  <div className="text-center py-6">
-                    <p className="text-sm text-[#595E63]">
-                      Showing {results.length} of {total} products
-                    </p>
-                  </div>
-                </>
+              {/* Product Grid */}
+              {!isLoading && results.length > 0 && (
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+                  {results.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               )}
             </div>
           </div>

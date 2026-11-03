@@ -1,160 +1,216 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-
 import type { Product } from "@/lib/types";
 export type { Product };
 
-const StarIcon = () => (
-  <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-  </svg>
-);
-
 const HeartIcon = ({ filled }: { filled: boolean }) => (
-  <svg width="14" height="14" viewBox="0 0 24 24"
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
     fill={filled ? "currentColor" : "none"}
     stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+    strokeWidth="1.6"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
   </svg>
 );
 
-export default function ProductCard({ product }: { product: Product }) {
+const BagAddIcon = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <path d="M16 10a4 4 0 0 1-8 0" />
+  </svg>
+);
+
+// Editorial colour palette dots for luxury fashion preview
+const SAMPLE_COLORS = [
+  { name: "Espresso", bg: "#302D27" },
+  { name: "Sand",     bg: "#D7CCBB" },
+  { name: "Olive",    bg: "#777B5A" },
+  { name: "Warm Ivory", bg: "#F8F6F0" },
+];
+
+export default function ProductCard({
+  product,
+  onQuickView,
+}: {
+  product: Product;
+  onQuickView?: (product: Product) => void;
+}) {
   const { addItem, items } = useCart();
   const { isWishlisted, toggleWishlist } = useWishlist();
   const inCart = items.some(i => i.product.id === product.id);
   const wishlisted = isWishlisted(product.id);
+  const [selectedColor, setSelectedColor] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const onAdd = (e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); addItem(product); };
-  const onWish = (e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(product); };
+  const onAdd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product);
+  };
 
-  const salePrice = product.discount
-    ? Math.round(product.price * (1 - (product.discount * 0.12) / 100))
-    : null;
+  const onWish = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist(product);
+  };
+
+  const handleQuickView = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onQuickView) onQuickView(product);
+  };
 
   return (
-    <article className="group relative flex flex-col bg-mb-surface border border-mb-border rounded-[12px] shadow-card hover:shadow-dropdown transition-all overflow-hidden">
+    <article
+      className="group relative flex flex-col bg-mb-bg border border-mb-border hover:border-mb-primary transition-all duration-300"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* ── Badges ────────────────────────────────────────────── */}
+      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 pointer-events-none">
+        {product.discount && product.discount > 0 ? (
+          <span className="bg-mb-primary text-mb-bg text-[10px] font-sans font-medium uppercase tracking-editorial px-2 py-0.5">
+            {product.discount}% Off
+          </span>
+        ) : product.badge ? (
+          <span className="bg-mb-accent text-mb-bg text-[10px] font-sans font-medium uppercase tracking-editorial px-2 py-0.5">
+            {product.badge}
+          </span>
+        ) : (
+          <span className="bg-mb-surface-strong text-mb-primary text-[9px] font-sans font-semibold uppercase tracking-widest px-2 py-0.5">
+            Studio Edit
+          </span>
+        )}
+      </div>
 
-      {/* ── Badges [BESTSELLER / NEW / FEATURED] ───────────────── */}
-      {(product.badge || (product.discount && product.discount > 10)) && (
-        <ul className="absolute top-2.5 left-2.5 z-10 flex flex-col gap-1" role="list" aria-label="Badges">
-          {product.discount && product.discount > 10 && (
-            <li role="listitem"
-              className="bg-mb-gold-deep text-mb-bg text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] shadow-sm">
-              BESTSELLER
-            </li>
-          )}
-          {product.badge && (
-            <li role="listitem"
-              className="bg-mb-primary text-mb-bg text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] shadow-sm">
-              {product.badge}
-            </li>
-          )}
-        </ul>
-      )}
-
-      {/* ── Wishlist button ────────────────────────────────────── */}
-      <button type="button"
+      {/* ── Wishlist Button ───────────────────────────────────── */}
+      <button
+        type="button"
         aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
         aria-pressed={wishlisted}
         onClick={onWish}
-        className="absolute top-2.5 right-2.5 z-10 w-7 h-7 flex items-center justify-center bg-mb-bg border border-mb-border text-mb-accent hover:text-mb-primary rounded-full shadow-sm transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent">
+        className={`absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center transition-all duration-200 border ${
+          wishlisted
+            ? "bg-mb-primary text-mb-bg border-mb-primary"
+            : "bg-mb-bg/90 text-mb-primary border-mb-border hover:border-mb-primary hover:text-mb-primary"
+        }`}
+      >
         <HeartIcon filled={wishlisted} />
       </button>
 
-      {/* ── Link: image + details ──────────────────────────────── */}
-      <Link href={`/product/${product.id}`}
-        aria-label={`${product.brand} ${product.name}, ₹${product.price.toLocaleString()}`}
-        className="flex flex-col flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-mb-accent">
+      {/* ── Image with Fashion Portrait Aspect Ratio ──────────── */}
+      <Link
+        href={`/product/${product.id}`}
+        className="relative block aspect-[3/4] bg-mb-surface overflow-hidden focus:outline-none"
+      >
+        <img
+          src={product.image}
+          alt={product.name}
+          loading="lazy"
+          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+        />
 
-        {/* Product image */}
-        <div className="relative bg-mb-surface overflow-hidden aspect-square flex items-center justify-center p-3">
-          <img src={product.image} alt={product.name}
-            loading="lazy"
-            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-          />
-        </div>
-
-        {/* Info block */}
-        <div className="flex flex-col flex-1 p-3 pt-2">
-
-          {/* Brand — Jost uppercase light tracking */}
-          <p className="text-[11px] font-medium text-mb-muted uppercase tracking-[0.15em] truncate mb-1">
-            {product.brand}
-          </p>
-
-          {/* Title — Luxury Serif */}
-          <h2 className="font-serif text-[14px] font-semibold text-mb-text line-clamp-2 mb-1.5 leading-snug"
-            title={product.name}>
-            {product.name}
-          </h2>
-
-          {/* Prices */}
-          <div aria-hidden="true" className="flex items-baseline gap-2 flex-wrap mb-1.5">
-            <span className="text-[14px] font-bold text-mb-text">
-              ₹{product.price.toLocaleString()}
-            </span>
-            {product.originalPrice && (
-              <span className="text-[12px] text-mb-muted line-through">
-                ₹{product.originalPrice.toLocaleString()}
-              </span>
-            )}
-            {product.discount && (
-              <span className="text-[11px] text-mb-accent-deep font-bold">
-                {product.discount}% Off
-              </span>
-            )}
-          </div>
-
-          <span className="sr-only">
-            {product.originalPrice
-              ? `Regular price ₹${product.originalPrice.toLocaleString()}. Discounted price ₹${product.price.toLocaleString()}. ${product.discount}% Off.`
-              : `Price ₹${product.price.toLocaleString()}.`}
-          </span>
-
-          {/* Star rating — Gold Deep badge */}
-          <div className="flex items-center gap-1.5 mb-2"
-            aria-label={`${product.rating} out of 5 star rating`}>
-            <span className="flex items-center gap-1 bg-mb-gold-deep text-mb-bg text-[10px] font-bold px-1.5 py-0.5 rounded-[4px] leading-none">
-              {product.rating} <StarIcon />
-            </span>
-            <span className="text-[11px] text-mb-muted">
-              ({product.reviewCount.toLocaleString()})
-            </span>
-          </div>
-
-          {/* Sale price secondary row */}
-          {salePrice && product.discount && (
-            <div className="flex items-center gap-1.5 px-2 py-1 mt-auto bg-mb-bg border border-mb-border-lite rounded-[6px]">
-              <span className="text-[10px] text-mb-muted uppercase tracking-wider">Sale</span>
-              <span className="text-[12px] font-bold text-mb-text">₹{salePrice.toLocaleString()}</span>
-              <span className="text-[10px] text-mb-accent-deep font-semibold">
-                {Math.min(product.discount + 5, 65)}% Off
-              </span>
-            </div>
+        {/* Quick Actions Hover Overlay */}
+        <div
+          className={`absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-mb-primary/80 via-mb-primary/30 to-transparent transition-opacity duration-300 flex items-center justify-between gap-2 ${
+            isHovered ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <button
+            type="button"
+            onClick={onAdd}
+            className="flex-1 py-2 px-3 bg-mb-bg text-mb-primary hover:bg-mb-primary hover:text-mb-bg text-[11px] font-sans font-medium uppercase tracking-editorial transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+          >
+            <BagAddIcon />
+            <span>{inCart ? "In Bag (+1)" : "Add to Bag"}</span>
+          </button>
+          
+          {onQuickView && (
+            <button
+              type="button"
+              onClick={handleQuickView}
+              className="py-2 px-3 bg-mb-bg/90 text-mb-primary hover:bg-mb-bg text-[11px] font-sans font-medium uppercase tracking-editorial transition-colors"
+            >
+              Quick Look
+            </button>
           )}
         </div>
       </Link>
 
-      {/* ── Add to Bag CTA ─────────────────────────────────────── */}
-      <div className="p-3 pt-0">
-        <button type="button"
-          aria-label={inCart ? `${product.name} added to bag` : `Add ${product.name} to bag`}
-          onClick={onAdd}
-          className={`w-full py-2 text-[12px] font-semibold rounded-[10px] transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-mb-accent ${
-            inCart
-              ? "bg-mb-primary text-mb-bg border border-mb-primary"
-              : "bg-mb-primary hover:bg-mb-primary-hover text-mb-bg"
-          }`}>
-          {inCart ? "✓ Added to Bag" : "Add to Bag"}
-        </button>
-      </div>
+      {/* ── Details Area ───────────────────────────────────────── */}
+      <div className="p-4 flex flex-col flex-1 justify-between bg-mb-bg">
+        <div>
+          {/* Category / Subtitle */}
+          <div className="flex items-center justify-between mb-1 text-[11px] font-sans tracking-editorial uppercase text-mb-muted">
+            <span>{product.brand === "Moryelle" ? "Modest Studio" : product.brand}</span>
+            <span className="text-mb-gold text-[10px]">★ {product.rating.toFixed(1)}</span>
+          </div>
 
-      <span aria-live="polite" aria-atomic="true" className="sr-only">
-        {inCart ? `${product.name} added to bag` : ""}
-      </span>
+          {/* Product Title */}
+          <h3 className="font-serif text-sm sm:text-base text-mb-text font-medium line-clamp-1 mb-2 hover:text-mb-accent-deep transition-colors">
+            <Link href={`/product/${product.id}`} title={product.name}>
+              {product.name}
+            </Link>
+          </h3>
+
+          {/* Colour Swatches */}
+          <div className="flex items-center gap-1.5 mb-3" aria-label="Available Colours">
+            {SAMPLE_COLORS.map((col, idx) => (
+              <button
+                key={col.name}
+                type="button"
+                onClick={e => {
+                  e.preventDefault();
+                  setSelectedColor(idx);
+                }}
+                title={col.name}
+                aria-label={col.name}
+                className={`w-3 h-3 rounded-full border transition-all ${
+                  selectedColor === idx ? "ring-1 ring-mb-primary scale-110" : "opacity-75 hover:opacity-100"
+                }`}
+                style={{ backgroundColor: col.bg, borderColor: "#DCD4C8" }}
+              />
+            ))}
+            <span className="text-[10px] font-body text-mb-muted ml-1">+2 shades</span>
+          </div>
+        </div>
+
+        {/* Price & CTA */}
+        <div className="pt-2 border-t border-mb-border-lite flex items-baseline justify-between">
+          <div className="flex items-baseline gap-2">
+            <span className="font-sans text-sm font-semibold text-mb-text">
+              ₹{product.price.toLocaleString("en-IN")}
+            </span>
+            {product.originalPrice && product.originalPrice > product.price && (
+              <span className="font-sans text-xs text-mb-muted line-through">
+                ₹{product.originalPrice.toLocaleString("en-IN")}
+              </span>
+            )}
+          </div>
+          <span className="text-[11px] font-sans uppercase tracking-wider text-mb-accent font-medium">
+            Available
+          </span>
+        </div>
+      </div>
     </article>
   );
 }

@@ -11,12 +11,12 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({
-  placeholder = 'Search products...',
+  placeholder = 'Search abayas, co-ords, scarves...',
   onSearch,
   showSuggestions = true,
 }: SearchBarProps) {
   const router = useRouter();
-  const { getSuggestions, suggestions, clearSuggestions, setFilter, search, filters } = useSearch();
+  const { getSuggestions, suggestions, clearSuggestions, setFilter } = useSearch();
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -53,7 +53,6 @@ export default function SearchBar({
     setFilter({ query: searchQuery, page: 1 });
     onSearch?.(searchQuery);
 
-    // Navigate to search page if not already there
     if (router.pathname !== '/search') {
       router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
     }
@@ -68,10 +67,6 @@ export default function SearchBar({
     }
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    handleSearch(suggestion);
-  };
-
   return (
     <div ref={containerRef} className="relative w-full">
       <form onSubmit={handleSubmit}>
@@ -82,22 +77,25 @@ export default function SearchBar({
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => query && setIsOpen(true)}
             placeholder={placeholder}
-            className="w-full px-4 py-2.5 pr-12 border border-[#CDD3D8] rounded-lg bg-white text-[#000000] placeholder-[#595E63] focus:border-[#E80071] focus:outline-none focus:ring-1 focus:ring-[#E80071]"
+            className="w-full px-4 py-3 pr-12 border border-mb-border bg-mb-bg text-mb-primary placeholder-mb-placeholder text-xs font-body focus:border-mb-primary focus:outline-none"
           />
           <button
             type="submit"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#595E63] hover:text-[#E80071] transition-colors"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-mb-primary hover:text-mb-accent-deep transition-colors"
+            aria-label="Submit search"
           >
             <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <circle cx="8" cy="8" r="6" />
-              <path d="M13 13l4 4" />
+              <circle cx="11" cy="11" r="7.5" />
+              <line x1="21" y1="21" x2="16.5" y2="16.5" />
             </svg>
           </button>
         </div>
@@ -105,16 +103,16 @@ export default function SearchBar({
 
       {/* Suggestions Dropdown */}
       {isOpen && suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-[#CDD3D8] rounded-lg shadow-md z-50">
-          <div className="p-2">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-mb-bg border border-mb-border shadow-dropdown z-50">
+          <div className="p-2 divide-y divide-mb-border-lite">
             {suggestions.map((suggestion, index) => (
               <button
                 key={index}
-                onClick={() => handleSuggestionClick(suggestion)}
-                className="w-full text-left px-3 py-2 hover:bg-[#F4F4F4] rounded text-sm text-[#595E63] hover:text-[#000000] transition-colors"
+                onClick={() => handleSearch(suggestion)}
+                className="w-full text-left px-3 py-2 hover:bg-mb-surface text-xs font-sans text-mb-body hover:text-mb-primary transition-colors flex items-center justify-between"
               >
-                <span className="text-[#E80071] mr-2">🔍</span>
-                {suggestion}
+                <span>{suggestion}</span>
+                <span className="text-[10px] text-mb-muted uppercase tracking-wider">Search →</span>
               </button>
             ))}
           </div>

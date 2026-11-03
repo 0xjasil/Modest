@@ -52,27 +52,27 @@ const TOP_LINKS = [
 ];
 
 const PRIMARY_NAV = [
-  { label: "Categories",    href: "#" },
-  { label: "Brands",        href: "#" },
-  { label: "Luxe",          href: "/category/luxe" },
-  { label: "MORYELLE Fashion", href: "/category/fashion" },
-  { label: "Beauty Advice", href: "#" },
+  { label: "Categories",    href: "/category/all" },
+  { label: "Front Open",    href: "/category/front-open" },
+  { label: "Double Shrug",  href: "/category/double-shrug" },
+  { label: "Bridal & Occasion", href: "/category/bridal-wear" },
+  { label: "Kaftans",       href: "/category/basic-kaftan" },
 ];
 
 // Exact order from Nykaa Secondary nav snapshot
 const CATEGORY_NAV = [
-  { label: "makeup",              href: "/category/makeup" },
-  { label: "skin",                href: "/category/skincare" },
-  { label: "hair",                href: "/category/hair" },
-  { label: "appliances",          href: "/category/appliances" },
-  { label: "Bath & Body",         href: "/category/bath-body" },
-  { label: "Natural",             href: "/category/natural" },
-  { label: "mom & baby",          href: "/category/mom-baby" },
-  { label: "Health & Wellness",   href: "/category/health-wellness" },
-  { label: "men",                 href: "/category/men" },
-  { label: "fragrance",           href: "/category/fragrance" },
-  { label: "Fashion Selects",     href: "/category/fashion" },
-  { label: "Offers",              href: "/category/offers", accent: true },
+  { label: "Front Open",        href: "/category/front-open" },
+  { label: "Double Shrug",      href: "/category/double-shrug" },
+  { label: "Basic Kaftans",     href: "/category/basic-kaftan" },
+  { label: "Daily Wear",        href: "/category/daily-wear" },
+  { label: "Kimono Abayas",     href: "/category/kimono-abaya" },
+  { label: "Embroidery",        href: "/category/embroidery-abaya" },
+  { label: "Handwork",          href: "/category/handwork-abaya" },
+  { label: "Bridal Wear",       href: "/category/bridal-wear" },
+  { label: "Jilbabs",           href: "/category/jilbabs" },
+  { label: "Chiffon Stoles",    href: "/category/hijabs-stoles" },
+  { label: "Accessories",       href: "/category/caps-accessories" },
+  { label: "Special Offers",    href: "/category/offers", accent: true },
 ];
 const SearchIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"

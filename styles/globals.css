@@ -8,36 +8,46 @@
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }
 
-/* ── DESIGN TOKENS (Moryelle Beauté Brand Sheet) ─────────────── */
+
+/* ── PREMIUM ABAYA E-COMMERCE BRAND THEME ── */
 :root {
-  /* ══ Core Brand Palette (Moryelle Beauté) ════════════════════ */
-  --color-bg:               #FFF7F2; /* Soft Cream (Dominant 60% Canvas & Header) */
-  --color-surface:          #F7E7E9; /* Rose Blush (Secondary 30% Cards & Alternating Areas) */
-  --color-surface-strong:   #D4A5A8; /* Dusty Rose (Tags, Chips, Accents) */
-  --color-primary:          #6D3A4E; /* Plum (Accent 10% Primary CTAs, Footer, Wordmark) */
-  --color-primary-hover:    #522C3C; /* Plum Pressed/Hover */
-  --color-accent:           #B76B7A; /* Mauve (Icons, active indicators, sale badges) */
-  --color-accent-deep:      #9A4F5F; /* Mauve Deep (Sale prices, links, high-readability accent text) */
-  --color-gold:             #E6C7B8; /* Champagne Gold (Fine dividers, ornament lines max 2%) */
-  --color-gold-deep:        #B07D4F; /* Gold Deep (Rating stars, bestseller tags) */
+  /* 60% — DOMINANT WARM IVORY */
+  --color-bg:               #F5EDE6;
+  --color-surface:          #FBF7F3;
+  --color-surface-strong:   #EAD9D2;
 
-  /* ══ Typography & Readability (WCAG AA Compliant) ═══════════ */
-  --color-text-main:        #3E1F2D; /* Headings, product titles, prices */
-  --color-text-body:        #5A3A47; /* Body copy & general labels */
-  --color-text-muted:       #7D5B68; /* Captions, breadcrumbs, reviews */
-  --color-text-placeholder: #8F7380; /* Form field placeholders */
-  --color-button-text:      #FFF7F2; /* High-contrast text on Plum/Mauve buttons */
+  /* 30% — VISIBLE DUSTY ROSE */
+  --color-secondary:        #D29A90;
+  --color-secondary-light:  #E8C3BA;
+  --color-secondary-dark:   #A96F68;
 
-  /* ══ Borders & Dividers ═════════════════════════════════════ */
-  --color-border:           #E3BFC3; /* 1px Card border on blush cards */
-  --color-border-lite:      #F0D9DC; /* Subtle dividers */
+  /* 10% — DEEP BURGUNDY */
+  --color-primary:          #5C1A24;
+  --color-primary-hover:    #42121B;
+  --color-accent:           #8D414A;
+  --color-accent-deep:      #2D1A1F;
 
-  /* ══ Functional ═════════════════════════════════════════════ */
-  --color-success:          #4F7A58; /* In-stock, confirmed, verified */
-  --color-error:            #A83A45; /* Error states, alerts */
+  /* Luxury details */
+  --color-gold:             #C6A477;
+  --color-gold-deep:        #967347;
 
-  /* ══ Backward Compatibility Aliases ═════════════════════════ */
-  --white:                  var(--color-bg);
+  /* Typography */
+  --color-text-main:        #2D1A1F;
+  --color-text-body:        #514044;
+  --color-text-muted:       #806D6D;
+  --color-text-placeholder: #9B8581;
+  --color-button-text:      #FFFFFF;
+
+  /* Borders */
+  --color-border:           #DCC1B9;
+  --color-border-lite:      #EBDDD7;
+
+  /* Functional */
+  --color-success:          #55765A;
+  --color-error:            #A83A45;
+
+  /* Compatibility aliases */
+  --white:                  #FFFFFF;
   --surface:                var(--color-surface);
   --text:                   var(--color-text-main);
   --muted:                  var(--color-text-muted);
@@ -45,23 +55,29 @@
   --primary:                var(--color-primary);
   --border:                 var(--color-border);
   --border-lite:            var(--color-border-lite);
-  --dim:                    var(--color-text-dim, #7D5B68);
-  --blue-bg:                var(--color-surface);
-  --pink-bg:                var(--color-surface);
+  --dim:                    var(--color-text-muted);
+
+  --blue-bg:                var(--color-surface-strong);
+  --pink-bg:                var(--color-secondary-light);
   --green-rate:             var(--color-success);
-  --sale-bg:                var(--color-surface);
+  --sale-bg:                var(--color-primary);
 
-  /* ══ Shadows & Elevation ════════════════════════════════════ */
-  --shadow-card:            0 2px 12px rgba(109, 58, 78, 0.10);
-  --shadow-dropdown:        0 4px 20px rgba(109, 58, 78, 0.15);
+  /* Shadows */
+  --shadow-card:
+    0 3px 16px rgba(92, 26, 36, 0.08);
+  --shadow-dropdown:
+    0 5px 22px rgba(45, 26, 31, 0.15);
 
-  /* ══ Fonts ══════════════════════════════════════════════════ */
-  --font-serif:             "Cormorant Garamond", "Playfair Display", Georgia, serif;
-  --font-sans:              "Jost", system-ui, -apple-system, sans-serif;
-  --font:                   var(--font-sans);
+  /* Typography */
+  --font-serif:
+    "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans:
+    "Jost", system-ui, -apple-system, sans-serif;
+  --font: var(--font-sans);
 
   /* ══ Motion ═════════════════════════════════════════════════ */
   --ease:                   0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
 }
 
 /* ── Reset & Global Typography ──────────────────────────────── */

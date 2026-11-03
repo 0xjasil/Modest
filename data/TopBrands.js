@@ -1,35 +1,63 @@
 export const category=[
   {
+    "img": "/abaya/categories/front-open.jpg",
+    "offer": "Front Open Abaya",
+    "slug": "front-open"
+  },
+  {
+    "img": "/abaya/categories/double-shrug.jpg",
+    "offer": "Double Shrug Abaya",
+    "slug": "double-shrug"
+  },
+  {
+    "img": "/abaya/categories/basic-kaftan.jpg",
+    "offer": "Basic Kaftan Abaya",
+    "slug": "basic-kaftan"
+  },
+  {
+    "img": "/abaya/categories/daily-wear.jpg",
+    "offer": "Daily Wear Abaya",
+    "slug": "daily-wear"
+  },
+  {
+    "img": "/abaya/categories/kimono-abaya.jpg",
+    "offer": "Kimono Abayas",
+    "slug": "kimono-abaya"
+  },
+  {
+    "img": "/abaya/categories/embroidery-abaya.jpg",
+    "offer": "Embroidery Abayas",
+    "slug": "embroidery-abaya"
+  },
+  {
+    "img": "/abaya/categories/handwork-abaya.jpg",
+    "offer": "Handwork Abaya",
+    "slug": "handwork-abaya"
+  },
+  {
+    "img": "/abaya/categories/bridal-wear.jpg",
+    "offer": "Bridal Wear Abaya",
+    "slug": "bridal-wear"
+  },
+  {
+    "img": "/abaya/categories/jilbabs.jpg",
+    "offer": "Jilbabs",
+    "slug": "jilbabs"
+  },
+  {
+    "img": "/abaya/categories/hijabs-stoles.jpg",
+    "offer": "Malaysian Chiffon Stoles",
+    "slug": "hijabs-stoles"
+  },
+  {
+    "img": "/abaya/categories/caps-accessories.jpg",
+    "offer": "Caps & Accessories",
+    "slug": "caps-accessories"
+  },
+  {
     "img": "/abaya/categories/classic-black.jpg",
-    "offer": "Classic Black Abayas"
-  },
-  {
-    "img": "/abaya/categories/open-front.jpg",
-    "offer": "Open Front & Kimonos"
-  },
-  {
-    "img": "/abaya/categories/silk-satin.jpg",
-    "offer": "Luxury Silk & Satin"
-  },
-  {
-    "img": "/abaya/categories/embroidered.jpg",
-    "offer": "Embroidered & Festive"
-  },
-  {
-    "img": "/abaya/categories/casual-linen.jpg",
-    "offer": "Casual & Linen"
-  },
-  {
-    "img": "/abaya/categories/kaftans-jalabiyas.jpg",
-    "offer": "Kaftans & Jalabiyas"
-  },
-  {
-    "img": "/abaya/categories/bridal-occasion.jpg",
-    "offer": "Bridal & Occasion"
-  },
-  {
-    "img": "/abaya/categories/hijabs-accessories.jpg",
-    "offer": "Hijabs & Accessories"
+    "offer": "Classic Black Abaya",
+    "slug": "classic-black"
   }
 ];
 

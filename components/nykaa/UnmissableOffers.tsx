@@ -2,31 +2,11 @@ import React, { useRef } from "react";
 import Link from "next/link";
 
 const offers = [
-  {
-    img: "/hero/card-1.jpg",
-    title: "Festive Grandeur Collection",
-    link: "/category/makeup"
-  },
-  {
-    img: "/hero/card-2.jpg",
-    title: "Signature Radiance Rituals",
-    link: "/category/skincare"
-  },
-  {
-    img: "/hero/card-3.jpg",
-    title: "Iconic Bestsellers",
-    link: "/category/luxe"
-  },
-  {
-    img: "/hero/card-4.jpg",
-    title: "Botanical Hair Elixirs",
-    link: "/category/hair"
-  },
-  {
-    img: "/hero/card-5.jpg",
-    title: "Curated Luxury Duos",
-    link: "/category/wellness"
-  }
+  { img: "/abaya/hero/hero-1.jpg", title: "Imperial Black Nidha Collection", link: "/category/all" },
+  { img: "/abaya/hero/hero-2.jpg", title: "Two-Piece Kimono & Slip Sets", link: "/category/all" },
+  { img: "/abaya/hero/hero-3.jpg", title: "Everyday Casual Linen Abayas", link: "/category/all" },
+  { img: "/abaya/hero/hero-4.jpg", title: "Silk & Satin Occasion Drops", link: "/category/all" },
+  { img: "/abaya/hero/hero-5.jpg", title: "Midnight Velvet Haute Couture", link: "/category/all" }
 ];
 
 export default function UnmissableOffers() {
@@ -42,7 +22,7 @@ export default function UnmissableOffers() {
     <section className="w-full bg-mb-surface border-y border-mb-border py-8 my-8" aria-label="Unmissable Offers For You">
       <div className="w-full px-3 sm:px-6">
         <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-mb-text mb-6 text-left">
-          Unmissable Beauté Offers
+          Unmissable Modest Studio Offers
         </h2>
 
         <div className="relative group">

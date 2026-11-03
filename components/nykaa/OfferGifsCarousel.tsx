@@ -2,31 +2,11 @@ import React, { useRef } from "react";
 import Link from "next/link";
 
 const gifBanners = [
-  {
-    img: "/hero/card-1.jpg",
-    title: "Trending Drops",
-    link: "/category/makeup"
-  },
-  {
-    img: "/hero/card-2.jpg",
-    title: "Special Combos",
-    link: "/category/skincare"
-  },
-  {
-    img: "/hero/card-3.jpg",
-    title: "Best In Beauty",
-    link: "/category/luxe"
-  },
-  {
-    img: "/hero/card-4.jpg",
-    title: "Must Haves",
-    link: "/category/hair"
-  },
-  {
-    img: "/hero/card-8.jpg",
-    title: "Festive Glam",
-    link: "/category/fragrance"
-  }
+  { img: "/abaya/hero/hero-1.jpg", title: "New Season Drops", link: "/category/all" },
+  { img: "/abaya/hero/hero-2.jpg", title: "Two-Piece Sets", link: "/category/all" },
+  { img: "/abaya/hero/hero-3.jpg", title: "Breathable Linen", link: "/category/all" },
+  { img: "/abaya/hero/hero-4.jpg", title: "Festive Occasion", link: "/category/all" },
+  { img: "/abaya/hero/hero-5.jpg", title: "Luxury Velvet Edits", link: "/category/all" }
 ];
 
 export default function OfferGifsCarousel() {

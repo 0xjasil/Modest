@@ -2,41 +2,13 @@ import React from "react";
 import Link from "next/link";
 
 const spotlightItems = [
-  {
-    img: "/categories/fragrance.jpg",
-    name: "Aromatherapy Candles",
-    link: "/category/fragrance"
-  },
-  {
-    img: "/categories/fragrance.jpg",
-    name: "Body Mists",
-    link: "/category/fragrance"
-  },
-  {
-    img: "/categories/skincare.jpg",
-    name: "Essential Oils",
-    link: "/category/skincare"
-  },
-  {
-    img: "/categories/bath-body.jpg",
-    name: "Botanical Bath Salts",
-    link: "/category/bath-body"
-  },
-  {
-    img: "/categories/bath-body.jpg",
-    name: "Massage Oils",
-    link: "/category/bath-body"
-  },
-  {
-    img: "/categories/skincare.jpg",
-    name: "Exfoliating Scrubs",
-    link: "/category/skincare"
-  },
-  {
-    img: "/categories/bath-body.jpg",
-    name: "Foot Care Rituals",
-    link: "/category/bath-body"
-  }
+  { img: "/abaya/categories/classic-black.jpg", name: "Classic Black Nidha", link: "/category/all" },
+  { img: "/abaya/categories/open-front.jpg", name: "Open Front Kimonos", link: "/category/all" },
+  { img: "/abaya/categories/silk-satin.jpg", name: "Silk & Satin Evening", link: "/category/all" },
+  { img: "/abaya/categories/embroidered.jpg", name: "Festive Embroidery", link: "/category/all" },
+  { img: "/abaya/categories/casual-linen.jpg", name: "Everyday Linen", link: "/category/all" },
+  { img: "/abaya/categories/kaftans-jalabiyas.jpg", name: "Moroccan Kaftans", link: "/category/all" },
+  { img: "/abaya/categories/hijabs-accessories.jpg", name: "Chiffon Hijabs", link: "/category/all" }
 ];
 
 export default function SpotlightSection() {
@@ -47,7 +19,7 @@ export default function SpotlightSection() {
           In The Spotlight
         </h2>
         <p className="text-xs sm:text-sm font-medium text-mb-muted mt-1">
-          Self-Care &amp; Sanctuary Essentials
+          Luxury Cuts &amp; Coordinated Modest Sets
         </p>
       </div>
 

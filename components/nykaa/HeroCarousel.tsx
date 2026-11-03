@@ -3,52 +3,52 @@ import Link from "next/link";
 
 export const heroData = [
   {
-    img: "/hero/card-1.jpg",
-    offer: "Up To 50% Off",
-    description: "Festive Grandeur Collection",
-    link: "/category/makeup"
+    img: "/abaya/hero/hero-1.jpg",
+    offer: "Up To 30% Off",
+    description: "Imperial Black Nidha Abayas",
+    link: "/category/all"
   },
   {
-    img: "/hero/card-2.jpg",
-    offer: "Signature Radiance Rituals",
-    description: "Discover Skincare",
-    link: "/category/skincare"
+    img: "/abaya/hero/hero-2.jpg",
+    offer: "Bestseller Set",
+    description: "Mocha Silk Kimono & Slip Dress",
+    link: "/category/all"
   },
   {
-    img: "/hero/card-3.jpg",
-    offer: "Min 40% Off",
-    description: "Iconic Bestsellers",
-    link: "/category/luxe"
+    img: "/abaya/hero/hero-3.jpg",
+    offer: "Summer Linen Edit",
+    description: "Sage Breathable Casual Abayas",
+    link: "/category/all"
   },
   {
-    img: "/hero/card-4.jpg",
-    offer: "Buy 2 Get 1 Complimentary",
-    description: "Botanical Hair Elixirs",
-    link: "/category/hair"
+    img: "/abaya/hero/hero-4.jpg",
+    offer: "Festive Grandeur",
+    description: "Champagne Satin Occasion Abayas",
+    link: "/category/all"
   },
   {
-    img: "/hero/card-5.jpg",
-    offer: "Up To 35% Off",
-    description: "Curated Luxury Duos",
-    link: "/category/wellness"
+    img: "/abaya/hero/hero-5.jpg",
+    offer: "Haute Modesty",
+    description: "Midnight Velvet Trim Abayas",
+    link: "/category/all"
   },
   {
-    img: "/hero/card-6.jpg",
-    offer: "25% Off Bond Repair",
-    description: "Restorative Rituals",
-    link: "/category/bath-body"
+    img: "/abaya/hero/hero-6.jpg",
+    offer: "Signature Flow",
+    description: "Draped Butterfly Farasha Cuts",
+    link: "/category/all"
   },
   {
-    img: "/hero/card-7.jpg",
-    offer: "Up To 35% Off",
-    description: "High-Pigment Lip Couture",
-    link: "/category/makeup"
+    img: "/abaya/hero/hero-7.jpg",
+    offer: "Special Occasion",
+    description: "Pearl & Crystal Collar Abayas",
+    link: "/category/all"
   },
   {
-    img: "/hero/card-8.jpg",
-    offer: "Haute Parfumerie",
-    description: "Signature Olfactory Notes",
-    link: "/category/fragrance"
+    img: "/abaya/hero/hero-8.jpg",
+    offer: "Royal Heritage",
+    description: "Moroccan Crepe Handwoven Kaftans",
+    link: "/category/all"
   }
 ];
 

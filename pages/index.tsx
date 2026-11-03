@@ -21,10 +21,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Moryelle Beauté: Beauty Beyond Today | Luxury Beauty &amp; Cosmetics</title>
+        <title>Modest Studio: Premium Abaya | Modest Wears &amp; Accessories</title>
         <meta
           name="description"
-          content="Discover luxury skincare, couture cosmetics, fine fragrances and wellness at Moryelle Beauté - Beauty Beyond Today."
+          content="Discover luxury abayas, open front kimonos, silk kaftans, and modest accessories at Modest Studio."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
       </Head>
@@ -38,7 +38,7 @@ export default function Home() {
           <Link href="/category/all" className="block w-full">
             <img
               src="/banners/top-promo-banner.jpg"
-              alt="Moryelle Beauté — Online Shopping New Arrivals Up to 70% Off"
+              alt="Modest Studio — Premium Abaya & Modest Wear New Arrivals"
               className="w-full h-auto max-h-[460px] object-cover object-center"
             />
           </Link>
@@ -55,7 +55,7 @@ export default function Home() {
           <Link href="/category/all" className="block w-full">
             <img
               src="/banners/category-highlights-banner.jpg"
-              alt="Curated Category Highlights — Moryelle Beauté"
+              alt="Curated Abaya Highlights — Modest Studio"
               className="w-full h-24 sm:h-32 md:h-40 lg:h-48 object-cover object-center"
             />
           </Link>
@@ -87,7 +87,7 @@ export default function Home() {
           <Link href="/category/all" className="block w-full">
             <img
               src="/banners/timeless-beauty-banner.jpg"
-              alt="Moryelle Beauté — Beauty Beyond Today"
+              alt="Modest Studio — Grace In Every Fold"
               className="w-full h-36 sm:h-48 md:h-60 lg:h-72 object-cover object-center"
             />
           </Link>
@@ -96,10 +96,10 @@ export default function Home() {
         {/* 14. Store Brand Statement */}
         <div className="w-full px-4 sm:px-6 py-14 text-center bg-mb-surface border-t border-mb-border">
           <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-mb-primary mb-2">
-            Moryelle Beauté
+            Modest Studio
           </h2>
           <p className="text-xs sm:text-sm font-light text-mb-muted uppercase tracking-[0.3em]">
-            Beauty Beyond Today
+            Premium Abaya • Modest Wears • Accessories
           </p>
         </div>
       </main>

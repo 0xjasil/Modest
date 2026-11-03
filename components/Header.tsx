@@ -351,6 +351,12 @@ export default function Header() {
                             alt=""
                             width={36}
                             height={36}
+                            onError={(e) => {
+                              const target = e.currentTarget;
+                              if (!target.src.includes("/abaya/products/abaya-1.jpg")) {
+                                target.src = "/abaya/products/abaya-1.jpg";
+                              }
+                            }}
                             className="w-9 h-9 object-contain bg-mb-surface rounded-sm p-0.5 border border-mb-border"
                           />
                           <div className="flex-1 min-w-0">

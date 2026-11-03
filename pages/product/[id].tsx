@@ -142,6 +142,12 @@ export default function ProductDetail() {
                 height={440}
                 loading="eager"
                 fetchPriority="high"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes("/abaya/products/abaya-1.jpg")) {
+                    target.src = "/abaya/products/abaya-1.jpg";
+                  }
+                }}
                 className="max-h-[400px] w-auto object-contain transition-transform duration-500 hover:scale-105"
               />
             </div>

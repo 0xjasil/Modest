@@ -43,7 +43,13 @@ export default function DiscoverCategories() {
                   src={cat.img}
                   alt={cat.offer}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+                
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes("/abaya/categories/classic-black.jpg")) {
+                        target.src = "/abaya/categories/classic-black.jpg";
+                      }
+                    }} />
               </div>
               <span className="font-serif text-xs sm:text-sm font-semibold text-mb-text group-hover:text-mb-primary transition-colors line-clamp-2">
                 {cat.offer}

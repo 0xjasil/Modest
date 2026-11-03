@@ -81,6 +81,12 @@ export default function Cart() {
                         width={100}
                         height={100}
                         loading="lazy"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.src.includes("/abaya/products/abaya-1.jpg")) {
+                            target.src = "/abaya/products/abaya-1.jpg";
+                          }
+                        }}
                         className="h-24 w-24 sm:h-28 sm:w-28 object-contain rounded-[8px] bg-mb-bg p-2 border border-mb-border-lite"
                       />
                     </Link>

@@ -7,6 +7,7 @@ import {
   mapBackendProductToProduct,
 } from "./api";
 import type { Category, Brand } from "./types";
+import localProductsData from "@/products.json";
 
 export type { Category, Brand };
 
@@ -20,8 +21,22 @@ export interface Banner {
   status?: string;
 }
 
+const fallbackProducts: Product[] = (localProductsData as any[]).map((p: any, i: number) => ({
+  id: String(p.id ?? i + 1),
+  name: p.name,
+  price: p.price ?? 2999,
+  originalPrice: p.originalPrice ?? undefined,
+  discount: p.discount ?? undefined,
+  rating: p.rating ?? 4.8,
+  reviewCount: p.reviewCount ?? 50,
+  image: p.image || "/abaya/products/abaya-1.jpg",
+  badge: p.badge ?? undefined,
+  category: p.category ?? "front-open",
+  brand: p.brand ?? "Modest Studio",
+}));
+
 /**
- * Fetch products with pagination and filtering using NestJS productAPI
+ * Fetch products with pagination and filtering using NestJS productAPI with local Abaya fallback
  */
 export function useProducts(
   page: number = 1,
@@ -47,12 +62,24 @@ export function useProducts(
       const items = response?.items || [];
       const transformed = items.map(mapBackendProductToProduct);
 
-      setProducts(transformed);
-      setHasMore(response ? response.page < response.totalPages : false);
+      if (transformed.length > 0) {
+        setProducts(transformed);
+        setHasMore(response ? response.page < response.totalPages : false);
+      } else {
+        // Fallback to local Abaya products
+        const filtered = category
+          ? fallbackProducts.filter((p) => p.category === category)
+          : fallbackProducts;
+        setProducts(filtered.slice((page - 1) * limit, page * limit));
+        setHasMore(filtered.length > page * limit);
+      }
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to fetch products";
-      setError(message);
+      // Fallback on network or server offline
+      const filtered = category
+        ? fallbackProducts.filter((p) => p.category === category)
+        : fallbackProducts;
+      setProducts(filtered.slice((page - 1) * limit, page * limit));
+      setHasMore(filtered.length > page * limit);
     } finally {
       setIsLoading(false);
     }
@@ -128,110 +155,66 @@ export function useBrands() {
 }
 
 /**
- * Fetch banners (graceful fallback)
+ * Hook for managing media queries and responsive breakpoints
  */
-export function useBanners() {
-  const [banners, setBanners] = useState<Banner[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchBanners = useCallback(async () => {
-    // Single merchant luxury backend has no banners table; return empty array safely
-    setBanners([]);
-    setIsLoading(false);
-  }, []);
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
 
   useEffect(() => {
-    fetchBanners();
-  }, [fetchBanners]);
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
 
-  return { banners, isLoading, error, refetch: fetchBanners };
+    const listener = () => setMatches(media.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, [matches, query]);
+
+  return matches;
 }
 
 /**
- * Fetch a single product by ID
+ * Hook for handling click outside of an element
  */
-export function useProduct(id: string | string[] | undefined) {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchProduct = useCallback(async () => {
-    if (!id) {
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const idStr = Array.isArray(id) ? id[0] : id;
-      const response = await productAPI.getById(idStr);
-      setProduct(mapBackendProductToProduct(response));
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to fetch product";
-      setError(message);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    fetchProduct();
-  }, [fetchProduct]);
-
-  return { product, isLoading, error, refetch: fetchProduct };
-}
-
-/**
- * Fetch products by category
- */
-export function useProductsByCategory(
-  slug: string | string[] | undefined,
-  page: number = 1,
-  limit: number = 20
+export function useClickOutside<T extends HTMLElement = HTMLElement>(
+  ref: React.RefObject<T>,
+  handler: (event: MouseEvent | TouchEvent) => void
 ) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [hasMore, setHasMore] = useState(false);
+  useEffect(() => {
+    const listener = (event: MouseEvent | TouchEvent) => {
+      const el = ref?.current;
+      if (!el || el.contains((event?.target as Node) || null)) {
+        return;
+      }
+      handler(event);
+    };
 
-  const fetchProducts = useCallback(async () => {
-    if (!slug) {
-      setIsLoading(false);
-      return;
-    }
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
 
-    try {
-      setIsLoading(true);
-      setError(null);
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
+}
 
-      const slugStr = Array.isArray(slug) ? slug.join("/") : slug;
-      const response = await productAPI.getAll({
-        category: slugStr === "all" ? undefined : slugStr,
-        page,
-        limit,
-      });
-
-      const items = response?.items || [];
-      const transformed = items.map(mapBackendProductToProduct);
-
-      setProducts(transformed);
-      setHasMore(response ? response.page < response.totalPages : false);
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to fetch products";
-      setError(message);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [slug, page, limit]);
+/**
+ * Hook for debouncing values
+ */
+export function useDebounce<T>(value: T, delay: number = 500): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
 
-  return { products, isLoading, error, hasMore, refetch: fetchProducts };
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
 }

@@ -36,7 +36,13 @@ export default function RadarSection() {
                   src={el.img}
                   alt={el.description}
                   className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
-                />
+                
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes("/abaya/products/abaya-1.jpg")) {
+                        target.src = "/abaya/products/abaya-1.jpg";
+                      }
+                    }} />
               </div>
               <h3 className="font-serif text-sm font-semibold text-mb-text group-hover:text-mb-primary transition-colors leading-tight">
                 {el.offer}

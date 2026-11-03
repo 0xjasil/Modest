@@ -45,7 +45,13 @@ export default function OfferGifsCarousel() {
                 src={banner.img}
                 alt={banner.title}
                 className="w-full h-auto object-cover rounded-[12px]"
-              />
+              
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes("/abaya/hero/hero-1.jpg")) {
+                        target.src = "/abaya/hero/hero-1.jpg";
+                      }
+                    }} />
             </Link>
           ))}
         </div>

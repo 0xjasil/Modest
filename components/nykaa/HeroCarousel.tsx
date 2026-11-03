@@ -132,7 +132,13 @@ export default function HeroCarousel() {
                     src={item.img}
                     alt={item.description}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                  
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes("/abaya/hero/hero-1.jpg")) {
+                        target.src = "/abaya/hero/hero-1.jpg";
+                      }
+                    }} />
                 </div>
 
                 {/* Card text placed at bottom */}

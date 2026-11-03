@@ -30,11 +30,11 @@ export default function HotListProducts() {
             Hot List Icons
           </h2>
           <p className="text-xs sm:text-sm font-medium text-mb-muted mt-1">
-            Moryelle Beauté's Iconic Super Sellers
+            Modest Studio's Iconic Bestsellers
           </p>
         </div>
         <Link
-          href="/category/makeup"
+          href="/category/all"
           className="text-xs sm:text-sm font-semibold text-mb-accent-deep hover:text-mb-primary flex items-center gap-1 transition-colors"
         >
           View Collection <span>→</span>
@@ -120,6 +120,12 @@ export default function HotListProducts() {
                       <img
                         src={product.image}
                         alt={product.name}
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.src.includes("/abaya/products/abaya-1.jpg")) {
+                            target.src = "/abaya/products/abaya-1.jpg";
+                          }
+                        }}
                         className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover/card:scale-105"
                       />
                     </div>

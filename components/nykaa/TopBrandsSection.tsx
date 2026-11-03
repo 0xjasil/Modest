@@ -29,7 +29,13 @@ export default function TopBrandsSection() {
                 src={brand.img}
                 alt={brand.name}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+              
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes("/abaya/brands/modest-studio.jpg")) {
+                        target.src = "/abaya/brands/modest-studio.jpg";
+                      }
+                    }} />
             </div>
             <div className="flex flex-col flex-1 justify-between">
               <div>

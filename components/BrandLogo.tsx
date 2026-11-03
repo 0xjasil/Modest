@@ -29,6 +29,12 @@ export default function BrandLogo({
     <img
       src={SRC[variant]}
       alt={label}
+      onError={(e) => {
+        const target = e.currentTarget;
+        if (!target.src.includes("/brand/logo-primary.png")) {
+          target.src = "/brand/logo-primary.png";
+        }
+      }}
       className={`object-contain object-center select-none ${className}`}
       draggable={false}
     />

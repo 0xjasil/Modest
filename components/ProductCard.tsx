@@ -73,6 +73,12 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="relative bg-mb-surface overflow-hidden aspect-square flex items-center justify-center p-3">
           <img src={product.image} alt={product.name}
             loading="lazy"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (!target.src.includes("/abaya/products/abaya-1.jpg")) {
+                target.src = "/abaya/products/abaya-1.jpg";
+              }
+            }}
             className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
           />
         </div>

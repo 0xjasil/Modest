@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Modest Studio Kochi Brand Tokens
+        // Moryelle Beauté Brand Sheet Tokens
         mb: {
           bg:              "var(--color-bg)",
           surface:         "var(--color-surface)",
@@ -26,43 +26,38 @@ module.exports = {
           "border-lite":   "var(--color-border-lite)",
           success:         "var(--color-success)",
           error:           "var(--color-error)",
-          // Palette direct hex mappings
-          ivory:           "#F8F6F0",
-          sand:            "#E9E2D6",
-          "sand-strong":   "#D7CCBB",
-          espresso:        "#302D27",
-          olive:           "#777B5A",
-          "olive-deep":    "#5E6345",
-          antiqueGold:     "#B69A70",
+          // Direct brand palette hex mappings
+          cream:           "#FFF7F2",
+          blush:           "#F7E7E9",
+          plum:            "#6D3A4E",
+          mauve:           "#B76B7A",
         },
       },
       fontFamily: {
         serif: ["'Cormorant Garamond'", "Georgia", "serif"],
         sans: ["'Jost'", "system-ui", "-apple-system", "sans-serif"],
-        body: ["'Inter'", "system-ui", "-apple-system", "sans-serif"],
         heading: ["'Cormorant Garamond'", "Georgia", "serif"],
       },
       boxShadow: {
-        card: "0 2px 10px rgba(48, 45, 39, 0.05)",
-        dropdown: "0 8px 24px rgba(48, 45, 39, 0.08)",
+        card: "0 2px 12px rgba(109,58,78,0.10)",
+        dropdown: "0 4px 20px rgba(109,58,78,0.15)",
       },
       borderRadius: {
-        DEFAULT: "2px",
-        sm: "2px",
-        md: "4px",
-        lg: "4px",
-        xl: "6px",
-        "2xl": "8px",
+        DEFAULT: "10px",
+        sm: "6px",
+        md: "10px",
+        lg: "12px",
+        xl: "14px",
+        "2xl": "18px",
         full: "9999px",
       },
       maxWidth: {
-        content: "1320px",
+        content: "1280px",
         site:    "1440px",
       },
       letterSpacing: {
         subbrand: "0.25em",
         tagline:  "0.30em",
-        editorial: "0.15em",
       },
     },
   },

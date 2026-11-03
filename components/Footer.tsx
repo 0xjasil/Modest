@@ -2,136 +2,144 @@ import React from "react";
 import Link from "next/link";
 import BrandLogo from "@/components/BrandLogo";
 
+/* ── Data ─────────────────────────────────────────────────────── */
+const LINKS = [
+  {
+    title: "Top Categories",
+    items: ["Makeup", "Skincare", "Hair", "Bath & Body", "Appliances", "Mom & Baby", "Health & Wellness", "Men", "Fragrance"],
+  },
+  {
+    title: "Company",
+    items: ["About Us", "Careers", "Press", "Investors", "Sustainability", "Moryelle Blog"],
+  },
+  {
+    title: "Support",
+    items: ["Track Order", "Returns & Refunds", "Shipping Policy", "Contact Us", "FAQs", "Store Locator"],
+  },
+  {
+    title: "Account",
+    items: ["Sign In", "Create Account", "Order History", "Wishlist", "Moryelle Wallet"],
+  },
+  {
+    title: "MORYELLE Stores",
+    items: ["Moryelle Luxe", "Moryelle Fashion", "Moryelle Man", "Moryelle Pro", "Moryelle Global"],
+  },
+];
+
+const SOCIALS = [
+  { label: "Facebook",  abbr: "Fb" },
+  { label: "Instagram", abbr: "In" },
+  { label: "Twitter",   abbr: "Tw" },
+  { label: "YouTube",   abbr: "Yt" },
+  { label: "Pinterest", abbr: "Pi" },
+];
+
+/* ── Component ────────────────────────────────────────────────── */
 export default function Footer() {
   return (
     <footer className="bg-mb-primary border-t border-mb-primary-hover text-mb-bg" role="contentinfo">
-      
-      {/* ── Top Brand Statement & Socials ──────────────────────────── */}
-      <div className="border-b border-mb-primary-hover/50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-[1360px] mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <Link href="/" aria-label="Modest Studio Kochi" className="inline-block">
-              <BrandLogo variant="gold" className="h-12 sm:h-14 w-auto min-w-[120px] max-w-[200px]" />
-            </Link>
-            <div className="h-8 w-px bg-mb-gold/30 hidden md:block" />
-            <div>
-              <p className="font-serif italic text-base sm:text-lg text-mb-gold">
-                Elegance in Every Layer
-              </p>
-              <p className="font-body text-xs text-mb-bg/80 mt-0.5">
-                Kochi Atelier • Contemporary Modest Fashion &amp; Bespoke Abayas
-              </p>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-4 text-xs font-sans uppercase tracking-editorial">
-            <span className="text-mb-gold/80 hidden sm:inline">Follow Our Journey</span>
-            <div className="flex items-center gap-3">
-              <a
-                href="https://www.instagram.com/modest_studio_kochi/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3.5 py-1.5 border border-mb-gold/40 text-mb-gold hover:border-mb-gold hover:bg-mb-gold/10 transition-colors text-xs font-medium"
-              >
-                Instagram
-              </a>
-              <a
-                href="https://wa.me/?text=Hello%20Modest%20Studio%20Kochi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3.5 py-1.5 border border-mb-gold/40 text-mb-gold hover:border-mb-gold hover:bg-mb-gold/10 transition-colors text-xs font-medium"
-              >
-                WhatsApp
-              </a>
-            </div>
-          </div>
+      {/* ── Brand & Tagline Header ──────────────────────────── */}
+      <div className="border-b border-mb-primary-hover/60 py-8 px-4">
+        <div className="mx-auto max-w-content flex flex-col items-center justify-center text-center">
+          <Link href="/" aria-label="Modest Studio" className="inline-block mb-3">
+            <BrandLogo variant="gold" className="h-14 md:h-16 w-auto min-w-[96px] max-w-[200px]" />
+          </Link>
+          <p className="text-xs md:text-sm font-light text-mb-gold uppercase tracking-[0.3em]">
+            Beauty Beyond Today
+          </p>
         </div>
       </div>
 
-      {/* ── Main Footer Columns ────────────────────────────────────── */}
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
-          
-          {/* Col 1: About Modest Studio */}
-          <div className="lg:col-span-2 pr-0 lg:pr-8">
-            <h3 className="font-serif text-lg text-mb-gold mb-3 font-medium">
-              Modest Studio Kochi
-            </h3>
-            <p className="font-body text-xs text-mb-bg/80 leading-relaxed mb-4">
-              Born in Kochi, Kerala, Modest Studio creates elevated modest attire designed for the modern woman. 
-              Each silhouette is mindfully designed with premium breathable fabrics, graceful drape, and architectural 
-              minimalism.
+      {/* ── App + Social strip ──────────────────────────────── */}
+      <div className="border-b border-mb-primary-hover/60">
+        <div className="mx-auto max-w-content px-4 md:px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="text-base font-serif font-semibold text-mb-bg">
+              Get Extra 20% Off on Your First App Order
             </p>
-            <div className="space-y-1.5 font-body text-xs text-mb-bg/70">
-              <p><strong className="text-mb-gold">Studio Address:</strong> Marine Drive / Panampilly Nagar, Kochi, Kerala</p>
-              <p><strong className="text-mb-gold">Concierge Desk:</strong> +91 98460 00000 • hello@modeststudio.in</p>
-              <p><strong className="text-mb-gold">Hours:</strong> Monday – Saturday, 10:00 AM – 8:00 PM IST</p>
-            </div>
+            <p className="text-xs text-mb-gold mt-0.5">Experience Moryelle Beauté on iOS &amp; Android</p>
           </div>
-
-          {/* Col 2: Collections */}
-          <div>
-            <h4 className="font-sans text-xs uppercase tracking-editorial text-mb-gold font-semibold mb-4">
-              Collections
-            </h4>
-            <ul className="space-y-2.5 font-body text-xs text-mb-bg/80">
-              <li><Link href="/category/all" className="hover:text-mb-gold transition-colors">All Silhouettes</Link></li>
-              <li><Link href="/category/fashion" className="hover:text-mb-gold transition-colors">Signature Abayas</Link></li>
-              <li><Link href="/category/luxe" className="hover:text-mb-gold transition-colors">Kimonos &amp; Overcoats</Link></li>
-              <li><Link href="/category/makeup" className="hover:text-mb-gold transition-colors">Modal &amp; Silk Hijabs</Link></li>
-              <li><Link href="/category/skincare" className="hover:text-mb-gold transition-colors">Co-ord Sets</Link></li>
-              <li><Link href="/category/all?sort=newest" className="hover:text-mb-gold transition-colors">New Arrivals</Link></li>
-            </ul>
+          <div className="flex gap-2">
+            <a
+              href="#"
+              className="inline-block bg-mb-bg text-mb-primary text-xs font-semibold px-4 py-2.5 rounded-md hover:bg-mb-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
+              aria-label="Get Moryelle Beauté on Google Play"
+            >
+              Google Play
+            </a>
+            <a
+              href="#"
+              className="inline-block bg-mb-bg text-mb-primary text-xs font-semibold px-4 py-2.5 rounded-md hover:bg-mb-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
+              aria-label="Download Moryelle Beauté on App Store"
+            >
+              App Store
+            </a>
           </div>
-
-          {/* Col 3: Client Care */}
-          <div>
-            <h4 className="font-sans text-xs uppercase tracking-editorial text-mb-gold font-semibold mb-4">
-              Client Care
-            </h4>
-            <ul className="space-y-2.5 font-body text-xs text-mb-bg/80">
-              <li><Link href="/orders" className="hover:text-mb-gold transition-colors">Track Your Order</Link></li>
-              <li><Link href="/#brand-story" className="hover:text-mb-gold transition-colors">Bespoke Fitting &amp; Sizing</Link></li>
-              <li><Link href="/category/offers" className="hover:text-mb-gold transition-colors">Studio Privileges</Link></li>
-              <li><Link href="/addresses" className="hover:text-mb-gold transition-colors">Delivery &amp; Shipping</Link></li>
-              <li><Link href="/wishlist" className="hover:text-mb-gold transition-colors">Saved Pieces</Link></li>
-            </ul>
-          </div>
-
-          {/* Col 4: Assurance & Policies */}
-          <div>
-            <h4 className="font-sans text-xs uppercase tracking-editorial text-mb-gold font-semibold mb-4">
-              Atelier Promise
-            </h4>
-            <ul className="space-y-2.5 font-body text-xs text-mb-bg/80">
-              <li><span className="text-mb-gold/90">✓ Handcrafted in India</span></li>
-              <li><span className="text-mb-gold/90">✓ Premium Linen, Silk &amp; Crepe</span></li>
-              <li><span className="text-mb-gold/90">✓ Express Pan-India Delivery</span></li>
-              <li><span className="text-mb-gold/90">✓ Seamless Exchanges</span></li>
-            </ul>
-            <div className="mt-5 pt-4 border-t border-mb-primary-hover/50">
-              <span className="text-[11px] font-sans uppercase tracking-wider text-mb-gold block mb-2">Secure Payments</span>
-              <p className="text-[11px] text-mb-bg/70 leading-relaxed">
-                UPI • Razorpay • NetBanking • Credit/Debit Cards • Cash on Delivery
-              </p>
-            </div>
-          </div>
-
+          <nav aria-label="Social media links" className="flex gap-2">
+            {SOCIALS.map(s => (
+              <a
+                key={s.label}
+                href="#"
+                aria-label={s.label}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-mb-gold/40 bg-mb-primary text-xs font-semibold text-mb-gold hover:bg-mb-bg hover:text-mb-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
+              >
+                {s.abbr}
+              </a>
+            ))}
+          </nav>
         </div>
-
-        {/* ── Bottom Strip ───────────────────────────────────────────── */}
-        <div className="mt-12 pt-8 border-t border-mb-primary-hover/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-body text-mb-bg/60">
-          <p>© {new Date().getFullYear()} Modest Studio Kochi. All rights reserved. Designed with contemporary grace.</p>
-          <div className="flex items-center gap-6 text-[11px]">
-            <Link href="/terms" className="hover:text-mb-gold transition-colors">Terms of Service</Link>
-            <span>•</span>
-            <Link href="/privacy" className="hover:text-mb-gold transition-colors">Privacy Policy</Link>
-            <span>•</span>
-            <Link href="/shipping" className="hover:text-mb-gold transition-colors">Shipping &amp; Returns</Link>
-          </div>
-        </div>
-
       </div>
+
+      {/* ── Links grid ──────────────────────────────────────── */}
+      <div className="mx-auto max-w-content px-4 md:px-6 py-10">
+        <nav aria-label="Footer navigation">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
+            {LINKS.map(section => (
+              <div key={section.title}>
+                <h3 className="text-xs font-semibold text-mb-gold uppercase tracking-[0.2em] mb-4">
+                  {section.title}
+                </h3>
+                <ul className="flex flex-col gap-2.5" role="list">
+                  {section.items.map(item => (
+                    <li key={item} role="listitem">
+                      <Link
+                        href="#"
+                        className="text-xs text-mb-bg/90 hover:text-mb-gold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-mb-accent rounded"
+                      >
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </nav>
+
+        {/* Bottom bar */}
+        <div className="mt-10 pt-6 border-t border-mb-primary-hover/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="text-xs text-mb-bg font-medium">
+              Customer Concierge: 1800-267-4444
+            </p>
+            <p className="text-[11px] text-mb-gold/80 mt-0.5">Available 7 days a week, 8 AM – 10 PM IST</p>
+          </div>
+          <nav className="flex gap-5" aria-label="Legal links">
+            {["Privacy Policy", "Terms of Service", "Sitemap"].map(l => (
+              <a
+                key={l}
+                href="#"
+                className="text-xs text-mb-gold hover:text-mb-bg transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-mb-accent rounded"
+              >
+                {l}
+              </a>
+            ))}
+          </nav>
+          <p className="text-xs text-mb-gold/80">© 2026 Modest Studio. All rights reserved.</p>
+        </div>
+      </div>
+
     </footer>
   );
 }

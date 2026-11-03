@@ -8,33 +8,33 @@
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }
 
-/* ── DESIGN TOKENS (Modest Studio Kochi) ─────────────────────── */
+/* ── DESIGN TOKENS (Moryelle Beauté Brand Sheet) ─────────────── */
 :root {
-  /* ══ Core Brand Palette (60% Ivory, 20% Sand, 10% Olive, 10% Espresso) ══ */
-  --color-bg:               #F8F6F0; /* Warm Ivory (Canvas & Main Areas) */
-  --color-surface:          #E9E2D6; /* Sand (Cards & Subtle Sections) */
-  --color-surface-strong:   #D7CCBB; /* Deep Sand (Badges, Active Tabs, Highlights) */
-  --color-primary:          #302D27; /* Espresso (Primary CTAs, Text, Strong Accents) */
-  --color-primary-hover:    #1F1D19; /* Deep Espresso */
-  --color-accent:           #777B5A; /* Olive (Badges, Active Accents, Subtle Indicators) */
-  --color-accent-deep:      #5E6345; /* Deep Olive */
-  --color-gold:             #B69A70; /* Muted Gold (Subtle decorative details only) */
-  --color-gold-deep:        #967C55; /* Antique Gold */
+  /* ══ Core Brand Palette (Moryelle Beauté) ════════════════════ */
+  --color-bg:               #FFF7F2; /* Soft Cream (Dominant 60% Canvas & Header) */
+  --color-surface:          #F7E7E9; /* Rose Blush (Secondary 30% Cards & Alternating Areas) */
+  --color-surface-strong:   #D4A5A8; /* Dusty Rose (Tags, Chips, Accents) */
+  --color-primary:          #6D3A4E; /* Plum (Accent 10% Primary CTAs, Footer, Wordmark) */
+  --color-primary-hover:    #522C3C; /* Plum Pressed/Hover */
+  --color-accent:           #B76B7A; /* Mauve (Icons, active indicators, sale badges) */
+  --color-accent-deep:      #9A4F5F; /* Mauve Deep (Sale prices, links, high-readability accent text) */
+  --color-gold:             #E6C7B8; /* Champagne Gold (Fine dividers, ornament lines max 2%) */
+  --color-gold-deep:        #B07D4F; /* Gold Deep (Rating stars, bestseller tags) */
 
   /* ══ Typography & Readability (WCAG AA Compliant) ═══════════ */
-  --color-text-main:        #302D27; /* Editorial Headings, Titles, Key Figures */
-  --color-text-body:        #514C43; /* Editorial body copy & descriptions */
-  --color-text-muted:       #81796E; /* Secondary metadata, breadcrumbs, hints */
-  --color-text-placeholder: #9C958A; /* Input placeholders */
-  --color-button-text:      #F8F6F0; /* High contrast text on dark/espresso buttons */
+  --color-text-main:        #3E1F2D; /* Headings, product titles, prices */
+  --color-text-body:        #5A3A47; /* Body copy & general labels */
+  --color-text-muted:       #7D5B68; /* Captions, breadcrumbs, reviews */
+  --color-text-placeholder: #8F7380; /* Form field placeholders */
+  --color-button-text:      #FFF7F2; /* High-contrast text on Plum/Mauve buttons */
 
   /* ══ Borders & Dividers ═════════════════════════════════════ */
-  --color-border:           #DCD4C8; /* Crisp 1px luxury architectural border */
-  --color-border-lite:      #EAE5DC; /* Whisper thin dividers */
+  --color-border:           #E3BFC3; /* 1px Card border on blush cards */
+  --color-border-lite:      #F0D9DC; /* Subtle dividers */
 
   /* ══ Functional ═════════════════════════════════════════════ */
-  --color-success:          #4A6B53; /* In-stock, confirmed, verified */
-  --color-error:            #963833; /* Error states, alerts */
+  --color-success:          #4F7A58; /* In-stock, confirmed, verified */
+  --color-error:            #A83A45; /* Error states, alerts */
 
   /* ══ Backward Compatibility Aliases ═════════════════════════ */
   --white:                  var(--color-bg);
@@ -45,20 +45,19 @@
   --primary:                var(--color-primary);
   --border:                 var(--color-border);
   --border-lite:            var(--color-border-lite);
-  --dim:                    var(--color-text-muted);
+  --dim:                    var(--color-text-dim, #7D5B68);
   --blue-bg:                var(--color-surface);
   --pink-bg:                var(--color-surface);
   --green-rate:             var(--color-success);
   --sale-bg:                var(--color-surface);
 
   /* ══ Shadows & Elevation ════════════════════════════════════ */
-  --shadow-card:            0 2px 10px rgba(48, 45, 39, 0.05);
-  --shadow-dropdown:        0 8px 24px rgba(48, 45, 39, 0.08);
+  --shadow-card:            0 2px 12px rgba(109, 58, 78, 0.10);
+  --shadow-dropdown:        0 4px 20px rgba(109, 58, 78, 0.15);
 
   /* ══ Fonts ══════════════════════════════════════════════════ */
-  --font-serif:             "Cormorant Garamond", Georgia, serif;
+  --font-serif:             "Cormorant Garamond", "Playfair Display", Georgia, serif;
   --font-sans:              "Jost", system-ui, -apple-system, sans-serif;
-  --font-body:              "Inter", system-ui, -apple-system, sans-serif;
   --font:                   var(--font-sans);
 
   /* ══ Motion ═════════════════════════════════════════════════ */
@@ -71,8 +70,8 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: 15px;
+  font-family: var(--font-sans);
+  font-size: 16px;
   line-height: 1.6;
   background-color: var(--color-bg);
   color: var(--color-text-body);
@@ -82,7 +81,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   color: var(--color-text-main);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
@@ -91,23 +90,20 @@ button { font-family: var(--font-sans); cursor: pointer; border: none; backgroun
 img { max-width: 100%; display: block; }
 a, button, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 
-/* ── Luxury Editorial Helpers ───────────────────────────────── */
+/* ── Custom Component Utilities ─────────────────────────────── */
 .luxury-card {
-  background-color: var(--color-bg);
+  background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-card);
-  border-radius: 2px;
+  border-radius: 12px;
 }
 
 .luxury-btn-primary {
   background-color: var(--color-primary);
   color: var(--color-button-text);
-  font-family: var(--font-sans);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 2px;
-  transition: background-color var(--ease), opacity var(--ease);
+  font-weight: 600;
+  border-radius: 10px;
+  transition: background-color var(--ease), transform var(--ease);
 }
 .luxury-btn-primary:hover {
   background-color: var(--color-primary-hover);
@@ -116,12 +112,9 @@ a, button, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-c
 .luxury-btn-secondary {
   background-color: transparent;
   color: var(--color-primary);
-  border: 1px solid var(--color-primary);
-  font-family: var(--font-sans);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 2px;
+  border: 1.5px solid var(--color-primary);
+  font-weight: 600;
+  border-radius: 10px;
   transition: all var(--ease);
 }
 .luxury-btn-secondary:hover {
@@ -133,13 +126,23 @@ a, button, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-c
   background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
 }
 
-/* ── Line clamp ─────────────────────────────────────────────── */
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.rose-gold-gradient {
+  background: linear-gradient(135deg, #E6C7B8, #D4A5A8, #B76B7A);
 }
+
+/* ── SR-only ────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border-width: 0;
+}
+.sr-only:focus-visible {
+  position: static; width: auto; height: auto;
+  padding: 4px 8px; margin: 0; overflow: visible;
+  clip: auto; white-space: normal;
+}
+
+/* ── Line clamp ─────────────────────────────────────────────── */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

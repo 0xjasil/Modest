@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Utilities ──────────────────────────────────────────────── */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* ── DESIGN TOKENS (Moryelle Beauté Brand Sheet) ─────────────── */
+:root {
+  /* ══ Core Brand Palette (Moryelle Beauté) ════════════════════ */
+  --color-bg:               #FFF7F2; /* Soft Cream (Dominant 60% Canvas & Header) */
+  --color-surface:          #F7E7E9; /* Rose Blush (Secondary 30% Cards & Alternating Areas) */
+  --color-surface-strong:   #D4A5A8; /* Dusty Rose (Tags, Chips, Accents) */
+  --color-primary:          #6D3A4E; /* Plum (Accent 10% Primary CTAs, Footer, Wordmark) */
+  --color-primary-hover:    #522C3C; /* Plum Pressed/Hover */
+  --color-accent:           #B76B7A; /* Mauve (Icons, active indicators, sale badges) */
+  --color-accent-deep:      #9A4F5F; /* Mauve Deep (Sale prices, links, high-readability accent text) */
+  --color-gold:             #E6C7B8; /* Champagne Gold (Fine dividers, ornament lines max 2%) */
+  --color-gold-deep:        #B07D4F; /* Gold Deep (Rating stars, bestseller tags) */
+
+  /* ══ Typography & Readability (WCAG AA Compliant) ═══════════ */
+  --color-text-main:        #3E1F2D; /* Headings, product titles, prices */
+  --color-text-body:        #5A3A47; /* Body copy & general labels */
+  --color-text-muted:       #7D5B68; /* Captions, breadcrumbs, reviews */
+  --color-text-placeholder: #8F7380; /* Form field placeholders */
+  --color-button-text:      #FFF7F2; /* High-contrast text on Plum/Mauve buttons */
+
+  /* ══ Borders & Dividers ═════════════════════════════════════ */
+  --color-border:           #E3BFC3; /* 1px Card border on blush cards */
+  --color-border-lite:      #F0D9DC; /* Subtle dividers */
+
+  /* ══ Functional ═════════════════════════════════════════════ */
+  --color-success:          #4F7A58; /* In-stock, confirmed, verified */
+  --color-error:            #A83A45; /* Error states, alerts */
+
+  /* ══ Backward Compatibility Aliases ═════════════════════════ */
+  --white:                  var(--color-bg);
+  --surface:                var(--color-surface);
+  --text:                   var(--color-text-main);
+  --muted:                  var(--color-text-muted);
+  --accent:                 var(--color-accent);
+  --primary:                var(--color-primary);
+  --border:                 var(--color-border);
+  --border-lite:            var(--color-border-lite);
+  --dim:                    var(--color-text-dim, #7D5B68);
+  --blue-bg:                var(--color-surface);
+  --pink-bg:                var(--color-surface);
+  --green-rate:             var(--color-success);
+  --sale-bg:                var(--color-surface);
+
+  /* ══ Shadows & Elevation ════════════════════════════════════ */
+  --shadow-card:            0 2px 12px rgba(109, 58, 78, 0.10);
+  --shadow-dropdown:        0 4px 20px rgba(109, 58, 78, 0.15);
+
+  /* ══ Fonts ══════════════════════════════════════════════════ */
+  --font-serif:             "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans:              "Jost", system-ui, -apple-system, sans-serif;
+  --font:                   var(--font-sans);
+
+  /* ══ Motion ═════════════════════════════════════════════════ */
+  --ease:                   0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Reset & Global Typography ──────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  background-color: var(--color-bg);
+  color: var(--color-text-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-text-main);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: var(--font-sans); cursor: pointer; border: none; background: none; padding: 0; }
+img { max-width: 100%; display: block; }
+a, button, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+/* ── Custom Component Utilities ─────────────────────────────── */
+.luxury-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  border-radius: 12px;
+}
+
+.luxury-btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-button-text);
+  font-weight: 600;
+  border-radius: 10px;
+  transition: background-color var(--ease), transform var(--ease);
+}
+.luxury-btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.luxury-btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all var(--ease);
+}
+.luxury-btn-secondary:hover {
+  background-color: var(--color-surface);
+}
+
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+.rose-gold-gradient {
+  background: linear-gradient(135deg, #E6C7B8, #D4A5A8, #B76B7A);
+}
+
+/* ── SR-only ────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border-width: 0;
+}
+.sr-only:focus-visible {
+  position: static; width: auto; height: auto;
+  padding: 4px 8px; margin: 0; overflow: visible;
+  clip: auto; white-space: normal;
+}
+
+/* ── Line clamp ─────────────────────────────────────────────── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

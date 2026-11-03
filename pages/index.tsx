@@ -3,7 +3,7 @@ import Head from "next/head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-
+import BrandLogo from "@/components/BrandLogo";
 
 import HeroCarousel from "@/components/nykaa/HeroCarousel";
 import DiscoverCategories from "@/components/nykaa/DiscoverCategories";
@@ -29,17 +29,23 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
       </Head>
 
-      {/* 1. Header (Moryelle Beauté) */}
+      {/* 1. Header (Modest Studio) */}
       <Header />
 
       <main id="main-content" className="min-h-screen bg-mb-bg w-full overflow-x-hidden">
-        {/* 2. Editorial Top Banner Strip */}
-        <div className="w-full my-1 sm:my-2 overflow-hidden">
-          <Link href="/category/all" className="block w-full">
+        {/* 2. Editorial Top Banner Strip — Perfect responsive height fit */}
+        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 my-2 sm:my-3">
+          <Link href="/category/all" className="block w-full overflow-hidden rounded-[14px] shadow-card hover:shadow-dropdown transition-all">
             <img
               src="/banners/top-promo-banner.jpg"
               alt="Modest Studio — Premium Abaya & Modest Wear New Arrivals"
-              className="w-full h-auto max-h-[460px] object-cover object-center"
+              className="w-full h-auto max-h-[440px] object-contain sm:object-cover object-center"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes("/abaya/banners/top-promo-banner.jpg")) {
+                  target.src = "/abaya/banners/top-promo-banner.jpg";
+                }
+              }}
             />
           </Link>
         </div>
@@ -47,16 +53,22 @@ export default function Home() {
         {/* 3. Hero Carousel Cards */}
         <HeroCarousel />
 
-        {/* 4. Discover Categories */}
+        {/* 4. Discover Categories (Ovais Abaya Collection Style) */}
         <DiscoverCategories />
 
-        {/* 5. Category Highlights Banner */}
-        <div className="w-full my-4 overflow-hidden">
-          <Link href="/category/all" className="block w-full">
+        {/* 5. Category Highlights Banner — Perfect responsive height fit */}
+        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 my-5 sm:my-6">
+          <Link href="/category/all" className="block w-full overflow-hidden rounded-[14px] shadow-card hover:shadow-dropdown transition-all">
             <img
               src="/banners/category-highlights-banner.jpg"
               alt="Curated Abaya Highlights — Modest Studio"
-              className="w-full h-24 sm:h-32 md:h-40 lg:h-48 object-cover object-center"
+              className="w-full h-auto max-h-[380px] object-contain sm:object-cover object-center"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes("/abaya/banners/category-highlights-banner.jpg")) {
+                  target.src = "/abaya/banners/category-highlights-banner.jpg";
+                }
+              }}
             />
           </Link>
         </div>
@@ -70,7 +82,7 @@ export default function Home() {
         {/* 8. Unmissable Offers */}
         <UnmissableOffers />
 
-        {/* 9. Save On Sunscreens */}
+        {/* 9. Curated Signature Abayas (Updated from old cards) */}
         <SaveOnSunscreens />
 
         {/* 10. Hot List Icons */}
@@ -82,19 +94,26 @@ export default function Home() {
         {/* 12. On Our Radar */}
         <RadarSection />
 
-        {/* 13. Bottom Feature Banner */}
-        <div className="w-full my-8 overflow-hidden">
-          <Link href="/category/all" className="block w-full">
+        {/* 13. Bottom Feature Banner — Perfect responsive height fit */}
+        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 my-6 sm:my-8">
+          <Link href="/category/all" className="block w-full overflow-hidden rounded-[14px] shadow-card hover:shadow-dropdown transition-all">
             <img
               src="/banners/timeless-beauty-banner.jpg"
               alt="Modest Studio — Grace In Every Fold"
-              className="w-full h-36 sm:h-48 md:h-60 lg:h-72 object-cover object-center"
+              className="w-full h-auto max-h-[400px] object-contain sm:object-cover object-center"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes("/abaya/banners/timeless-beauty-banner.jpg")) {
+                  target.src = "/abaya/banners/timeless-beauty-banner.jpg";
+                }
+              }}
             />
           </Link>
         </div>
 
-        {/* 14. Store Brand Statement */}
+        {/* 14. Store Brand Statement with Brand Logo */}
         <div className="w-full px-4 sm:px-6 py-14 text-center bg-mb-surface border-t border-mb-border">
+          <BrandLogo variant="primary" className="h-16 sm:h-20 w-auto mx-auto mb-3" />
           <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-mb-primary mb-2">
             Modest Studio
           </h2>
@@ -118,46 +137,42 @@ export default function Home() {
           </div>
           <div className="text-left pr-2">
             <p className="font-serif text-xs font-semibold text-mb-text leading-tight">Exclusive Offers On App</p>
-            <p className="text-[11px] text-mb-muted leading-snug">Enjoy 20% off your initial order</p>
+            <p className="text-[11px] text-mb-muted mt-0.5">Scan to download Modest Studio App</p>
           </div>
           <button
-            type="button"
             onClick={() => setShowAppBanner(false)}
-            aria-label="Dismiss app download banner"
-            className="text-mb-placeholder hover:text-mb-primary text-sm font-bold p-1 leading-none rounded hover:bg-mb-bg"
+            aria-label="Close app download banner"
+            className="w-6 h-6 flex items-center justify-center text-mb-muted hover:text-mb-text transition-colors rounded-full hover:bg-mb-bg"
           >
-            ✕
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </aside>
       )}
 
-      {/* 2. Customer Care Help Pill (Bottom-Right) */}
-      <aside aria-label="Customer Concierge Help" className="fixed bottom-5 right-5 z-40">
+      {/* 2. Customer Service Floating Concierge Button (Bottom-Right) */}
+      <aside aria-label="Customer Support Concierge" className="fixed bottom-5 right-5 z-40">
         <button
-          type="button"
-          onClick={() => alert("Moryelle Beauté Concierge: Our advisors are available daily, 8 AM - 10 PM. Call 1800-267-4444 or email concierge@moryelle.com")}
-          className="flex items-center gap-2.5 bg-mb-surface px-4 py-3 rounded-full shadow-dropdown border border-mb-border hover:border-mb-accent hover:shadow-xl transition-all group cursor-pointer"
+          aria-label="Contact Modest Studio Concierge"
+          onClick={() => alert("Modest Studio Concierge: Advisors available daily, 8 AM - 10 PM.")}
+          className="group flex items-center gap-2.5 bg-mb-primary text-mb-bg px-4 py-3 rounded-full shadow-dropdown hover:bg-mb-primary-hover border border-mb-primary-hover transition-all duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
         >
-          <svg
-            className="w-4 h-4 text-mb-accent group-hover:scale-110 transition-transform"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
-            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+          <svg className="w-5 h-5 flex-shrink-0 text-mb-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+            />
           </svg>
-          <span className="text-xs font-semibold text-mb-text group-hover:text-mb-primary transition-colors">
-            How may we assist you?
+          <span className="font-serif text-xs sm:text-sm font-semibold tracking-wide">
+            Modest Concierge
           </span>
         </button>
       </aside>
 
-      {/* 15. Footer (Moryelle Beauté) */}
+      {/* 15. Footer (Modest Studio) */}
       <Footer />
     </>
   );

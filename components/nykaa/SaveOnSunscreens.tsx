@@ -1,29 +1,48 @@
 import React from "react";
 import Link from "next/link";
 
-const sunscreenItems = [
-  "/abaya/categories/classic-black.jpg",
-  "/abaya/categories/open-front.jpg",
-  "/abaya/categories/silk-satin.jpg",
-  "/abaya/categories/embroidered.jpg",
-  "/abaya/categories/casual-linen.jpg",
-  "/abaya/categories/kaftans-jalabiyas.jpg"
+const signatureItems = [
+  { img: "/abaya/categories/classic-black.jpg", name: "Classic Black", slug: "classic-black" },
+  { img: "/abaya/categories/front-open.jpg", name: "Front Open", slug: "front-open" },
+  { img: "/abaya/categories/double-shrug.jpg", name: "Double Shrug", slug: "double-shrug" },
+  { img: "/abaya/categories/kimono-abaya.jpg", name: "Kimono Abayas", slug: "kimono-abaya" },
+  { img: "/abaya/categories/daily-wear.jpg", name: "Daily Wear", slug: "daily-wear" },
+  { img: "/abaya/categories/basic-kaftan.jpg", name: "Basic Kaftans", slug: "basic-kaftan" }
 ];
 
 export default function SaveOnSunscreens() {
   return (
-    <section className="w-full px-3 sm:px-6 my-8" aria-label="Signature Abayas">
-      <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-mb-text mb-6 text-left">
-        Curated Signature Abayas
-      </h2>
+    <section className="w-full px-3 sm:px-6 my-8" aria-label="Curated Signature Abayas">
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-mb-text">
+            Curated Signature Abayas
+          </h2>
+          <p className="text-xs sm:text-sm text-mb-muted mt-0.5">
+            Handcrafted Cuts in Pure Japanese Nida Matte &amp; Flowing Silks
+          </p>
+        </div>
+        <Link
+          href="/category/all"
+          className="text-xs sm:text-sm font-semibold text-mb-primary hover:text-mb-primary-hover flex items-center gap-1 transition-colors"
+        >
+          View Collection <span>→</span>
+        </Link>
+      </div>
 
-      {/* Main Feature Banner */}
-      <div className="relative overflow-hidden rounded-[14px] shadow-card mb-5 group border border-mb-border">
+      {/* Main Feature Banner — Responsive natural fit */}
+      <div className="relative overflow-hidden rounded-[14px] shadow-card mb-6 group border border-mb-border">
         <Link href="/category/all" className="block">
           <img
             src="/banners/category-highlights-banner.jpg"
-            alt="Signature Abayas"
-            className="w-full h-36 sm:h-48 md:h-56 object-cover object-center transition-transform duration-500 group-hover:scale-[1.01]"
+            alt="Curated Signature Abayas"
+            className="w-full h-auto max-h-[360px] object-cover object-center transition-transform duration-500 group-hover:scale-[1.01]"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (!target.src.includes("/banners/top-promo-banner.jpg")) {
+                target.src = "/banners/top-promo-banner.jpg";
+              }
+            }}
           />
           <div className="absolute bottom-4 left-4 bg-mb-primary/95 text-mb-bg px-5 py-3 rounded-[10px] shadow-card border border-mb-primary-hover">
             <p className="font-serif text-lg sm:text-xl font-bold leading-tight text-mb-bg">Up To 30% Off</p>
@@ -32,32 +51,29 @@ export default function SaveOnSunscreens() {
         </Link>
       </div>
 
-      {/* 6 item Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 mb-5">
-        {sunscreenItems.map((src, i) => (
+      {/* 6 item Grid matching Ovais portrait card style */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4">
+        {signatureItems.map((item, i) => (
           <Link
             key={i}
-            href="/category/all"
-            className="group flex flex-col items-center justify-center p-3 bg-mb-surface rounded-[12px] border border-mb-border shadow-card hover:shadow-dropdown transition-all"
+            href={`/category/${item.slug}`}
+            className="group block overflow-hidden rounded-[10px] sm:rounded-[12px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown hover:-translate-y-1 transition-all duration-300"
           >
-            <img
-              src={src}
-              alt="Sunscreen Product"
-              className="w-full h-auto object-contain rounded-[8px] transition-transform duration-500 group-hover:scale-105"
-            />
+            <div className="relative aspect-[287/322] w-full overflow-hidden bg-[#EEE4D8]">
+              <img
+                src={item.img}
+                alt={item.name}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes("/abaya/categories/classic-black.jpg")) {
+                    target.src = "/abaya/categories/classic-black.jpg";
+                  }
+                }}
+              />
+            </div>
           </Link>
         ))}
-      </div>
-
-      {/* Secondary Bottom Banner */}
-      <div className="overflow-hidden rounded-[14px] shadow-card border border-mb-border">
-        <Link href="/category/all" className="block">
-          <img
-            src="/banners/category-highlights-banner.jpg"
-            alt="Sunscreens Promotion"
-            className="w-full h-28 sm:h-36 md:h-44 object-cover object-center"
-          />
-        </Link>
       </div>
     </section>
   );

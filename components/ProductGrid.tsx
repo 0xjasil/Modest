@@ -15,8 +15,8 @@ export const products: Product[] = (productsData as any[]).map((p: any, i: numbe
   reviewCount:   p.reviewCount ?? 120,
   image:         p.image,
   badge:         p.badge ?? undefined,
-  category:      (p.category as Product["category"]) ?? "makeup",
-  brand:         p.brand ?? "Moryelle",
+  category:      (p.category as Product["category"]) ?? "front-open",
+  brand:         p.brand ?? "Modest Studio",
 }));
 
 /* ── Section header ───────────────────────────────────────────── */

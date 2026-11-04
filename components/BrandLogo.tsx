@@ -6,6 +6,9 @@ const SRC = {
   horizontal: "/brand/logo-horizontal.png",
   emblem: "/brand/logo-emblem.png",
   gold: "/brand/logo-gold.png",
+  white: "/brand/logo-white.png",
+  wordmark: "/brand/logo-wordmark.png",
+  vector: "/brand/logo-primary.svg",
 } as const;
 
 type LogoVariant = keyof typeof SRC;

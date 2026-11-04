@@ -94,10 +94,10 @@ export default function ProductDetail() {
   return (
     <>
       <Head>
-        <title>{product.name} | Moryelle Beauté</title>
+        <title>{product.name} | Modest Studio</title>
         <meta
           name="description"
-          content={`Experience ${product.name} by ${product.brand} at Moryelle Beauté - Beauty Beyond Today.`}
+          content={`Experience ${product.name} by ${product.brand} at Modest Studio - Beauty Beyond Today.`}
         />
       </Head>
       <Header />
@@ -236,7 +236,7 @@ export default function ProductDetail() {
                     <>
                       Experience authentic luxury with{" "}
                       <strong className="text-mb-text font-semibold">{product.brand}</strong>.
-                      Formulated with rare botanical actives and couture pigments, exclusively presented by Moryelle Beauté.
+                      Formulated with rare botanical actives and couture pigments, exclusively presented by Modest Studio.
                     </>
                   )}
                 </p>

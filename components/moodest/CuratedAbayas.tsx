@@ -10,7 +10,7 @@ const signatureItems = [
   { img: "/abaya/categories/basic-kaftan.jpg", name: "Basic Kaftans", slug: "basic-kaftan" }
 ];
 
-export default function SaveOnSunscreens() {
+export default function CuratedAbayas() {
   return (
     <section className="w-full px-3 sm:px-6 my-8" aria-label="Curated Signature Abayas">
       <div className="flex items-center justify-between mb-5">

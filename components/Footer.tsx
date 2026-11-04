@@ -2,27 +2,36 @@ import React from "react";
 import Link from "next/link";
 import BrandLogo from "@/components/BrandLogo";
 
-/* ── Data ─────────────────────────────────────────────────────── */
+/* ── Data ───────────────────────────────────────────────────────────── */
 const LINKS = [
   {
-    title: "Top Categories",
-    items: ["Makeup", "Skincare", "Hair", "Bath & Body", "Appliances", "Mom & Baby", "Health & Wellness", "Men", "Fragrance"],
+    title: "Abaya Collections",
+    items: [
+      "Front Open Abayas",
+      "Double Shrug Sets",
+      "Basic Kaftans",
+      "Daily Wear Abayas",
+      "Kimono Silhouettes",
+      "Embroidery Abayas",
+      "Handwork & Bridal",
+      "Malaysian Stoles",
+    ],
   },
   {
-    title: "Company",
-    items: ["About Us", "Careers", "Press", "Investors", "Sustainability", "Moryelle Blog"],
+    title: "Maison",
+    items: ["About Modest Studio", "Our Artisans", "Press & Editorial", "Sustainable Fabrics", "Lookbook 2026"],
   },
   {
-    title: "Support",
-    items: ["Track Order", "Returns & Refunds", "Shipping Policy", "Contact Us", "FAQs", "Store Locator"],
+    title: "Concierge",
+    items: ["Track Order", "Size Guide (50-62)", "Shipping & Delivery", "Returns & Exchanges", "Custom Stitching", "Contact Us"],
   },
   {
     title: "Account",
-    items: ["Sign In", "Create Account", "Order History", "Wishlist", "Moryelle Wallet"],
+    items: ["Sign In", "Create Account", "Order History", "Wishlist", "Modest Studio Rewards"],
   },
   {
-    title: "MORYELLE Stores",
-    items: ["Moryelle Luxe", "Moryelle Fashion", "Moryelle Man", "Moryelle Pro", "Moryelle Global"],
+    title: "Boutiques",
+    items: ["Dubai Flagship", "Abu Dhabi Boutique", "London Studio", "Mumbai Trunk Show", "Worldwide Delivery"],
   },
 ];
 
@@ -34,7 +43,7 @@ const SOCIALS = [
   { label: "Pinterest", abbr: "Pi" },
 ];
 
-/* ── Component ────────────────────────────────────────────────── */
+/* ── Component ────────────────────────────────────────────────────────── */
 export default function Footer() {
   return (
     <footer className="bg-mb-primary border-t border-mb-primary-hover text-mb-bg" role="contentinfo">
@@ -56,22 +65,22 @@ export default function Footer() {
         <div className="mx-auto max-w-content px-4 md:px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-base font-serif font-semibold text-mb-bg">
-              Get Extra 20% Off on Your First App Order
+              Get Extra 20% Off on Your First Order
             </p>
-            <p className="text-xs text-mb-gold mt-0.5">Experience Moryelle Beauté on iOS &amp; Android</p>
+            <p className="text-xs text-mb-gold mt-0.5">Experience Modest Studio on iOS &amp; Android</p>
           </div>
           <div className="flex gap-2">
             <a
               href="#"
               className="inline-block bg-mb-bg text-mb-primary text-xs font-semibold px-4 py-2.5 rounded-md hover:bg-mb-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
-              aria-label="Get Moryelle Beauté on Google Play"
+              aria-label="Get Modest Studio on Google Play"
             >
               Google Play
             </a>
             <a
               href="#"
               className="inline-block bg-mb-bg text-mb-primary text-xs font-semibold px-4 py-2.5 rounded-md hover:bg-mb-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
-              aria-label="Download Moryelle Beauté on App Store"
+              aria-label="Download Modest Studio on App Store"
             >
               App Store
             </a>

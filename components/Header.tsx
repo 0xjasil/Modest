@@ -1,5 +1,5 @@
 /**
- * Header — exact Nykaa 3-tier structure from Playwright MCP snapshots:
+ * Header — exact Modest Studio 3-tier structure from Playwright MCP snapshots:
  * Tier 1: announcement bar + [Get App, Store & Events, Gift Card, Help]
  * Tier 2: logo | primary nav [Categories, Brands, Luxe, Fashion, Beauty Advice] | search | [Sign in, Bag]
  * Tier 3: category nav [makeup, skin, hair, appliances, Bath & Body, Natural, mom & baby, Health & Wellness, men, fragrance, Fashion Selects, Offers]
@@ -43,7 +43,7 @@ const HelpIcon = () => (
   </svg>
 );
 
-/* ── Data — exact Nykaa labels from snapshots ─────────────────── */
+/* ── Data — exact Modest Studio labels from snapshots ─────────────────── */
 const TOP_LINKS = [
   { label: "Get App",         href: "#", icon: MobileIcon },
   { label: "Store & Events",  href: "#", icon: LocationIcon },
@@ -59,7 +59,7 @@ const PRIMARY_NAV = [
   { label: "Kaftans",       href: "/category/basic-kaftan" },
 ];
 
-// Exact order from Nykaa Secondary nav snapshot
+// Exact order from Modest Studio Secondary nav snapshot
 const CATEGORY_NAV = [
   { label: "Front Open",        href: "/category/front-open" },
   { label: "Double Shrug",      href: "/category/double-shrug" },
@@ -183,10 +183,10 @@ export default function Header() {
         {/* ══ TIER 1: Announcement + top utility links ═════════ */}
         <div className="bg-mb-surface text-mb-primary border-b border-mb-border">
           <div className="mx-auto max-w-content px-4 md:px-6 h-8 flex items-center justify-between">
-            {/* Announcement — clickable like Nykaa "BEAUTY BONANZA" */}
+            {/* Announcement — clickable like Modest Studio "BEAUTY BONANZA" */}
             <Link href="#"
               className="text-[11px] font-semibold tracking-wide truncate hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-mb-accent">
-              Get Extra 20% Off on First App Order! Use Code: MORYELLE20
+              Get Extra 20% Off on First App Order! Use Code: MODEST20
             </Link>
 
             {/* Utility list — [Get App, Store & Events, Gift Card, Help] with icons and dividers */}
@@ -285,28 +285,28 @@ export default function Header() {
                   onMouseLeave={() => setActiveMenu(null)}
                   className="absolute top-full left-12 mt-2 w-[340px] bg-mb-bg rounded-md shadow-lg border border-mb-border p-4 z-50"
                 >
-                  <h3 className="text-xs font-bold text-mb-accent-deep uppercase tracking-wider mb-2">Top Brands</h3>
+                  <h3 className="text-xs font-bold text-mb-accent-deep uppercase tracking-wider mb-2">Featured Abaya Maisons</h3>
                   <div className="grid grid-cols-2 gap-2 text-xs text-mb-text">
-                    <Link href="/category/loreal-paris" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">L&apos;Oréal Paris</Link>
-                    <Link href="/category/maybelline" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Maybelline</Link>
-                    <Link href="/category/lakme" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Lakmé</Link>
-                    <Link href="/category/fenty-beauty" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Fenty Beauty</Link>
-                    <Link href="/category/biotique" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Biotique</Link>
-                    <Link href="/category/mamaearth" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Mamaearth</Link>
-                    <Link href="/category/pixi" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">PIXI</Link>
-                    <Link href="/category/moryelle" onClick={() => setActiveMenu(null)} className="font-semibold text-mb-accent-deep">MORYELLE Cosmetics</Link>
+                    <Link href="/category/modest-studio" onClick={() => setActiveMenu(null)} className="font-semibold text-mb-accent-deep hover:underline">Modest Studio</Link>
+                    <Link href="/category/nudra-dubai" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Nudra Dubai</Link>
+                    <Link href="/category/noor-dubai" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Noor Dubai</Link>
+                    <Link href="/category/zahra-couture" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Zahra Couture</Link>
+                    <Link href="/category/aura-modest" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Aura Modest</Link>
+                    <Link href="/category/amani-kaftans" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Amani Kaftans</Link>
+                    <Link href="/category/al-jawhara" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Al-Jawhara</Link>
+                    <Link href="/category/ruaa-luxury" onClick={() => setActiveMenu(null)} className="hover:text-mb-accent-deep">Ruaa Luxury</Link>
                   </div>
                 </div>
               )}
             </nav>
 
-            {/* Search — "Search on Nykaa" placeholder from snapshot */}
+            {/* Search — "Search on Modest Studio" placeholder from snapshot */}
             <div ref={searchContainerRef} className="flex-1 hidden md:block relative">
               <form
                 onSubmit={handleSearchSubmit}
                 className="flex items-center bg-mb-surface border border-mb-border rounded h-9 focus-within:border-mb-accent focus-within:ring-2 focus-within:ring-mb-accent transition-colors"
               >
-                <label htmlFor="header-search" className="sr-only">Search on MORYELLE</label>
+                <label htmlFor="header-search" className="sr-only">Search on Modest Studio</label>
                 <input
                   id="header-search"
                   type="search"

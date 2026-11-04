@@ -13,7 +13,7 @@ export default function Wishlist() {
   return (
     <>
       <Head>
-        <title>My Wishlist | Moryelle Beauté</title>
+        <title>My Wishlist | Modest Studio</title>
       </Head>
       <Header />
       <main id="main-content" className="min-h-screen bg-mb-bg py-8">

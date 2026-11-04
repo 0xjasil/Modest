@@ -565,7 +565,7 @@ This is a **light-themed** interface with a warm, approachable feel. The light b
 - Animation: tw-transitions: transition-shadow, transition-opacity, transition-transform, duration-300, transition-all, hover-transforms
 
 ```tsx
-/* article — cursor=pointer, exactly like Nykaa */
+/* article — cursor=pointer, exactly like Modest Studio */
     <article className="group relative flex flex-col bg-white border border-[#E8E8E8] hover:shadow-sm transition-shadow cursor-pointer">
 
       {/* ── Badge list [AD, BESTSELLER, NEW] ── */}

@@ -18,7 +18,7 @@ export default function Cart() {
   return (
     <>
       <Head>
-        <title>Shopping Bag | Moryelle Beauté</title>
+        <title>Shopping Bag | Modest Studio</title>
       </Head>
       <Header />
       <main id="main-content" className="min-h-screen bg-mb-bg py-8">
@@ -51,7 +51,7 @@ export default function Cart() {
               </div>
               <h2 className="font-serif text-xl font-semibold text-mb-text mb-2">Your Bag is Empty</h2>
               <p className="text-xs sm:text-sm text-mb-body mb-6">
-                Discover exceptional skincare, fragrances, and couture beauty rituals.
+                Discover exceptional handcrafted luxury abayas, modest wear, and signature stoles.
               </p>
               <Link
                 href="/"

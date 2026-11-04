@@ -5,15 +5,15 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import BrandLogo from "@/components/BrandLogo";
 
-import HeroCarousel from "@/components/nykaa/HeroCarousel";
-import DiscoverCategories from "@/components/nykaa/DiscoverCategories";
-import OfferGifsCarousel from "@/components/nykaa/OfferGifsCarousel";
-import TopBrandsSection from "@/components/nykaa/TopBrandsSection";
-import UnmissableOffers from "@/components/nykaa/UnmissableOffers";
-import SaveOnSunscreens from "@/components/nykaa/SaveOnSunscreens";
-import HotListProducts from "@/components/nykaa/HotListProducts";
-import SpotlightSection from "@/components/nykaa/SpotlightSection";
-import RadarSection from "@/components/nykaa/RadarSection";
+import HeroCarousel from "@/components/moodest/HeroCarousel";
+import DiscoverCategories from "@/components/moodest/DiscoverCategories";
+import OfferGifsCarousel from "@/components/moodest/OfferGifsCarousel";
+import TopBrandsSection from "@/components/moodest/TopBrandsSection";
+import UnmissableOffers from "@/components/moodest/UnmissableOffers";
+import CuratedAbayas from "@/components/moodest/CuratedAbayas";
+import HotListProducts from "@/components/moodest/HotListProducts";
+import SpotlightSection from "@/components/moodest/SpotlightSection";
+import RadarSection from "@/components/moodest/RadarSection";
 
 export default function Home() {
   const [showAppBanner, setShowAppBanner] = useState(true);
@@ -82,8 +82,8 @@ export default function Home() {
         {/* 8. Unmissable Offers */}
         <UnmissableOffers />
 
-        {/* 9. Curated Signature Abayas (Updated from old cards) */}
-        <SaveOnSunscreens />
+        {/* 9. Curated Signature Abayas */}
+        <CuratedAbayas />
 
         {/* 10. Hot List Icons */}
         <HotListProducts />

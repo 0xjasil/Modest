@@ -126,7 +126,7 @@ export default function Category() {
   return (
     <>
       <Head>
-        <title>{categoryDisplay} | Moryelle Beauté</title>
+        <title>{categoryDisplay} | Modest Studio</title>
       </Head>
       <Header />
       <main id="main-content" className="min-h-screen bg-mb-bg py-8">

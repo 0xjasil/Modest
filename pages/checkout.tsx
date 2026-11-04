@@ -314,7 +314,7 @@ export default function CheckoutPage() {
                         onChange={(e) => setApplyWallet(e.target.checked)}
                         className="w-4 h-4 text-[#E80071] rounded border-[#CDD3D8]"
                       />
-                      <span>Use Moryelle Wallet Balance (Available: ₹{walletBalance.toLocaleString("en-IN")})</span>
+                      <span>Use Modest Studio Wallet Balance (Available: ₹{walletBalance.toLocaleString("en-IN")})</span>
                     </label>
                     {applyWallet && walletDeduction > 0 && (
                       <span className="text-sm font-semibold text-green-600">-₹{walletDeduction.toLocaleString("en-IN")}</span>

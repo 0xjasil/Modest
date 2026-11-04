@@ -9,7 +9,6 @@ import { WalletProvider } from "@/context/WalletContext";
 import { OrderProvider } from "@/context/OrderContext";
 import { AddressProvider } from "@/context/AddressContext";
 import { SearchProvider } from "@/context/SearchContext";
-import { VendorProvider } from "@/context/VendorContext";
 import { AnalyticsProvider, useAnalytics } from "@/context/AnalyticsContext";
 import { NotificationProvider } from "@/context/NotificationContext";
 import { RecommendationProvider } from "@/context/RecommendationContext";
@@ -48,21 +47,19 @@ function AppWithAnalytics({ Component, pageProps }: AppProps) {
     <NotificationProvider>
       <RecommendationProvider>
         <AuthProvider>
-          <VendorProvider>
-            <SearchProvider>
-              <AddressProvider>
-                <WalletProvider>
-                  <OrderProvider>
-                    <CartProvider>
-                      <WishlistProvider>
-                        <Component {...pageProps} />
-                      </WishlistProvider>
-                    </CartProvider>
-                  </OrderProvider>
-                </WalletProvider>
-              </AddressProvider>
-            </SearchProvider>
-          </VendorProvider>
+          <SearchProvider>
+            <AddressProvider>
+              <WalletProvider>
+                <OrderProvider>
+                  <CartProvider>
+                    <WishlistProvider>
+                      <Component {...pageProps} />
+                    </WishlistProvider>
+                  </CartProvider>
+                </OrderProvider>
+              </WalletProvider>
+            </AddressProvider>
+          </SearchProvider>
         </AuthProvider>
       </RecommendationProvider>
     </NotificationProvider>

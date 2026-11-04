@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const SRC = {
   primary: "/brand/logo-primary.svg",
@@ -22,30 +22,34 @@ export default function BrandLogo({
   className?: string;
   alt?: string;
 }) {
+  const [hasError, setHasError] = useState(false);
+
   const label =
     alt ??
     (variant === "emblem"
       ? "Modest Studio emblem"
       : "Modest Studio");
 
+  const fallbackPng =
+    variant === "emblem"
+      ? "/brand/logo-emblem.png"
+      : variant === "gold"
+      ? "/brand/logo-gold.png"
+      : variant === "secondary" || variant === "horizontal"
+      ? "/brand/logo-secondary.png"
+      : variant === "white"
+      ? "/brand/logo-white.png"
+      : "/brand/logo-primary.png";
+
+  const currentSrc = hasError ? fallbackPng : SRC[variant] ?? SRC.primary;
+
   return (
     <img
-      src={SRC[variant]}
+      src={currentSrc}
       alt={label}
-      onError={(e) => {
-        const target = e.currentTarget;
-        const fallbackName =
-          variant === "emblem"
-            ? "logo-emblem.png"
-            : variant === "gold"
-            ? "logo-gold.png"
-            : variant === "secondary" || variant === "horizontal"
-            ? "logo-secondary.png"
-            : variant === "white"
-            ? "logo-white.png"
-            : "logo-primary.png";
-        if (!target.src.endsWith(fallbackName)) {
-          target.src = `/brand/${fallbackName}`;
+      onError={() => {
+        if (!hasError) {
+          setHasError(true);
         }
       }}
       className={`object-contain object-center select-none ${className}`}

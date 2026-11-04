@@ -56,13 +56,13 @@ export default function Home() {
         {/* 4. Discover Categories (Ovais Abaya Collection Style) */}
         <DiscoverCategories />
 
-        {/* 5. Category Highlights Banner — Perfect responsive height fit */}
-        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 my-5 sm:my-6">
-          <Link href="/category/all" className="block w-full overflow-hidden rounded-[14px] shadow-card hover:shadow-dropdown transition-all">
+        {/* 5. Category Highlights Banner — Full Width Left to Right Without Gaps */}
+        <div className="w-full my-6 sm:my-8">
+          <Link href="/category/all" className="block w-full">
             <img
               src="/banners/category-highlights-banner.jpg"
               alt="Curated Abaya Highlights — Modest Studio"
-              className="w-full h-auto max-h-[380px] object-contain sm:object-cover object-center"
+              className="w-full h-auto object-cover object-center"
               onError={(e) => {
                 const target = e.currentTarget;
                 if (!target.src.includes("/abaya/banners/category-highlights-banner.jpg")) {
@@ -94,13 +94,13 @@ export default function Home() {
         {/* 12. On Our Radar */}
         <RadarSection />
 
-        {/* 13. Bottom Feature Banner — Perfect responsive height fit */}
-        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 my-6 sm:my-8">
-          <Link href="/category/all" className="block w-full overflow-hidden rounded-[14px] shadow-card hover:shadow-dropdown transition-all">
+        {/* 13. Bottom Feature Banner — Full Width Left to Right Without Gaps */}
+        <div className="w-full my-8 sm:my-10">
+          <Link href="/category/all" className="block w-full">
             <img
               src="/banners/timeless-beauty-banner.jpg"
               alt="Modest Studio — Grace In Every Fold"
-              className="w-full h-auto max-h-[400px] object-contain sm:object-cover object-center"
+              className="w-full h-auto object-cover object-center"
               onError={(e) => {
                 const target = e.currentTarget;
                 if (!target.src.includes("/abaya/banners/timeless-beauty-banner.jpg")) {

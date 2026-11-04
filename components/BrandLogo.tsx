@@ -1,13 +1,13 @@
 import React from "react";
 
 const SRC = {
-  primary: "/brand/logo-primary.png",
-  secondary: "/brand/logo-secondary.png",
-  horizontal: "/brand/logo-horizontal.png",
-  emblem: "/brand/logo-emblem.png",
-  gold: "/brand/logo-gold.png",
-  white: "/brand/logo-white.png",
-  wordmark: "/brand/logo-wordmark.png",
+  primary: "/brand/logo-primary.svg",
+  secondary: "/brand/logo-secondary.svg",
+  horizontal: "/brand/logo-horizontal.svg",
+  emblem: "/brand/logo-emblem.svg",
+  gold: "/brand/logo-gold.svg",
+  white: "/brand/logo-white.svg",
+  wordmark: "/brand/logo-horizontal.svg",
   vector: "/brand/logo-primary.svg",
 } as const;
 
@@ -34,8 +34,18 @@ export default function BrandLogo({
       alt={label}
       onError={(e) => {
         const target = e.currentTarget;
-        if (!target.src.includes("/brand/logo-primary.png")) {
-          target.src = "/brand/logo-primary.png";
+        const fallbackName =
+          variant === "emblem"
+            ? "logo-emblem.png"
+            : variant === "gold"
+            ? "logo-gold.png"
+            : variant === "secondary" || variant === "horizontal"
+            ? "logo-secondary.png"
+            : variant === "white"
+            ? "logo-white.png"
+            : "logo-primary.png";
+        if (!target.src.endsWith(fallbackName)) {
+          target.src = `/brand/${fallbackName}`;
         }
       }}
       className={`object-contain object-center select-none ${className}`}

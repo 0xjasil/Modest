@@ -217,7 +217,7 @@ export default function Header() {
             {/* Logo — brand sheet logo: 40px mobile / 44px desktop */}
             <Link href="/" aria-label="Modest Studio — homepage"
               className="flex-shrink-0 mr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded flex items-center">
-              <BrandLogo variant="secondary" className="h-10 md:h-12 w-auto min-w-[130px] max-w-[200px]" />
+              <BrandLogo variant="secondary" className="h-10 md:h-12 w-auto min-w-[140px] max-w-[220px] md:max-w-[260px]" />
             </Link>
 
             {/* Primary nav — [Categories, Brands, Luxe, Fashion, Beauty Advice] */}

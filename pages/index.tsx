@@ -33,13 +33,13 @@ export default function Home() {
       <Header />
 
       <main id="main-content" className="min-h-screen bg-mb-bg w-full overflow-x-hidden">
-        {/* 2. Editorial Top Banner Strip — Perfect responsive height fit */}
-        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 my-2 sm:my-3">
-          <Link href="/category/all" className="block w-full overflow-hidden rounded-[14px] shadow-card hover:shadow-dropdown transition-all">
+        {/* 2. Hero Banner — Full Size Left to Right */}
+        <div className="w-full mb-4 sm:mb-6">
+          <Link href="/category/all" className="block w-full">
             <img
               src="/banners/top-promo-banner.jpg"
               alt="Modest Studio — Premium Abaya & Modest Wear New Arrivals"
-              className="w-full h-auto max-h-[440px] object-contain sm:object-cover object-center"
+              className="w-full h-auto object-cover object-center"
               onError={(e) => {
                 const target = e.currentTarget;
                 if (!target.src.includes("/abaya/banners/top-promo-banner.jpg")) {

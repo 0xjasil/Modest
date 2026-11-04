@@ -33,9 +33,9 @@ export default function Home() {
       <Header />
 
       <main id="main-content" className="min-h-screen bg-mb-bg w-full overflow-x-hidden">
-        {/* 2. Top Banner — Starts with image on left to text on right (like below) */}
-        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 my-2 sm:my-4">
-          <Link href="/category/all" className="block w-full overflow-hidden rounded-[14px] shadow-card hover:shadow-dropdown transition-all">
+        {/* 2. Top Banner — 100% Full Width Edge-to-Edge Without Gaps */}
+        <div className="w-full mb-4 sm:mb-6">
+          <Link href="/category/all" className="block w-full">
             <img
               src="/banners/top-promo-banner.jpg"
               alt="Modest Studio — Premium Abaya & Modest Wear New Arrivals"

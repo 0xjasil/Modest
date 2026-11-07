@@ -70,7 +70,7 @@ const DEFAULT_CATEGORY_NAV: NavCategoryItem[] = [
     ],
   },
   {
-    label: "Occasion & Luxury",
+    label: "Occasion & Luxury Abayas",
     href: "/category/occasion-luxury-abayas",
     children: [
       { label: "Hand-Embroidered Luxury", href: "/category/hand-embroidered-luxury" },
@@ -148,6 +148,9 @@ export default function Header() {
   // Dynamic categories from backend CMS / database
   const [navCategories, setNavCategories] = useState<NavCategoryItem[]>(DEFAULT_CATEGORY_NAV);
 
+  const mainCategories = React.useMemo(() => navCategories.filter(c => !c.accent), [navCategories]);
+  const accentCategory = React.useMemo(() => navCategories.find(c => c.accent), [navCategories]);
+
   useEffect(() => {
     let isSubscribed = true;
     categoryAPI
@@ -164,7 +167,7 @@ export default function Header() {
             ? cat.children.map((sub: any) => ({
                 id: sub.id,
                 label: sub.name,
-                href: `/category/${sub.slug || sub.id}`,
+                href: `/category/${cat.slug || cat.id}/${sub.slug || sub.id}`,
               }))
             : undefined,
         }));
@@ -275,41 +278,27 @@ export default function Header() {
               <BrandLogo variant="secondary" className="h-10 md:h-12 w-auto min-w-[140px] max-w-[220px] md:max-w-[260px]" />
             </Link>
 
-            {/* Primary nav — Categories + Top Dynamic Categories */}
+            {/* Primary nav — Categories Mega Menu Button */}
             <nav ref={navContainerRef} className="hidden lg:flex items-center relative" aria-label="Primary navigation">
-              <ul className="flex items-center" role="list">
-                <li role="listitem" className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setActiveMenu(activeMenu === "Categories" ? null : "Categories")}
-                    onMouseEnter={() => setActiveMenu("Categories")}
-                    className={`flex items-center gap-1 px-3 py-1 text-[13px] font-medium transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded ${
-                      activeMenu === "Categories" ? "text-mb-primary border-b-2 border-mb-accent font-semibold" : "text-mb-primary hover:text-mb-accent-deep"
-                    }`}
-                  >
-                    <span>Categories</span>
-                    <ChevronDown />
-                  </button>
-                </li>
-                {navCategories.filter(c => !c.accent).slice(0, 4).map(item => (
-                  <li key={item.label} role="listitem">
-                    <Link
-                      href={item.href}
-                      className="flex items-center gap-1 px-3 py-1 text-[13px] font-medium text-mb-primary hover:text-mb-accent-deep transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <button
+                type="button"
+                onClick={() => setActiveMenu(activeMenu === "Categories" ? null : "Categories")}
+                onMouseEnter={() => setActiveMenu("Categories")}
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded ${
+                  activeMenu === "Categories" ? "text-mb-primary border-b-2 border-mb-accent" : "text-mb-primary hover:text-mb-accent-deep"
+                }`}
+              >
+                <span>Categories</span>
+                <ChevronDown />
+              </button>
 
               {/* Mega-menu / Dropdown for Categories */}
               {activeMenu === "Categories" && (
                 <div
                   onMouseLeave={() => setActiveMenu(null)}
-                  className="absolute top-full left-0 mt-2 w-[480px] bg-mb-surface rounded-[6px] shadow-dropdown border border-mb-border p-4 z-50 grid grid-cols-2 gap-4"
+                  className="absolute top-full left-0 mt-2 w-[520px] max-h-[75vh] overflow-y-auto bg-mb-surface rounded-[6px] shadow-dropdown border border-mb-border p-4 z-50 grid grid-cols-2 gap-4"
                 >
-                  {navCategories.filter(c => !c.accent).map(cat => (
+                  {mainCategories.map(cat => (
                     <div key={cat.label} className="space-y-1.5">
                       <Link
                         href={cat.href}
@@ -575,23 +564,51 @@ export default function Header() {
 
         {/* ══ TIER 3: Category nav ══════════════════════════════ */}
         {/* navigation "Secondary" > navigation "Main navigation menu" from snapshot */}
-        <nav aria-label="Main navigation menu"
-          className="hidden lg:block bg-mb-surface border-b border-mb-border">
-          <div className="mx-auto max-w-content px-4 md:px-6">
-            <ul className="flex items-center overflow-x-auto no-scrollbar gap-1" role="list">
-              {navCategories.map(cat => (
-                <li key={cat.label} role="listitem">
-                  <Link href={cat.href}
-                    className={`block px-3 py-2.5 text-[13px] font-medium whitespace-nowrap border-b-2 border-transparent hover:border-mb-accent hover:text-mb-accent-deep transition-colors capitalize focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent ${
-                      cat.accent ? "text-mb-accent-deep font-semibold" : "text-mb-text"
-                    }`}>
-                    {cat.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </nav>
+        {(mainCategories.length > 0 || accentCategory) && (
+          <nav aria-label="Main navigation menu"
+            className="hidden lg:block bg-mb-surface border-b border-mb-border">
+            <div className="mx-auto max-w-content px-4 md:px-6">
+              <ul className="flex items-center overflow-x-auto no-scrollbar gap-1" role="list">
+                {mainCategories.map(cat => (
+                  <li key={cat.label} role="listitem" className="relative group">
+                    <Link href={cat.href}
+                      className="inline-flex items-center gap-1 px-3.5 py-2.5 text-[13px] font-medium whitespace-nowrap border-b-2 border-transparent group-hover:border-mb-accent group-hover:text-mb-accent-deep transition-colors capitalize focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent text-mb-text">
+                      <span>{cat.label}</span>
+                      {cat.children && cat.children.length > 0 && (
+                        <span className="opacity-40 group-hover:opacity-100 transition-opacity">
+                          <ChevronDown />
+                        </span>
+                      )}
+                    </Link>
+
+                    {cat.children && cat.children.length > 0 && (
+                      <div className="absolute top-full left-0 hidden group-hover:block z-50 min-w-[210px] bg-white border border-mb-border rounded-b-md shadow-lg py-1.5 animate-in fade-in-50 duration-150">
+                        {cat.children.map(sub => (
+                          <Link
+                            key={sub.label}
+                            href={sub.href}
+                            className="block px-4 py-2 text-xs text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep font-medium transition-colors"
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </li>
+                ))}
+
+                {accentCategory && (
+                  <li role="listitem" className="relative">
+                    <Link href={accentCategory.href}
+                      className="inline-flex items-center gap-1 px-3.5 py-2.5 text-[13px] font-semibold whitespace-nowrap border-b-2 border-transparent hover:border-mb-accent transition-colors capitalize text-mb-accent-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent">
+                      <span>{accentCategory.label}</span>
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </nav>
+        )}
 
         {/* Mobile nav drawer */}
         {menuOpen && (
@@ -624,11 +641,31 @@ export default function Header() {
               {navCategories.map(cat => (
                 <li key={cat.label} role="listitem">
                   <Link href={cat.href} onClick={() => setMenuOpen(false)}
-                    className={`flex items-center px-4 py-3 text-[13px] font-medium border-b border-mb-border-lite hover:bg-mb-surface capitalize transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-mb-accent ${
+                    className={`flex items-center justify-between px-4 py-3 text-[13px] font-medium border-b border-mb-border-lite hover:bg-mb-surface capitalize transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-mb-accent ${
                       cat.accent ? "text-mb-accent-deep font-semibold" : "text-mb-text"
                     }`}>
-                    {cat.label}
+                    <span>{cat.label}</span>
+                    {cat.children && cat.children.length > 0 && (
+                      <span className="text-[11px] text-mb-placeholder font-normal">
+                        ({cat.children.length})
+                      </span>
+                    )}
                   </Link>
+
+                  {cat.children && cat.children.length > 0 && (
+                    <div className="bg-mb-surface/40 border-b border-mb-border-lite pl-6 pr-4 py-1 space-y-1">
+                      {cat.children.map(sub => (
+                        <Link
+                          key={sub.label}
+                          href={sub.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="block py-1.5 text-xs text-mb-body hover:text-mb-accent-deep transition-colors"
+                        >
+                          ↳ {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </li>
               ))}
               {isAuthenticated && user ? (

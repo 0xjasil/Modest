@@ -45,12 +45,16 @@ export interface Category {
 }
 
 export interface Variant {
-  id: number;
-  productId: number;
+  id: number | string;
+  productId?: number | string;
   size: string;
   color: string;
+  colorHex?: string | null;
   stock: number;
   sku: string;
+  price?: number;
+  offerPrice?: number | null;
+  image?: string | null;
   product?: Product;
 }
 
@@ -78,7 +82,7 @@ export interface BackendProduct {
 /** Product shape expected by existing customer frontend components */
 export interface Product {
   id: string;
-  backendId?: number;
+  backendId?: number | string;
   name: string;
   price: number;
   originalPrice?: number;
@@ -92,7 +96,7 @@ export interface Product {
   brand: string;
   description?: string;
   variants?: Variant[];
-  variantId?: number;
+  variantId?: number | string;
 }
 
 export interface CartItem {

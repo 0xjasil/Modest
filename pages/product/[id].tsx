@@ -2,23 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
+import type { GetServerSideProps } from "next";
 import Header from "@/components/Header";
 import ReviewForm from "@/components/ReviewForm";
 import Footer from "@/components/Footer";
-import { products as fallbackProducts } from "@/components/ProductGrid";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { productAPI, reviewAPI, mapBackendProductToProduct } from "@/lib/api";
 import type { Product } from "@/components/ProductCard";
 import type { Review } from "@/lib/types";
 
-export default function ProductDetail() {
+export default function ProductDetail({ initialProduct = null }: { initialProduct?: Product | null }) {
   const router = useRouter();
   const { id } = router.query;
   const [qty, setQty] = useState(1);
   const [flash, setFlash] = useState(false);
-  const [liveProduct, setLiveProduct] = useState<Product | null>(null);
-  const [selectedVariantId, setSelectedVariantId] = useState<number | undefined>(undefined);
+  const [liveProduct, setLiveProduct] = useState<Product | null>(initialProduct);
+  const [selectedVariantId, setSelectedVariantId] = useState<any>(initialProduct?.variantId);
+  const [selectedImage, setSelectedImage] = useState<string | null>(initialProduct?.image || null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [showReviewForm, setShowReviewForm] = useState(false);
 
@@ -36,9 +37,7 @@ export default function ProductDetail() {
   const { addItem, items } = useCart();
   const { isWishlisted, toggleWishlist } = useWishlist();
 
-  // Initial fallback product
-  const initialFallback = fallbackProducts.find((p) => p.id === id) ?? fallbackProducts[0];
-  const product = liveProduct ?? initialFallback;
+  const product = liveProduct ?? initialProduct;
 
   // Fetch product and reviews from NestJS backend
   useEffect(() => {
@@ -53,6 +52,9 @@ export default function ProductDetail() {
           setLiveProduct(mapped);
           if (mapped.variantId) {
             setSelectedVariantId(mapped.variantId);
+          }
+          if (mapped.image) {
+            setSelectedImage(mapped.image);
           }
         }
       } catch {
@@ -78,6 +80,22 @@ export default function ProductDetail() {
 
   const inCart = items.some((i) => i.product.id === product.id);
   const wishlisted = isWishlisted(product.id);
+
+  if (!product) {
+    return (
+      <>
+        <Header />
+        <main className="min-h-[60vh] flex flex-col items-center justify-center p-8 text-center bg-mb-bg">
+          <h1 className="text-xl font-serif font-bold text-mb-text mb-2">Product Not Found</h1>
+          <p className="text-sm text-mb-muted mb-6">The requested product could not be located in our catalog.</p>
+          <Link href="/category/all" className="px-5 py-2.5 bg-[#5C1A24] text-white text-xs font-semibold rounded-lg hover:bg-[#42121B] transition-colors">
+            Return to All Collections
+          </Link>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   const handleAddToCart = () => {
     const itemToAdd: Product = {
@@ -133,23 +151,59 @@ export default function ProductDetail() {
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-[460px_1fr]">
 
-            {/* ── Image ───────────────────────────────────── */}
-            <div className="bg-mb-surface rounded-[6px] md:rounded-[8px] border border-mb-border shadow-card p-8 flex items-center justify-center aspect-square md:aspect-auto md:min-h-[440px]">
-              <img
-                src={product.image}
-                alt={product.name}
-                width={440}
-                height={440}
-                loading="eager"
-                fetchPriority="high"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  if (!target.src.includes("/abaya/products/abaya-1.jpg")) {
-                    target.src = "/abaya/products/abaya-1.jpg";
-                  }
-                }}
-                className="max-h-[400px] w-auto object-contain transition-transform duration-500 hover:scale-105"
-              />
+            {/* ── Image & Gallery ───────────────────────────── */}
+            <div className="flex flex-col gap-3">
+              <div className="bg-mb-surface rounded-[6px] md:rounded-[8px] border border-mb-border shadow-card p-8 flex items-center justify-center aspect-square md:aspect-auto md:min-h-[440px]">
+                <img
+                  src={selectedImage || product.image}
+                  alt={product.name}
+                  width={440}
+                  height={440}
+                  loading="eager"
+                  fetchPriority="high"
+                  className="max-h-[400px] w-auto object-contain transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+
+              {/* Gallery Thumbnails (De-duplicated valid photos) */}
+              {(() => {
+                const uniqueImages = Array.from(
+                  new Set(
+                    [product.image, ...(product.images || [])].filter(
+                      (url): url is string => Boolean(url && typeof url === "string" && !url.includes("placeholder.png"))
+                    )
+                  )
+                );
+
+                if (uniqueImages.length <= 1) return null;
+
+                return (
+                  <div className="flex items-center gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Product image gallery">
+                    {uniqueImages.map((imgUrl, idx) => {
+                      const isSelected = (selectedImage || product.image) === imgUrl;
+                      return (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => setSelectedImage(imgUrl)}
+                          aria-label={`View photo ${idx + 1}`}
+                          className={`size-16 rounded-md border p-1 shrink-0 overflow-hidden bg-mb-surface transition-all ${
+                            isSelected
+                              ? "border-mb-primary ring-2 ring-mb-primary/30"
+                              : "border-mb-border hover:border-mb-accent opacity-80 hover:opacity-100"
+                          }`}
+                        >
+                          <img
+                            src={imgUrl}
+                            alt={`${product.name} thumbnail ${idx + 1}`}
+                            className="size-full object-contain"
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
             </div>
 
             {/* ── Details ─────────────────────────────────── */}
@@ -188,44 +242,85 @@ export default function ProductDetail() {
                   </span>
                 </div>
 
-                {/* Price */}
-                <div className="flex items-baseline gap-3 border-t border-mb-border-lite pt-4 mb-4">
-                  <span className="text-3xl font-bold text-mb-text">
-                    ₹{product.price.toLocaleString()}
-                  </span>
-                  {product.originalPrice && (
-                    <span className="text-sm text-mb-muted line-through">
-                      ₹{product.originalPrice.toLocaleString()}
-                    </span>
-                  )}
-                  {product.discount && (
-                    <span className="text-sm font-bold text-mb-accent-deep">
-                      {product.discount}% Off
-                    </span>
-                  )}
-                </div>
+                {/* Variation-Aware Price */}
+                {(() => {
+                  const activeVariant = product.variants?.find((v: any) => String(v.id) === String(selectedVariantId));
+                  const displayPrice = activeVariant?.offerPrice ?? activeVariant?.price ?? product.price;
+                  const displayOriginalPrice = activeVariant?.offerPrice ? activeVariant.price : product.originalPrice;
 
-                {/* Variants Selection (if variants exist) */}
-                {product.variants && product.variants.length > 1 && (
-                  <div className="mb-4">
-                    <span className="text-xs font-semibold text-mb-body uppercase tracking-wider block mb-2">
-                      Options:
-                    </span>
+                  return (
+                    <div className="flex items-baseline gap-3 border-t border-mb-border-lite pt-4 mb-4">
+                      <span className="text-3xl font-bold text-mb-text">
+                        ₹{Number(displayPrice).toLocaleString()}
+                      </span>
+                      {displayOriginalPrice && (
+                        <span className="text-sm text-mb-muted line-through">
+                          ₹{Number(displayOriginalPrice).toLocaleString()}
+                        </span>
+                      )}
+                      {product.discount && (
+                        <span className="text-sm font-bold text-mb-accent-deep">
+                          {product.discount}% Off
+                        </span>
+                      )}
+                    </div>
+                  );
+                })()}
+
+                {/* Variants Selection (Size & Color options) */}
+                {product.variants && product.variants.length > 0 && (
+                  <div className="mb-5 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-semibold text-mb-body uppercase tracking-wider block">
+                        Select Variation / Size:
+                      </span>
+                      {(() => {
+                        const activeVariant = product.variants?.find((v: any) => String(v.id) === String(selectedVariantId));
+                        return activeVariant ? (
+                          <span className="text-xs text-mb-muted">
+                            Selected:{" "}
+                            <strong className="text-mb-text font-semibold">
+                              {[activeVariant.size ? `Size ${activeVariant.size}` : null, activeVariant.color].filter(Boolean).join(" • ") || "Default"}
+                            </strong>
+                          </span>
+                        ) : null;
+                      })()}
+                    </div>
                     <div className="flex flex-wrap gap-2">
-                      {product.variants.map((v) => (
-                        <button
-                          key={v.id}
-                          type="button"
-                          onClick={() => setSelectedVariantId(v.id)}
-                          className={`px-3 py-1.5 text-xs font-medium rounded-md border transition-all ${
-                            selectedVariantId === v.id
-                              ? "border-mb-primary bg-mb-primary text-white"
-                              : "border-mb-border bg-mb-bg text-mb-text hover:border-mb-accent"
-                          }`}
-                        >
-                          {v.size || v.color || `Option ${v.id}`}
-                        </button>
-                      ))}
+                      {product.variants.map((v) => {
+                        const isSelected = String(selectedVariantId) === String(v.id);
+                        const label = [v.size ? `Size ${v.size}` : null, v.color].filter(Boolean).join(" • ") || `Option ${v.id}`;
+                        return (
+                          <button
+                            key={v.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedVariantId(v.id);
+                              if (v.image) {
+                                setSelectedImage(v.image);
+                              }
+                            }}
+                            className={`flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border transition-all ${
+                              isSelected
+                                ? "border-[#5C1A24] bg-[#5C1A24] text-white shadow-sm ring-1 ring-[#5C1A24]"
+                                : "border-mb-border bg-white hover:border-[#5C1A24]/60 text-mb-text hover:bg-[#5C1A24]/5"
+                            }`}
+                          >
+                            {v.colorHex && (
+                              <span
+                                className="size-3 rounded-full border border-black/20 shrink-0"
+                                style={{ backgroundColor: v.colorHex }}
+                              />
+                            )}
+                            <span>{label}</span>
+                            {v.offerPrice && v.price && Number(v.offerPrice) < Number(v.price) && (
+                              <span className={`text-[10px] ${isSelected ? "text-amber-200" : "text-emerald-600 font-semibold"}`}>
+                                ₹{Number(v.offerPrice).toLocaleString()}
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -234,9 +329,9 @@ export default function ProductDetail() {
                 <p className="text-sm sm:text-base text-mb-body leading-relaxed mb-6">
                   {product.description || (
                     <>
-                      Experience authentic luxury with{" "}
+                      Experience authentic elegance with{" "}
                       <strong className="text-mb-text font-semibold">{product.brand}</strong>.
-                      Formulated with rare botanical actives and couture pigments, exclusively presented by Modest Studio.
+                      Exquisitely tailored for modest luxury, comfort, and everyday sophistication.
                     </>
                   )}
                 </p>
@@ -384,3 +479,30 @@ export default function ProductDetail() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.params || {};
+  if (!id || typeof id !== "string") {
+    return { notFound: true };
+  }
+
+  try {
+    const raw = await productAPI.getById(id);
+    if (!raw) {
+      return { notFound: true };
+    }
+    const initialProduct = mapBackendProductToProduct(raw);
+    return {
+      props: {
+        initialProduct,
+      },
+    };
+  } catch (error) {
+    console.warn(`[getServerSideProps] Product ${id} not found:`, error);
+    return {
+      props: {
+        initialProduct: null,
+      },
+    };
+  }
+};

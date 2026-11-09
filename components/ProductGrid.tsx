@@ -25,11 +25,13 @@ export function SectionHeader({ title, subtitle, viewAllHref }: {
 
 /* ── Category filter tabs ─────────────────────────────────────── */
 const CATS = [
-  { key: "all",       label: "All Products" },
-  { key: "everyday",  label: "Everyday Abayas" },
-  { key: "occasion",  label: "Occasion & Luxury" },
-  { key: "kimono",    label: "Kimonos & Shrugs" },
-  { key: "stoles",    label: "Hijabs & Stoles" },
+  { key: "all",               label: "All Products" },
+  { key: "syrian",            label: "Syrian Collection" },
+  { key: "classics",          label: "The Classics" },
+  { key: "luxe",              label: "The Luxe Edit" },
+  { key: "occasion",          label: "Occasion Wear" },
+  { key: "kimono",            label: "Kimono & Kaftan" },
+  { key: "open",              label: "Open Abaya Edit" },
 ];
 
 /* ── ProductGrid ──────────────────────────────────────────────── */

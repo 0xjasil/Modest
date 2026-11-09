@@ -73,7 +73,7 @@ export default function DiscoverCategories() {
             Shop by Category
           </h2>
           <p className="text-xs sm:text-sm text-mb-muted mt-0.5">
-            Signature Silhouettes — Front Open, Double Shrug, Kaftans &amp; Bridal Edits
+            Signature Silhouettes — Syrian Collection, The Classics, Luxe Edit &amp; Occasion Wear
           </p>
         </div>
         <Link
@@ -84,7 +84,7 @@ export default function DiscoverCategories() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3.5 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
         {categories.map((cat) => {
           const href = `/category/${cat.slug || cat.id}`;
           return (

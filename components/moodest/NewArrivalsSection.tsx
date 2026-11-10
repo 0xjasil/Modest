@@ -62,19 +62,19 @@ export default function NewArrivalsSection({ initialProducts }: NewArrivalsSecti
 
   return (
     <section className="w-full px-3 sm:px-6 my-10" aria-label="New Arrivals">
-      {/* Section Header with Increased Header Size & Underlined DISCOVER MORE */}
-      <div className="flex items-center justify-between mb-4 sm:mb-6">
+      {/* Section Header with Refined Header Size & Underlined DISCOVER MORE */}
+      <div className="flex items-center justify-between mb-3.5 sm:mb-6">
         <div>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-mb-text tracking-tight">
+          <h2 className="font-serif text-lg sm:text-2xl md:text-3xl font-bold text-mb-text tracking-tight">
             New Arrivals
           </h2>
-          <p className="text-xs sm:text-sm text-mb-muted mt-1">
+          <p className="text-[11px] sm:text-sm text-mb-muted mt-0.5 sm:mt-1">
             Fresh drops and latest additions to the collection
           </p>
         </div>
         <Link
           href="/category/all?sort=newest"
-          className="text-xs sm:text-sm font-bold uppercase tracking-wider text-mb-text hover:text-mb-primary underline underline-offset-4 decoration-1 decoration-mb-text/80 transition-colors"
+          className="text-[11px] sm:text-sm font-bold uppercase tracking-wider text-mb-text hover:text-mb-primary underline underline-offset-4 decoration-1 decoration-mb-text/80 transition-colors"
         >
           DISCOVER MORE
         </Link>
@@ -84,7 +84,7 @@ export default function NewArrivalsSection({ initialProducts }: NewArrivalsSecti
       {loading ? (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4.5">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="aspect-[3/4] rounded-[10px] sm:rounded-[12px] bg-mb-surface border border-mb-border animate-pulse" />
+            <div key={i} className="aspect-[3/4] rounded-[1px] bg-mb-surface border border-mb-border animate-pulse" />
           ))}
         </div>
       ) : products.length > 0 ? (

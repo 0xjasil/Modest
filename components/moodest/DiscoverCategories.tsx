@@ -192,7 +192,7 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="flex-shrink-0 w-[46vw] sm:w-[30vw] md:w-[22vw] lg:w-[calc((100%-5*1rem)/6)] aspect-[2/3] rounded-[16px] bg-mb-surface border border-mb-border animate-pulse"
+              className="flex-shrink-0 w-[46vw] sm:w-[30vw] md:w-[22vw] lg:w-[calc((100%-5*1rem)/6)] aspect-[2/3] rounded-[1px] bg-mb-surface border border-mb-border animate-pulse"
             />
           ))}
         </div>
@@ -205,19 +205,19 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
   return (
     <section className="w-full px-3 sm:px-6 my-10 relative group/section" aria-label="Explore Abaya Categories">
       {/* Header with Dynamic Database Categories Subtitle & Underlined DISCOVER MORE */}
-      <div className="flex items-center justify-between mb-4 sm:mb-6">
+      <div className="flex items-center justify-between mb-3.5 sm:mb-6">
         <div>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-mb-text tracking-tight">
+          <h2 className="font-serif text-lg sm:text-2xl md:text-3xl font-bold text-mb-text tracking-tight">
             Shop by Category
           </h2>
-          <p className="text-xs sm:text-sm text-mb-muted mt-1">
+          <p className="text-[11px] sm:text-sm text-mb-muted mt-0.5 sm:mt-1">
             Browse our curated collections
           </p>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/category/all"
-            className="text-xs sm:text-sm font-bold uppercase tracking-wider text-mb-text hover:text-mb-primary underline underline-offset-4 decoration-1 decoration-mb-text/80 transition-colors"
+            className="text-[11px] sm:text-sm font-bold uppercase tracking-wider text-mb-text hover:text-mb-primary underline underline-offset-4 decoration-1 decoration-mb-text/80 transition-colors"
           >
             DISCOVER MORE
           </Link>
@@ -266,7 +266,7 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
             >
               <Link
                 href={href}
-                className="group block overflow-hidden rounded-[10px] sm:rounded-[12px] bg-mb-surface border border-mb-border/80 shadow-card hover:shadow-dropdown hover:-translate-y-1 transition-all duration-300"
+                className="group block overflow-hidden rounded-[1px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown hover:-translate-y-0.5 transition-all duration-300"
               >
                 <div className="relative aspect-[2/3] w-full overflow-hidden bg-[#E8DDD0]">
                   {/* Reference Image Index Pill Badge (01, 02, 03...) */}

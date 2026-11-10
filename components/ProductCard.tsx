@@ -33,29 +33,29 @@ export default function ProductCard({ product }: { product: Product }) {
   const formatPrice = (val: number) => `Rs. ${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
   return (
-    <article className="group relative flex flex-col bg-transparent transition-all overflow-hidden select-none">
+    <article className="group relative flex flex-col bg-mb-surface border border-mb-border rounded-[1px] transition-all overflow-hidden select-none shadow-2xs hover:border-mb-accent/60">
 
       {/* ── Top Image Container ───────────────────────────────── */}
-      <div className="relative aspect-[3/4] w-full rounded-[14px] sm:rounded-[18px] overflow-hidden bg-mb-surface border border-mb-border/60">
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-mb-surface border-b border-mb-border/60">
         
-        {/* Top-Left: Black Capsule Badge (Reference Image Style) */}
+        {/* Top-Left: Black Capsule Badge (1px subtle border radius) */}
         {product.discount ? (
-          <span className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-xs pointer-events-none">
+          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[1px] uppercase tracking-wider shadow-xs pointer-events-none">
             {product.discount}% OFF
           </span>
         ) : product.badge ? (
-          <span className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-xs pointer-events-none">
+          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[1px] uppercase tracking-wider shadow-xs pointer-events-none">
             {product.badge}
           </span>
         ) : null}
 
-        {/* Top-Right: White Circular Wishlist Button (Reference Image Style) */}
+        {/* Top-Right: White Circular Wishlist Button */}
         <button
           type="button"
           aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
           aria-pressed={wishlisted}
           onClick={onWish}
-          className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-10 w-8 h-8 rounded-full bg-white text-gray-900 shadow-md flex items-center justify-center transition-transform hover:scale-110 active:scale-95 focus-visible:outline-none"
+          className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-gray-900 shadow-md flex items-center justify-center transition-transform hover:scale-110 active:scale-95 focus-visible:outline-none"
         >
           <HeartIcon filled={wishlisted} />
         </button>
@@ -98,7 +98,7 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* ── Product Details Below Image (Exact Reference Image Typography & Plus Button) ───────────────── */}
-      <div className="pt-2 sm:pt-2.5 px-0.5 flex items-start justify-between gap-2">
+      <div className="p-2 sm:p-2.5 flex items-start justify-between gap-1.5 bg-mb-surface flex-1">
         <Link href={`/product/${product.id}`} className="flex-1 min-w-0 group/link">
           {/* Title: Decreased font size, clean & modern */}
           <h2 className="text-xs sm:text-[13px] font-medium text-mb-text group-hover/link:text-mb-primary line-clamp-1 mb-0.5 transition-colors">
@@ -131,7 +131,7 @@ export default function ProductCard({ product }: { product: Product }) {
           onClick={onAdd}
           aria-label={inCart ? `${product.name} in bag` : `Add ${product.name} to bag`}
           title={inCart ? "In Bag" : "Add to Bag"}
-          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-all flex-shrink-0 mt-1 shadow-2xs ${
+          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-all flex-shrink-0 mt-0.5 shadow-2xs ${
             inCart
               ? "bg-black text-white border-black"
               : "border-gray-300 dark:border-white/20 bg-white dark:bg-[#181818] text-gray-800 dark:text-gray-200 hover:border-black dark:hover:border-white hover:scale-105"

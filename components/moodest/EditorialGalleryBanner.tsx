@@ -11,7 +11,7 @@ export default function EditorialGalleryBanner() {
         <div className="col-span-1 md:col-span-4 h-[340px] sm:h-[440px] md:h-[620px] lg:h-[680px]">
           <Link
             href="/category/syrian-collection"
-            className="group relative block w-full h-full overflow-hidden rounded-[12px] sm:rounded-[16px] bg-neutral-100 shadow-card hover:shadow-dropdown transition-all duration-300"
+            className="group relative block w-full h-full overflow-hidden rounded-[1px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
             aria-label="Explore Syrian Collection"
           >
             <img
@@ -44,7 +44,7 @@ export default function EditorialGalleryBanner() {
           {/* Top Card */}
           <Link
             href="/category/the-classics"
-            className="group flex-1 relative block w-full h-full overflow-hidden rounded-[12px] sm:rounded-[16px] bg-neutral-100 shadow-card hover:shadow-dropdown transition-all duration-300"
+            className="group flex-1 relative block w-full h-full overflow-hidden rounded-[1px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
             aria-label="Explore The Classics Collection"
           >
             <img
@@ -73,7 +73,7 @@ export default function EditorialGalleryBanner() {
           {/* Bottom Card */}
           <Link
             href="/category/the-luxe-edit"
-            className="group flex-1 relative block w-full h-full overflow-hidden rounded-[12px] sm:rounded-[16px] bg-neutral-100 shadow-card hover:shadow-dropdown transition-all duration-300"
+            className="group flex-1 relative block w-full h-full overflow-hidden rounded-[1px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
             aria-label="Explore The Luxe Edit"
           >
             <img
@@ -104,7 +104,7 @@ export default function EditorialGalleryBanner() {
         <div className="hidden md:block md:col-span-4 h-[420px] sm:h-[480px] md:h-[620px] lg:h-[680px]">
           <Link
             href="/category/occasion-wear"
-            className="group relative block w-full h-full overflow-hidden rounded-[12px] sm:rounded-[16px] bg-neutral-100 shadow-card hover:shadow-dropdown transition-all duration-300"
+            className="group relative block w-full h-full overflow-hidden rounded-[1px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
             aria-label="Explore Occasion Wear"
           >
             <img

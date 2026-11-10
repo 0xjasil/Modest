@@ -198,34 +198,6 @@ export default function TrendingNowSection({ initialProducts }: TrendingNowSecti
                 </div>
               ))}
             </div>
-
-            {/* Desktop Pagination Dots */}
-            {products.length > 1 && (
-              <div
-                className="flex items-center justify-center gap-2 mt-5 py-2"
-                role="tablist"
-                aria-label="Trending Now Carousel Pagination Dots"
-              >
-                {products.map((_, idx) => {
-                  const isActive = activeIndex === idx;
-                  return (
-                    <button
-                      key={idx}
-                      type="button"
-                      role="tab"
-                      aria-selected={isActive}
-                      aria-label={`Go to slide ${idx + 1}`}
-                      onClick={() => scrollToItem(idx)}
-                      className={`transition-all duration-300 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent ${
-                        isActive
-                          ? "w-7 h-2 bg-mb-primary shadow-xs"
-                          : "w-2 h-2 bg-mb-border hover:bg-mb-muted/60"
-                      }`}
-                    />
-                  );
-                })}
-              </div>
-            )}
           </div>
         </>
       ) : null}

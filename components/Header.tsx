@@ -355,75 +355,95 @@ export default function Header() {
 
               {/* Authenticated user menu or Sign in link */}
               {isAuthenticated && user ? (
-                <div ref={userDropdownRef} className="relative hidden md:block">
-                  <button
-                    type="button"
-                    onClick={() => setUserDropdownOpen((v) => !v)}
-                    aria-expanded={userDropdownOpen}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-mb-text bg-mb-surface hover:bg-mb-surface-hover border border-mb-border rounded shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
-                  >
-                    <span className="w-5 h-5 rounded-full bg-mb-primary text-mb-bg text-[10px] font-bold flex items-center justify-center">
-                      {(user.firstName || user.email || "U")[0].toUpperCase()}
-                    </span>
-                    <span className="max-w-[100px] truncate">{user.firstName || "Account"}</span>
-                    <ChevronDown />
-                  </button>
+                <>
+                  {/* Desktop user dropdown */}
+                  <div ref={userDropdownRef} className="relative hidden md:block">
+                    <button
+                      type="button"
+                      onClick={() => setUserDropdownOpen((v) => !v)}
+                      aria-expanded={userDropdownOpen}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-mb-text bg-mb-surface hover:bg-mb-surface-hover border border-mb-border rounded-[2px] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
+                    >
+                      <span className="w-5 h-5 rounded-full bg-mb-primary text-mb-bg text-[10px] font-bold flex items-center justify-center">
+                        {(user.firstName || user.email || "U")[0].toUpperCase()}
+                      </span>
+                      <span className="max-w-[100px] truncate">{user.firstName || "Account"}</span>
+                      <ChevronDown />
+                    </button>
 
-                  {userDropdownOpen && (
-                    <div className="absolute right-0 top-full mt-1.5 w-48 bg-white border border-mb-border rounded-md shadow-lg py-1 z-50 text-xs">
-                      <div className="px-3 py-2 border-b border-mb-border-lite">
-                        <p className="font-semibold text-mb-text truncate">{user.firstName ? `${user.firstName} ${user.lastName || ""}`.trim() : (user.email.split('@')[0] || "Customer")}</p>
-                        <p className="text-[11px] text-mb-placeholder truncate">{user.email}</p>
+                    {userDropdownOpen && (
+                      <div className="absolute right-0 top-full mt-1.5 w-48 bg-white border border-mb-border rounded-[2px] shadow-lg py-1 z-50 text-xs">
+                        <div className="px-3 py-2 border-b border-mb-border-lite">
+                          <p className="font-semibold text-mb-text truncate">{user.firstName ? `${user.firstName} ${user.lastName || ""}`.trim() : (user.email.split('@')[0] || "Customer")}</p>
+                          <p className="text-[11px] text-mb-placeholder truncate">{user.email}</p>
+                        </div>
+                        <Link
+                          href="/orders"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
+                        >
+                          My Orders
+                        </Link>
+                        <Link
+                          href="/addresses"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
+                        >
+                          Saved Addresses
+                        </Link>
+                        <Link
+                          href="/wallet"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
+                        >
+                          My Wallet
+                        </Link>
+                        <Link
+                          href="/wishlist"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
+                        >
+                          Wishlist ({wishlistCount})
+                        </Link>
+                        <div className="border-t border-mb-border-lite my-1" />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setUserDropdownOpen(false);
+                            logout();
+                            router.push("/");
+                          }}
+                          className="w-full text-left px-3 py-2 text-red-600 hover:bg-red-50 transition-colors font-medium"
+                        >
+                          Sign Out
+                        </button>
                       </div>
-                      <Link
-                        href="/orders"
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
-                      >
-                        My Orders
-                      </Link>
-                      <Link
-                        href="/addresses"
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
-                      >
-                        Saved Addresses
-                      </Link>
-                      <Link
-                        href="/wallet"
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
-                      >
-                        My Wallet
-                      </Link>
-                      <Link
-                        href="/wishlist"
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
-                      >
-                        Wishlist ({wishlistCount})
-                      </Link>
-                      <div className="border-t border-mb-border-lite my-1" />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setUserDropdownOpen(false);
-                          logout();
-                          router.push("/");
-                        }}
-                        className="w-full text-left px-3 py-2 text-red-600 hover:bg-red-50 transition-colors font-medium"
-                      >
-                        Sign Out
-                      </button>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+
+                  {/* Mobile user icon button */}
+                  <Link
+                    href="/orders"
+                    aria-label="My Account"
+                    className="md:hidden p-2 text-mb-body hover:text-mb-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded-[2px]"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                  </Link>
+                </>
               ) : (
                 <Link
                   href="/login"
-                  className="hidden md:inline-flex items-center justify-center px-4 py-1.5 text-[13px] font-semibold text-mb-bg bg-mb-primary hover:bg-mb-primary-hover transition-colors rounded shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
+                  aria-label="Sign in"
+                  className="inline-flex items-center gap-1 px-2.5 sm:px-4 py-1.5 text-xs sm:text-[13px] font-semibold text-mb-bg bg-mb-primary hover:bg-mb-primary-hover transition-colors rounded-[2px] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
                 >
-                  Sign in
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  <span>Sign in</span>
                 </Link>
               )}
 
@@ -466,13 +486,13 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Mobile Search Capsule Bar (Matches Reference Image) */}
+          {/* Mobile Search Capsule Bar (Matches Our Brand Theme) */}
           <div className="md:hidden px-3.5 pb-2.5 pt-0.5 bg-mb-bg">
             <form
               onSubmit={handleSearchSubmit}
-              className="flex items-center bg-[#181818] text-white rounded-full px-3.5 h-10 border border-white/10 shadow-xs focus-within:ring-2 focus-within:ring-mb-accent/60 transition-all"
+              className="flex items-center bg-mb-surface text-mb-text rounded-full px-3.5 h-10 border border-mb-border shadow-2xs focus-within:ring-2 focus-within:ring-mb-accent/60 transition-all"
             >
-              <span className="text-gray-400 mr-2 flex-shrink-0">
+              <span className="text-mb-primary mr-2 flex-shrink-0">
                 <SearchIcon />
               </span>
               <input
@@ -481,9 +501,9 @@ export default function Header() {
                 placeholder="What are you looking for?"
                 value={searchVal}
                 onChange={(e) => setSearchVal(e.target.value)}
-                className="flex-1 min-w-0 bg-transparent text-xs text-white placeholder-gray-400 outline-none"
+                className="flex-1 min-w-0 bg-transparent text-xs text-mb-text placeholder-mb-placeholder outline-none"
               />
-              <button type="button" aria-label="Visual Search" className="text-gray-400 hover:text-white transition-colors p-1 flex-shrink-0">
+              <button type="button" aria-label="Visual Search" className="text-mb-primary hover:text-mb-accent-deep transition-colors p-1 flex-shrink-0">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <circle cx="12" cy="12" r="3" strokeWidth="2" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />

@@ -38,24 +38,24 @@ export default function ProductCard({ product }: { product: Product }) {
       {/* ── Top Image Container ───────────────────────────────── */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-mb-surface border-b border-mb-border/60">
         
-        {/* Top-Left: Black Capsule Badge (2px subtle border radius) */}
+        {/* Top-Left: Badge following brand palette (2px subtle border radius) */}
         {product.discount ? (
-          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[2px] uppercase tracking-wider shadow-xs pointer-events-none">
+          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-mb-accent-deep text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[2px] uppercase tracking-wider shadow-xs pointer-events-none">
             {product.discount}% OFF
           </span>
         ) : product.badge ? (
-          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[2px] uppercase tracking-wider shadow-xs pointer-events-none">
+          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-mb-accent-deep text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[2px] uppercase tracking-wider shadow-xs pointer-events-none">
             {product.badge}
           </span>
         ) : null}
 
-        {/* Top-Right: White Circular Wishlist Button */}
+        {/* Top-Right: Brand Theme Circular Wishlist Button */}
         <button
           type="button"
           aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
           aria-pressed={wishlisted}
           onClick={onWish}
-          className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-gray-900 shadow-md flex items-center justify-center transition-transform hover:scale-110 active:scale-95 focus-visible:outline-none"
+          className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-mb-surface text-mb-text border border-mb-border shadow-xs flex items-center justify-center transition-transform hover:scale-110 active:scale-95 focus-visible:outline-none"
         >
           <HeartIcon filled={wishlisted} />
         </button>
@@ -112,20 +112,20 @@ export default function ProductCard({ product }: { product: Product }) {
 
           {/* Strikethrough Original Price */}
           {product.originalPrice && (
-            <p className="text-[10px] sm:text-[11px] text-gray-400 line-through leading-tight mt-0.5">
+            <p className="text-[10px] sm:text-[11px] text-mb-muted line-through leading-tight mt-0.5">
               {formatPrice(product.originalPrice)}
             </p>
           )}
 
-          {/* Red/Rust Discount Percentage */}
+          {/* Red/Rust Discount Percentage (Brand Theme --color-error / #A83A45) */}
           {product.discount && (
-            <p className="text-[10px] sm:text-[11px] font-bold text-[#b03a2e] dark:text-[#e06655] leading-tight mt-0.5">
+            <p className="text-[10px] sm:text-[11px] font-bold text-mb-error leading-tight mt-0.5">
               {product.discount}% OFF
             </p>
           )}
         </Link>
 
-        {/* Circular Plus Button (Reference Image Style) */}
+        {/* Circular Plus Button (Brand Theme Palette) */}
         <button
           type="button"
           onClick={onAdd}
@@ -133,8 +133,8 @@ export default function ProductCard({ product }: { product: Product }) {
           title={inCart ? "In Bag" : "Add to Bag"}
           className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-all flex-shrink-0 mt-0.5 shadow-2xs ${
             inCart
-              ? "bg-black text-white border-black"
-              : "border-gray-300 dark:border-white/20 bg-white dark:bg-[#181818] text-gray-800 dark:text-gray-200 hover:border-black dark:hover:border-white hover:scale-105"
+              ? "bg-mb-primary text-white border-mb-primary"
+              : "border-mb-border bg-mb-surface text-mb-text hover:border-mb-primary hover:text-mb-primary hover:scale-105"
           }`}
         >
           {inCart ? (

@@ -299,8 +299,8 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
                     <span className="text-white font-serif text-sm sm:text-base font-semibold group-hover:text-[#D29A90] transition-colors drop-shadow-sm leading-tight pr-2">
                       {cat.name}
                     </span>
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-neutral-900 shadow-md flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <svg className="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <svg className="w-3.5 h-3.5 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
@@ -311,34 +311,6 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
           );
         })}
       </div>
-
-      {/* Manual Dotting Area: Controllable Pagination Dots Below Category Row */}
-      {categories.length > 1 && (
-        <div
-          className="flex items-center justify-center gap-2 mt-5 py-2"
-          role="tablist"
-          aria-label="Category Carousel Pagination Dots"
-        >
-          {categories.map((cat, idx) => {
-            const isActive = activeIndex === idx;
-            return (
-              <button
-                key={cat.id || idx}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                aria-label={`Go to category ${idx + 1}: ${cat.name}`}
-                onClick={() => scrollToCard(idx)}
-                className={`transition-all duration-300 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent ${
-                  isActive
-                    ? "w-7 h-2 bg-mb-primary shadow-xs"
-                    : "w-2 h-2 bg-mb-border hover:bg-mb-muted/60"
-                }`}
-              />
-            );
-          })}
-        </div>
-      )}
     </section>
   );
 }

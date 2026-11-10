@@ -132,7 +132,7 @@ export default function HeroCarousel({ initialBanners }: HeroCarouselProps) {
 
   return (
     <div
-      className="relative w-full h-[62vh] sm:h-[70vh] md:h-[78vh] lg:h-[84vh] min-h-[440px] sm:min-h-[500px] md:min-h-[540px] max-h-[840px] overflow-hidden select-none bg-neutral-950"
+      className="relative w-full h-[62vh] sm:h-[70vh] md:h-[78vh] lg:h-[84vh] min-h-[440px] sm:min-h-[500px] md:min-h-[540px] max-h-[840px] overflow-hidden select-none bg-mb-surface-strong"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       role="region"
@@ -175,7 +175,7 @@ export default function HeroCarousel({ initialBanners }: HeroCarouselProps) {
           type="button"
           onClick={prevSlide}
           aria-label="Previous Hero Image"
-          className="hidden sm:flex absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-white/90 hover:bg-white text-neutral-900 shadow-xl backdrop-blur-sm items-center justify-center transition-all hover:scale-105 active:scale-95 focus:outline-none"
+          className="hidden sm:flex absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-mb-surface/90 hover:bg-mb-surface text-mb-text border border-mb-border shadow-xl backdrop-blur-sm items-center justify-center transition-all hover:scale-105 active:scale-95 focus:outline-none"
         >
           <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -189,7 +189,7 @@ export default function HeroCarousel({ initialBanners }: HeroCarouselProps) {
           type="button"
           onClick={nextSlide}
           aria-label="Next Hero Image"
-          className="hidden sm:flex absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-white/90 hover:bg-white text-neutral-900 shadow-xl backdrop-blur-sm items-center justify-center transition-all hover:scale-105 active:scale-95 focus:outline-none"
+          className="hidden sm:flex absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-mb-surface/90 hover:bg-mb-surface text-mb-text border border-mb-border shadow-xl backdrop-blur-sm items-center justify-center transition-all hover:scale-105 active:scale-95 focus:outline-none"
         >
           <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />

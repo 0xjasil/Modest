@@ -30,8 +30,8 @@ export default function EditorialGalleryBanner() {
               <span className="font-serif text-sm sm:text-base md:text-lg font-semibold text-white drop-shadow-md">
                 Syrian Edits
               </span>
-              <div className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-white text-neutral-900 shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
                 </svg>
               </div>
@@ -62,8 +62,8 @@ export default function EditorialGalleryBanner() {
               <span className="font-serif text-xs sm:text-sm md:text-base font-semibold text-white drop-shadow-md">
                 The Classics
               </span>
-              <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-white text-neutral-900 shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
-                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
                 </svg>
               </div>
@@ -91,8 +91,8 @@ export default function EditorialGalleryBanner() {
               <span className="font-serif text-xs sm:text-sm md:text-base font-semibold text-white drop-shadow-md">
                 The Luxe Edit
               </span>
-              <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-white text-neutral-900 shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
-                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
                 </svg>
               </div>

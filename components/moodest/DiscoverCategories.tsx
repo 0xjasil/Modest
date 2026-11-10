@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
 import { categoryAPI } from "@/lib/api";
 import type { Product } from "@/lib/types";
 
@@ -229,22 +230,18 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
                 onClick={scrollPrev}
                 disabled={activeIndex === 0}
                 aria-label="Previous categories"
-                className="w-8 h-8 rounded-full bg-mb-surface border border-mb-border text-mb-text hover:bg-mb-primary hover:text-white transition-all flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none shadow-xs"
+                className="w-8 h-8 rounded-full bg-mb-surface border border-mb-border text-mb-text hover:bg-mb-primary hover:text-white transition-all flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none shadow-xs cursor-pointer"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
-                </svg>
+                <Icon icon="lucide:chevron-left" className="w-4 h-4" />
               </button>
               <button
                 type="button"
                 onClick={scrollNext}
                 disabled={activeIndex >= categories.length - 1}
                 aria-label="Next categories"
-                className="w-8 h-8 rounded-full bg-mb-surface border border-mb-border text-mb-text hover:bg-mb-primary hover:text-white transition-all flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none shadow-xs"
+                className="w-8 h-8 rounded-full bg-mb-surface border border-mb-border text-mb-text hover:bg-mb-primary hover:text-white transition-all flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none shadow-xs cursor-pointer"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-                </svg>
+                <Icon icon="lucide:chevron-right" className="w-4 h-4" />
               </button>
             </div>
           )}
@@ -300,9 +297,7 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
                       {cat.name}
                     </span>
                     <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <svg className="w-3.5 h-3.5 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-                      </svg>
+                      <Icon icon="lucide:chevron-right" className="w-3.5 h-3.5 text-mb-primary" />
                     </div>
                   </div>
                 </div>

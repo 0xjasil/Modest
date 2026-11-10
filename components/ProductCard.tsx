@@ -1,24 +1,19 @@
 import React from "react";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 
 import type { Product } from "@/lib/types";
 export type { Product };
 
-const StarIcon = () => (
-  <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-  </svg>
-);
+const StarIcon = () => <Icon icon="lucide:star" className="w-2.5 h-2.5 fill-current" />;
 
 const HeartIcon = ({ filled }: { filled: boolean }) => (
-  <svg width="14" height="14" viewBox="0 0 24 24"
-    fill={filled ? "currentColor" : "none"}
-    stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-  </svg>
+  <Icon
+    icon="lucide:heart"
+    className={`w-3.5 h-3.5 ${filled ? "fill-current" : ""}`}
+  />
 );
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -138,13 +133,9 @@ export default function ProductCard({ product }: { product: Product }) {
           }`}
         >
           {inCart ? (
-            <svg className="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
+            <Icon icon="lucide:check" className="w-3.5 h-3.5" />
           ) : (
-            <svg className="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-            </svg>
+            <Icon icon="lucide:plus" className="w-3.5 h-3.5" />
           )}
         </button>
       </div>

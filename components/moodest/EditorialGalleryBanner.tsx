@@ -1,194 +1,271 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { editorialGalleryItems, type GalleryItem } from "@/data/gallery";
-import { bannerAPI } from "@/lib/api";
+import { Icon } from "@iconify/react";
+import { categoryAPI, productAPI, mapBackendProductToProduct } from "@/lib/api";
+import { getDynamicCategoryImage, type CategoryItem } from "@/components/moodest/DiscoverCategories";
+import type { Product } from "@/lib/types";
 
-export default function EditorialGalleryBanner() {
-  const [gallery, setGallery] = useState({
-    leftTall: editorialGalleryItems.leftTall,
-    rightTop: editorialGalleryItems.rightTop,
-    rightBottom: editorialGalleryItems.rightBottom,
-    desktopRightTall: editorialGalleryItems.desktopRightTall,
-  });
+interface EditorialGalleryBannerProps {
+  initialCategories?: CategoryItem[];
+  initialProducts?: Product[];
+}
+
+interface GalleryCardItem {
+  id: string;
+  title: string;
+  subtitle?: string;
+  href: string;
+  image: string;
+  ariaLabel: string;
+}
+
+export default function EditorialGalleryBanner({
+  initialCategories,
+  initialProducts,
+}: EditorialGalleryBannerProps) {
+  const [categories, setCategories] = useState<CategoryItem[]>(initialCategories || []);
+  const [products, setProducts] = useState<Product[]>(initialProducts || []);
+  const [loading, setLoading] = useState(
+    (!initialCategories || initialCategories.length === 0) &&
+    (!initialProducts || initialProducts.length === 0)
+  );
+
+  useEffect(() => {
+    if (initialCategories && initialCategories.length > 0) {
+      setCategories(initialCategories);
+    }
+    if (initialProducts && initialProducts.length > 0) {
+      setProducts(initialProducts);
+    }
+  }, [initialCategories, initialProducts]);
 
   useEffect(() => {
     let isMounted = true;
-    bannerAPI.getAll().then((banners) => {
-      if (!isMounted || !Array.isArray(banners)) return;
+    async function loadData() {
+      if (categories.length > 0 && products.length > 0) return;
+      try {
+        setLoading(true);
+        const [catsRes, prodsRes] = await Promise.all([
+          categories.length === 0 ? categoryAPI.getAll().catch(() => []) : Promise.resolve(null),
+          products.length === 0 ? productAPI.getAll({ limit: 12 }).catch(() => null) : Promise.resolve(null),
+        ]);
 
-      const g1 = banners.find(b => b.tag === "GALLERY_1" && b.isActive !== false);
-      const g2 = banners.find(b => b.tag === "GALLERY_2" && b.isActive !== false);
-      const g3 = banners.find(b => b.tag === "GALLERY_3" && b.isActive !== false);
-      const g4 = banners.find(b => b.tag === "GALLERY_4" && b.isActive !== false);
+        if (!isMounted) return;
 
-      setGallery(prev => ({
-        leftTall: g1 ? {
-          id: prev.leftTall.id,
-          title: g1.title || prev.leftTall.title,
-          href: g1.buttonLink || prev.leftTall.href,
-          image: g1.image || prev.leftTall.image,
-          alt: `${g1.title || prev.leftTall.title} — Modest Studio Signature Gallery`,
-        } : prev.leftTall,
-        rightTop: g2 ? {
-          id: prev.rightTop.id,
-          title: g2.title || prev.rightTop.title,
-          href: g2.buttonLink || prev.rightTop.href,
-          image: g2.image || prev.rightTop.image,
-          alt: `${g2.title || prev.rightTop.title} — Modest Studio Signature Gallery`,
-        } : prev.rightTop,
-        rightBottom: g3 ? {
-          id: prev.rightBottom.id,
-          title: g3.title || prev.rightBottom.title,
-          href: g3.buttonLink || prev.rightBottom.href,
-          image: g3.image || prev.rightBottom.image,
-          alt: `${g3.title || prev.rightBottom.title} — Modest Studio Signature Gallery`,
-        } : prev.rightBottom,
-        desktopRightTall: g4 ? {
-          id: prev.desktopRightTall.id,
-          title: g4.title || prev.desktopRightTall.title,
-          href: g4.buttonLink || prev.desktopRightTall.href,
-          image: g4.image || prev.desktopRightTall.image,
-          alt: `${g4.title || prev.desktopRightTall.title} — Modest Studio Signature Gallery`,
-        } : prev.desktopRightTall,
-      }));
-    }).catch(() => {});
+        if (catsRes && Array.isArray(catsRes) && catsRes.length > 0) {
+          setCategories(
+            catsRes.map((cat: any) => ({
+              id: String(cat.id),
+              name: cat.name,
+              slug: cat.slug || cat.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+              image: cat.image || cat.imageUrl || cat.img || cat.thumbnail || "",
+              description: cat.description || "",
+            }))
+          );
+        }
 
+        if (prodsRes?.items && Array.isArray(prodsRes.items)) {
+          setProducts(prodsRes.items.map(mapBackendProductToProduct));
+        }
+      } catch (err) {
+        console.warn("[EditorialGalleryBanner] Error fetching gallery items:", err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    }
+
+    loadData();
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [categories.length, products.length]);
 
-  const { leftTall, rightTop, rightBottom, desktopRightTall } = gallery;
+  // Construct dynamic cards from live categories or products
+  const cards: GalleryCardItem[] = React.useMemo(() => {
+    if (categories.length >= 3) {
+      // Prioritize categories with dynamic image resolution
+      return categories.slice(0, 4).map((cat) => {
+        const resolvedImg = getDynamicCategoryImage(cat, products) || "/banners/category-highlights-banner.jpg";
+        return {
+          id: cat.id,
+          title: cat.name,
+          subtitle: cat.description ? cat.description.slice(0, 45) : "Exclusive Edition",
+          href: `/category/${cat.slug}`,
+          image: resolvedImg,
+          ariaLabel: `Explore ${cat.name} Collection`,
+        };
+      });
+    }
+
+    if (products.length >= 3) {
+      return products.slice(0, 4).map((p) => ({
+        id: String(p.id),
+        title: p.name,
+        subtitle: p.brand || "Modest Studio",
+        href: `/product/${p.id}`,
+        image: p.image || "/banners/top-promo-banner.jpg",
+        ariaLabel: `View ${p.name}`,
+      }));
+    }
+
+    return [];
+  }, [categories, products]);
+
+  // Loading skeleton state
+  if (loading && cards.length === 0) {
+    return (
+      <section className="w-full px-3 sm:px-6 my-10 sm:my-20 relative block clear-both" aria-label="Loading Visual Gallery">
+        <div className="w-full h-auto grid grid-cols-2 md:grid-cols-12 gap-2.5 sm:gap-4.5 animate-pulse">
+          <div className="col-span-1 md:col-span-4 h-[340px] sm:h-[440px] md:h-[620px] lg:h-[680px] bg-gray-200 dark:bg-white/5 rounded-[2px]" />
+          <div className="col-span-1 md:col-span-4 flex flex-col gap-2.5 sm:gap-4.5 h-[340px] sm:h-[440px] md:h-[620px] lg:h-[680px]">
+            <div className="flex-1 bg-gray-200 dark:bg-white/5 rounded-[2px]" />
+            <div className="flex-1 bg-gray-200 dark:bg-white/5 rounded-[2px]" />
+          </div>
+          <div className="hidden md:block md:col-span-4 h-[420px] sm:h-[480px] md:h-[620px] lg:h-[680px] bg-gray-200 dark:bg-white/5 rounded-[2px]" />
+        </div>
+      </section>
+    );
+  }
+
+  // If no dynamic cards available, return null
+  if (cards.length === 0) {
+    return null;
+  }
+
+  const card1 = cards[0];
+  const card2 = cards[1];
+  const card3 = cards[2];
+  const card4 = cards[3] || cards[0];
 
   return (
-    <section className="w-full max-w-full px-3 sm:px-6 my-10 sm:my-20 relative block clear-both overflow-hidden" aria-label="Signature Visual Gallery">
+    <section className="w-full px-3 sm:px-6 my-10 sm:my-20 relative block clear-both" aria-label="Signature Visual Gallery">
       {/* Mobile-first Mosaic Gallery: 2-column asymmetrical on mobile (<md), 3-column on desktop (md+) */}
       <div className="w-full h-auto grid grid-cols-2 md:grid-cols-12 gap-2.5 sm:gap-4.5">
         
         {/* Column 1: Left Tall Vertical Card — Full height on mobile & desktop */}
-        <div className="col-span-1 md:col-span-4 h-[340px] sm:h-[440px] md:h-[620px] lg:h-[680px]">
-          <Link
-            href={leftTall.href}
-            className="group relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
-            aria-label={leftTall.alt}
-          >
-            <img
-              src={leftTall.image}
-              alt={leftTall.alt}
-              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (!target.src.includes("/banners/top-promo-banner.jpg")) {
-                  target.src = "/banners/top-promo-banner.jpg";
-                }
-              }}
-            />
-            {/* Subtle Gradient & Floating Circular Arrow Button */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end justify-between p-3.5 sm:p-5">
-              <span className="font-serif text-sm sm:text-base md:text-lg font-semibold text-white drop-shadow-md">
-                {leftTall.title}
-              </span>
-              <div className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-                </svg>
+        {card1 && (
+          <div className="col-span-1 md:col-span-4 h-[340px] sm:h-[440px] md:h-[620px] lg:h-[680px]">
+            <Link
+              href={card1.href}
+              className="group relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
+              aria-label={card1.ariaLabel}
+            >
+              <img
+                src={card1.image}
+                alt={`${card1.title} | Modest Studio`}
+                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes("/banners/top-promo-banner.jpg")) {
+                    target.src = "/banners/top-promo-banner.jpg";
+                  }
+                }}
+              />
+              {/* Subtle Gradient & Floating Circular Arrow Button */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent flex items-end justify-between p-3.5 sm:p-5">
+                <span className="font-serif text-sm sm:text-base md:text-lg font-semibold text-white drop-shadow-md truncate pr-2">
+                  {card1.title}
+                </span>
+                <div className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+                  <Icon icon="lucide:chevron-right" className="w-4 h-4 sm:w-5 sm:h-5 text-mb-primary" />
+                </div>
               </div>
-            </div>
-          </Link>
-        </div>
+            </Link>
+          </div>
+        )}
 
         {/* Column 2: 2 Stacked Cards — Top & Bottom on mobile & desktop */}
         <div className="col-span-1 md:col-span-4 flex flex-col gap-2.5 sm:gap-4.5 h-[340px] sm:h-[440px] md:h-[620px] lg:h-[680px]">
           {/* Top Card */}
-          <Link
-            href={rightTop.href}
-            className="group flex-1 relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
-            aria-label={rightTop.alt}
-          >
-            <img
-              src={rightTop.image}
-              alt={rightTop.alt}
-              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (!target.src.includes("/banners/category-highlights-banner.jpg")) {
-                  target.src = "/banners/category-highlights-banner.jpg";
-                }
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end justify-between p-3 sm:p-4">
-              <span className="font-serif text-xs sm:text-sm md:text-base font-semibold text-white drop-shadow-md">
-                {rightTop.title}
-              </span>
-              <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
-                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-                </svg>
+          {card2 && (
+            <Link
+              href={card2.href}
+              className="group flex-1 relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
+              aria-label={card2.ariaLabel}
+            >
+              <img
+                src={card2.image}
+                alt={`${card2.title} | Modest Studio`}
+                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes("/banners/category-highlights-banner.jpg")) {
+                    target.src = "/banners/category-highlights-banner.jpg";
+                  }
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent flex items-end justify-between p-3 sm:p-4">
+                <span className="font-serif text-xs sm:text-sm md:text-base font-semibold text-white drop-shadow-md truncate pr-2">
+                  {card2.title}
+                </span>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+                  <Icon icon="lucide:chevron-right" className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-mb-primary" />
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          )}
 
           {/* Bottom Card */}
-          <Link
-            href={rightBottom.href}
-            className="group flex-1 relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
-            aria-label={rightBottom.alt}
-          >
-            <img
-              src={rightBottom.image}
-              alt={rightBottom.alt}
-              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (!target.src.includes("/banners/timeless-beauty-banner.jpg")) {
-                  target.src = "/banners/timeless-beauty-banner.jpg";
-                }
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end justify-between p-3 sm:p-4">
-              <span className="font-serif text-xs sm:text-sm md:text-base font-semibold text-white drop-shadow-md">
-                {rightBottom.title}
-              </span>
-              <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
-                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-                </svg>
+          {card3 && (
+            <Link
+              href={card3.href}
+              className="group flex-1 relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
+              aria-label={card3.ariaLabel}
+            >
+              <img
+                src={card3.image}
+                alt={`${card3.title} | Modest Studio`}
+                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes("/banners/timeless-beauty-banner.jpg")) {
+                    target.src = "/banners/timeless-beauty-banner.jpg";
+                  }
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent flex items-end justify-between p-3 sm:p-4">
+                <span className="font-serif text-xs sm:text-sm md:text-base font-semibold text-white drop-shadow-md truncate pr-2">
+                  {card3.title}
+                </span>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+                  <Icon icon="lucide:chevron-right" className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-mb-primary" />
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          )}
         </div>
 
         {/* Column 3: Right Tall Vertical Card — Only on desktop (md+), hidden on mobile (<md) */}
-        <div className="hidden md:block md:col-span-4 h-[420px] sm:h-[480px] md:h-[620px] lg:h-[680px]">
-          <Link
-            href={desktopRightTall.href}
-            className="group relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
-            aria-label={desktopRightTall.alt}
-          >
-            <img
-              src={desktopRightTall.image}
-              alt={desktopRightTall.alt}
-              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (!target.src.includes("/banners/top-promo-banner.jpg")) {
-                  target.src = "/banners/top-promo-banner.jpg";
-                }
-              }}
-            />
-            {/* Gradient & Floating Circular Arrow Button */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end justify-between p-5">
-              <span className="font-serif text-base sm:text-lg font-semibold text-white drop-shadow-md">
-                {desktopRightTall.title}
-              </span>
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-neutral-900 shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-                </svg>
+        {card4 && (
+          <div className="hidden md:block md:col-span-4 h-[420px] sm:h-[480px] md:h-[620px] lg:h-[680px]">
+            <Link
+              href={card4.href}
+              className="group relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
+              aria-label={card4.ariaLabel}
+            >
+              <img
+                src={card4.image}
+                alt={`${card4.title} | Modest Studio`}
+                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes("/banners/top-promo-banner.jpg")) {
+                    target.src = "/banners/top-promo-banner.jpg";
+                  }
+                }}
+              />
+              {/* Gradient & Floating Circular Arrow Button */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent flex items-end justify-between p-5">
+                <span className="font-serif text-base sm:text-lg font-semibold text-white drop-shadow-md truncate pr-2">
+                  {card4.title}
+                </span>
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-neutral-900 shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+                  <Icon icon="lucide:chevron-right" className="w-4 h-4 sm:w-5 sm:h-5 text-black" />
+                </div>
               </div>
-            </div>
-          </Link>
-        </div>
+            </Link>
+          </div>
+        )}
 
       </div>
     </section>

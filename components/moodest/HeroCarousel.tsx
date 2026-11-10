@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
 import { bannerAPI } from "@/lib/api";
 import type { Banner } from "@/lib/types";
 
@@ -175,11 +176,9 @@ export default function HeroCarousel({ initialBanners }: HeroCarouselProps) {
           type="button"
           onClick={prevSlide}
           aria-label="Previous Hero Image"
-          className="hidden sm:flex absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-mb-surface/90 hover:bg-mb-surface text-mb-text border border-mb-border shadow-xl backdrop-blur-sm items-center justify-center transition-all hover:scale-105 active:scale-95 focus:outline-none"
+          className="hidden sm:flex absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-mb-surface/90 hover:bg-mb-surface text-mb-text border border-mb-border shadow-xl backdrop-blur-sm items-center justify-center transition-all hover:scale-105 active:scale-95 focus:outline-none cursor-pointer"
         >
-          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-          </svg>
+          <Icon icon="lucide:chevron-left" className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
         </button>
       )}
 
@@ -189,11 +188,9 @@ export default function HeroCarousel({ initialBanners }: HeroCarouselProps) {
           type="button"
           onClick={nextSlide}
           aria-label="Next Hero Image"
-          className="hidden sm:flex absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-mb-surface/90 hover:bg-mb-surface text-mb-text border border-mb-border shadow-xl backdrop-blur-sm items-center justify-center transition-all hover:scale-105 active:scale-95 focus:outline-none"
+          className="hidden sm:flex absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-mb-surface/90 hover:bg-mb-surface text-mb-text border border-mb-border shadow-xl backdrop-blur-sm items-center justify-center transition-all hover:scale-105 active:scale-95 focus:outline-none cursor-pointer"
         >
-          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-          </svg>
+          <Icon icon="lucide:chevron-right" className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
         </button>
       )}
 

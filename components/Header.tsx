@@ -7,6 +7,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Icon } from "@iconify/react";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -14,35 +15,11 @@ import BrandLogo from "@/components/BrandLogo";
 import { categoryAPI, productAPI, mapBackendProductToProduct } from "@/lib/api";
 import type { Product } from "@/components/ProductCard";
 
-/* ── SVG icons ────────────────────────────────────────────────── */
-const MobileIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-    <line x1="12" y1="18" x2="12.01" y2="18" />
-  </svg>
-);
-const LocationIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-    <circle cx="12" cy="10" r="3" />
-  </svg>
-);
-const GiftCardIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <polyline points="20 12 20 22 4 22 4 12" />
-    <rect x="2" y="7" width="20" height="5" />
-    <line x1="12" y1="22" x2="12" y2="7" />
-    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
-    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
-  </svg>
-);
-const HelpIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="12" cy="12" r="10" />
-    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-    <line x1="12" y1="17" x2="12.01" y2="17" />
-  </svg>
-);
+/* ── Iconify icons ────────────────────────────────────────────── */
+const MobileIcon = () => <Icon icon="lucide:smartphone" className="w-3 h-3" />;
+const LocationIcon = () => <Icon icon="lucide:map-pin" className="w-3 h-3" />;
+const GiftCardIcon = () => <Icon icon="lucide:gift" className="w-3 h-3" />;
+const HelpIcon = () => <Icon icon="lucide:help-circle" className="w-3 h-3" />;
 
 /* ── Data — exact Modest Studio labels from snapshots ─────────────────── */
 const TOP_LINKS = [
@@ -69,38 +46,11 @@ const DEFAULT_CATEGORY_NAV: NavCategoryItem[] = [
   { label: "Open Abaya Edit", href: "/category/open-abaya-edit" },
   { label: "All Collections", href: "/category/all", accent: true },
 ];
-const SearchIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-  </svg>
-);
-const BagIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-    <line x1="3" y1="6" x2="21" y2="6" />
-    <path d="M16 10a4 4 0 01-8 0" />
-  </svg>
-);
-const ChevronDown = () => (
-  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <polyline points="6 9 12 15 18 9" />
-  </svg>
-);
-const CloseIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-);
-const MenuIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
-  </svg>
-);
+const SearchIcon = () => <Icon icon="lucide:search" className="w-4 h-4" />;
+const BagIcon = () => <Icon icon="lucide:shopping-bag" className="w-[18px] h-[18px]" />;
+const ChevronDown = () => <Icon icon="lucide:chevron-down" className="w-2.5 h-2.5" />;
+const CloseIcon = () => <Icon icon="lucide:x" className="w-[18px] h-[18px]" />;
+const MenuIcon = () => <Icon icon="lucide:menu" className="w-5 h-5" />;
 
 /* ── Component ────────────────────────────────────────────────── */
 export default function Header() {
@@ -421,10 +371,7 @@ export default function Header() {
                     aria-label="My Account"
                     className="md:hidden p-1.5 text-mb-body hover:text-mb-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded-[2px] flex-shrink-0"
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                      <circle cx="12" cy="7" r="4" />
-                    </svg>
+                    <Icon icon="lucide:user" className="w-5 h-5" />
                   </Link>
                 </>
               ) : (
@@ -435,10 +382,7 @@ export default function Header() {
                     aria-label="Sign in"
                     className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-mb-bg bg-mb-primary hover:bg-mb-primary-hover transition-colors rounded-[2px] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent flex-shrink-0"
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                      <circle cx="12" cy="7" r="4" />
-                    </svg>
+                    <Icon icon="lucide:user" className="w-3.5 h-3.5" />
                     <span>Sign in</span>
                   </Link>
 
@@ -448,10 +392,7 @@ export default function Header() {
                     aria-label="Sign in"
                     className="md:hidden p-1.5 text-mb-body hover:text-mb-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded-[2px] flex-shrink-0"
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                      <circle cx="12" cy="7" r="4" />
-                    </svg>
+                    <Icon icon="lucide:user" className="w-5 h-5" />
                     <span className="sr-only">Sign in</span>
                   </Link>
                 </>
@@ -461,10 +402,7 @@ export default function Header() {
               <Link href="/wishlist"
                 aria-label={`Wishlist, ${wishlistCount} items`}
                 className="relative hidden md:flex p-2 text-mb-body hover:text-mb-accent-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-                </svg>
+                <Icon icon="lucide:heart" className="w-[18px] h-[18px]" />
                 {wishlistCount > 0 && (
                   <span aria-hidden="true"
                     className="absolute top-0 right-0 w-4 h-4 bg-mb-primary text-mb-bg text-[9px] font-bold rounded-full flex items-center justify-center">
@@ -514,10 +452,7 @@ export default function Header() {
                 className="flex-1 min-w-0 bg-transparent text-xs text-mb-text placeholder-mb-placeholder outline-none"
               />
               <button type="button" aria-label="Visual Search" className="text-mb-primary hover:text-mb-accent-deep transition-colors p-1 flex-shrink-0">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="3" strokeWidth="2" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                </svg>
+                <Icon icon="lucide:camera" className="w-4 h-4" />
               </button>
             </form>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
 import ProductCard from "@/components/ProductCard";
 import { productAPI, mapBackendProductToProduct } from "@/lib/api";
 import type { Product } from "@/lib/types";
@@ -131,22 +132,18 @@ export default function TrendingNowSection({ initialProducts }: TrendingNowSecti
                 onClick={scrollPrev}
                 disabled={activeIndex === 0}
                 aria-label="Previous trending items"
-                className="w-8 h-8 rounded-full bg-mb-surface border border-mb-border text-mb-text hover:bg-mb-primary hover:text-white transition-all flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none shadow-xs"
+                className="w-8 h-8 rounded-full bg-mb-surface border border-mb-border text-mb-text hover:bg-mb-primary hover:text-white transition-all flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none shadow-xs cursor-pointer"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
-                </svg>
+                <Icon icon="lucide:chevron-left" className="w-4 h-4" />
               </button>
               <button
                 type="button"
                 onClick={scrollNext}
                 disabled={activeIndex >= products.length - 1}
                 aria-label="Next trending items"
-                className="w-8 h-8 rounded-full bg-mb-surface border border-mb-border text-mb-text hover:bg-mb-primary hover:text-white transition-all flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none shadow-xs"
+                className="w-8 h-8 rounded-full bg-mb-surface border border-mb-border text-mb-text hover:bg-mb-primary hover:text-white transition-all flex items-center justify-center disabled:opacity-30 disabled:pointer-events-none shadow-xs cursor-pointer"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-                </svg>
+                <Icon icon="lucide:chevron-right" className="w-4 h-4" />
               </button>
             </div>
           )}

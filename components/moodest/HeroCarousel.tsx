@@ -132,7 +132,7 @@ export default function HeroCarousel({ initialBanners }: HeroCarouselProps) {
 
   return (
     <div
-      className="relative w-full h-[62vh] sm:h-[70vh] md:h-[78vh] lg:h-[84vh] min-h-[440px] sm:min-h-[500px] md:min-h-[540px] max-h-[840px] rounded-t-[20px] sm:rounded-t-[28px] overflow-hidden select-none bg-neutral-950"
+      className="relative w-full h-[62vh] sm:h-[70vh] md:h-[78vh] lg:h-[84vh] min-h-[440px] sm:min-h-[500px] md:min-h-[540px] max-h-[840px] overflow-hidden select-none bg-neutral-950"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       role="region"

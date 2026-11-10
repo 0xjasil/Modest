@@ -30,42 +30,42 @@ export default function ProductCard({ product }: { product: Product }) {
   const onAdd = (e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); addItem(product); };
   const onWish = (e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(product); };
 
-  const salePrice = product.discount
-    ? Math.round(product.price * (1 - (product.discount * 0.12) / 100))
-    : null;
+  const formatPrice = (val: number) => `Rs. ${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
   return (
-    <article className="group relative flex flex-col bg-mb-surface border border-mb-border/80 rounded-[10px] sm:rounded-[12px] shadow-card hover:shadow-dropdown transition-all overflow-hidden">
+    <article className="group relative flex flex-col bg-transparent transition-all overflow-hidden select-none">
 
-      {/* ── Badges [Single Percentage Badge — Reference Image Style] ───────────────── */}
-      {product.discount ? (
-        <span className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 bg-black text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm pointer-events-none">
-          {product.discount}% OFF
-        </span>
-      ) : product.badge ? (
-        <span className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 bg-black text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm pointer-events-none">
-          {product.badge}
-        </span>
-      ) : null}
+      {/* ── Top Image Container ───────────────────────────────── */}
+      <div className="relative aspect-[3/4] w-full rounded-[14px] sm:rounded-[18px] overflow-hidden bg-mb-surface border border-mb-border/60">
+        
+        {/* Top-Left: Black Capsule Badge (Reference Image Style) */}
+        {product.discount ? (
+          <span className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-xs pointer-events-none">
+            {product.discount}% OFF
+          </span>
+        ) : product.badge ? (
+          <span className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-xs pointer-events-none">
+            {product.badge}
+          </span>
+        ) : null}
 
-      {/* ── Wishlist button [Reference Image Style: White Circle at Top-Right] ────────────────── */}
-      <button
-        type="button"
-        aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
-        aria-pressed={wishlisted}
-        onClick={onWish}
-        className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-10 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-white text-gray-900 rounded-full shadow-md transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
-      >
-        <HeartIcon filled={wishlisted} />
-      </button>
+        {/* Top-Right: White Circular Wishlist Button (Reference Image Style) */}
+        <button
+          type="button"
+          aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
+          aria-pressed={wishlisted}
+          onClick={onWish}
+          className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-10 w-8 h-8 rounded-full bg-white text-gray-900 shadow-md flex items-center justify-center transition-transform hover:scale-110 active:scale-95 focus-visible:outline-none"
+        >
+          <HeartIcon filled={wishlisted} />
+        </button>
 
-      {/* ── Link: image + details ──────────────────────────────── */}
-      <Link href={`/product/${product.id}`}
-        aria-label={`${product.brand} ${product.name}, ₹${product.price.toLocaleString()}`}
-        className="flex flex-col flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-mb-accent">
-
-        {/* Product image (Primary + Hover Thumbnail) — tall fashion aspect ratio */}
-        <div className="relative bg-mb-surface overflow-hidden aspect-[3/4] sm:aspect-[4/5] w-full">
+        {/* Link wrapping image only */}
+        <Link
+          href={`/product/${product.id}`}
+          aria-label={`${product.brand} ${product.name}, ${formatPrice(product.price)}`}
+          className="block w-full h-full relative cursor-pointer"
+        >
           <img
             src={product.image}
             alt={`${product.name} — ${product.brand || "Modest Studio"} Luxury Designer Abaya`}
@@ -94,75 +94,58 @@ export default function ProductCard({ product }: { product: Product }) {
               className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             />
           )}
-        </div>
+        </Link>
+      </div>
 
-        {/* Info block */}
-        <div className="flex flex-col flex-1 p-3 pt-2">
-
-          {/* Brand — Jost uppercase light tracking */}
-          <p className="text-[11px] font-medium text-mb-muted uppercase tracking-[0.15em] truncate mb-1">
-            {product.brand}
-          </p>
-
-          {/* Title — Luxury Serif */}
-          <h2 className="font-serif text-[14px] font-semibold text-mb-text line-clamp-2 mb-1.5 leading-snug"
-            title={product.name}>
+      {/* ── Product Details Below Image (Exact Reference Image Typography & Plus Button) ───────────────── */}
+      <div className="pt-2 sm:pt-2.5 px-0.5 flex items-start justify-between gap-2">
+        <Link href={`/product/${product.id}`} className="flex-1 min-w-0 group/link">
+          {/* Title: Decreased font size, clean & modern */}
+          <h2 className="text-xs sm:text-[13px] font-medium text-mb-text group-hover/link:text-mb-primary line-clamp-1 mb-0.5 transition-colors">
             {product.name}
           </h2>
 
-          {/* Prices — Single percentage rule: discount already displayed on top badge */}
-          <div aria-hidden="true" className="flex items-baseline gap-2 flex-wrap mb-1.5">
-            <span className="text-[14px] font-bold text-mb-text">
-              ₹{product.price.toLocaleString()}
-            </span>
-            {product.originalPrice && (
-              <span className="text-[12px] text-mb-muted line-through">
-                ₹{product.originalPrice.toLocaleString()}
-              </span>
-            )}
-          </div>
+          {/* Regular Price */}
+          <p className="text-xs sm:text-[13px] font-semibold text-mb-text leading-tight">
+            {formatPrice(product.price)}
+          </p>
 
-          <span className="sr-only">
-            {product.originalPrice
-              ? `Regular price ₹${product.originalPrice.toLocaleString()}. Discounted price ₹${product.price.toLocaleString()}. ${product.discount}% Off.`
-              : `Price ₹${product.price.toLocaleString()}.`}
-          </span>
-
-          {/* Star rating — Gold Deep badge */}
-          <div className="flex items-center gap-1.5 mb-2"
-            aria-label={`${product.rating} out of 5 star rating`}>
-            <span className="flex items-center gap-1 bg-mb-gold-deep text-mb-bg text-[10px] font-bold px-1.5 py-0.5 rounded-[4px] leading-none">
-              {product.rating} <StarIcon />
-            </span>
-            <span className="text-[11px] text-mb-muted">
-              ({product.reviewCount.toLocaleString()})
-            </span>
-          </div>
-
-          {/* Sale price secondary row */}
-          {salePrice && product.discount && (
-            <div className="flex items-center gap-1.5 px-2 py-1 mt-auto bg-mb-bg border border-mb-border-lite rounded-[6px]">
-              <span className="text-[10px] text-mb-muted uppercase tracking-wider">Sale</span>
-              <span className="text-[12px] font-bold text-mb-text">₹{salePrice.toLocaleString()}</span>
-              <span className="text-[10px] text-mb-accent-deep font-semibold">
-                {Math.min(product.discount + 5, 65)}% Off
-              </span>
-            </div>
+          {/* Strikethrough Original Price */}
+          {product.originalPrice && (
+            <p className="text-[10px] sm:text-[11px] text-gray-400 line-through leading-tight mt-0.5">
+              {formatPrice(product.originalPrice)}
+            </p>
           )}
-        </div>
-      </Link>
 
-      {/* ── Add to Bag CTA ─────────────────────────────────────── */}
-      <div className="p-3 pt-0">
-        <button type="button"
-          aria-label={inCart ? `${product.name} added to bag` : `Add ${product.name} to bag`}
+          {/* Red/Rust Discount Percentage */}
+          {product.discount && (
+            <p className="text-[10px] sm:text-[11px] font-bold text-[#b03a2e] dark:text-[#e06655] leading-tight mt-0.5">
+              {product.discount}% OFF
+            </p>
+          )}
+        </Link>
+
+        {/* Circular Plus Button (Reference Image Style) */}
+        <button
+          type="button"
           onClick={onAdd}
-          className={`w-full py-2 text-[12px] font-semibold rounded-[4px] sm:rounded-[6px] transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-mb-accent ${
+          aria-label={inCart ? `${product.name} in bag` : `Add ${product.name} to bag`}
+          title={inCart ? "In Bag" : "Add to Bag"}
+          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-all flex-shrink-0 mt-1 shadow-2xs ${
             inCart
-              ? "bg-mb-primary text-mb-bg border border-mb-primary"
-              : "bg-mb-primary hover:bg-mb-primary-hover text-mb-bg"
-          }`}>
-          {inCart ? "✓ Added to Bag" : "Add to Bag"}
+              ? "bg-black text-white border-black"
+              : "border-gray-300 dark:border-white/20 bg-white dark:bg-[#181818] text-gray-800 dark:text-gray-200 hover:border-black dark:hover:border-white hover:scale-105"
+          }`}
+        >
+          {inCart ? (
+            <svg className="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          ) : (
+            <svg className="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+          )}
         </button>
       </div>
 

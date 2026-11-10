@@ -1,7 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import { editorialGalleryItems } from "@/data/gallery";
 
 export default function EditorialGalleryBanner() {
+  const { leftTall, rightTop, rightBottom, desktopRightTall } = editorialGalleryItems;
+
   return (
     <section className="w-full max-w-full px-3 sm:px-6 my-10 sm:my-20 relative block clear-both overflow-hidden" aria-label="Signature Visual Gallery">
       {/* Mobile-first Mosaic Gallery: 2-column asymmetrical on mobile (<md), 3-column on desktop (md+) */}
@@ -10,13 +13,13 @@ export default function EditorialGalleryBanner() {
         {/* Column 1: Left Tall Vertical Card — Full height on mobile & desktop */}
         <div className="col-span-1 md:col-span-4 h-[340px] sm:h-[440px] md:h-[620px] lg:h-[680px]">
           <Link
-            href="/category/syrian-collection"
+            href={leftTall.href}
             className="group relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
-            aria-label="Explore Syrian Collection"
+            aria-label={leftTall.alt}
           >
             <img
-              src="/abaya/hero/hero-6.jpg"
-              alt="Syrian Collection — Modest Silhouettes & Artisanal Handwork | Modest Studio"
+              src={leftTall.image}
+              alt={leftTall.alt}
               className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               onError={(e) => {
                 const target = e.currentTarget;
@@ -28,7 +31,7 @@ export default function EditorialGalleryBanner() {
             {/* Subtle Gradient & Floating Circular Arrow Button */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end justify-between p-3.5 sm:p-5">
               <span className="font-serif text-sm sm:text-base md:text-lg font-semibold text-white drop-shadow-md">
-                Syrian Edits
+                {leftTall.title}
               </span>
               <div className="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
                 <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,13 +46,13 @@ export default function EditorialGalleryBanner() {
         <div className="col-span-1 md:col-span-4 flex flex-col gap-2.5 sm:gap-4.5 h-[340px] sm:h-[440px] md:h-[620px] lg:h-[680px]">
           {/* Top Card */}
           <Link
-            href="/category/the-classics"
+            href={rightTop.href}
             className="group flex-1 relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
-            aria-label="Explore The Classics Collection"
+            aria-label={rightTop.alt}
           >
             <img
-              src="/abaya/hero/hero-2.jpg"
-              alt="The Classics — Silk & Midnight Nida Classic Abayas | Modest Studio"
+              src={rightTop.image}
+              alt={rightTop.alt}
               className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               onError={(e) => {
                 const target = e.currentTarget;
@@ -60,7 +63,7 @@ export default function EditorialGalleryBanner() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end justify-between p-3 sm:p-4">
               <span className="font-serif text-xs sm:text-sm md:text-base font-semibold text-white drop-shadow-md">
-                The Classics
+                {rightTop.title}
               </span>
               <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
                 <svg className="w-3 h-3 sm:w-4 sm:h-4 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,13 +75,13 @@ export default function EditorialGalleryBanner() {
 
           {/* Bottom Card */}
           <Link
-            href="/category/the-luxe-edit"
+            href={rightBottom.href}
             className="group flex-1 relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
-            aria-label="Explore The Luxe Edit"
+            aria-label={rightBottom.alt}
           >
             <img
-              src="/abaya/hero/hero-3.jpg"
-              alt="The Luxe Edit — Earth Tones & Silk Organza Edits | Modest Studio"
+              src={rightBottom.image}
+              alt={rightBottom.alt}
               className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               onError={(e) => {
                 const target = e.currentTarget;
@@ -89,7 +92,7 @@ export default function EditorialGalleryBanner() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end justify-between p-3 sm:p-4">
               <span className="font-serif text-xs sm:text-sm md:text-base font-semibold text-white drop-shadow-md">
-                The Luxe Edit
+                {rightBottom.title}
               </span>
               <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-mb-surface text-mb-primary border border-mb-border shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
                 <svg className="w-3 h-3 sm:w-4 sm:h-4 text-mb-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,13 +106,13 @@ export default function EditorialGalleryBanner() {
         {/* Column 3: Right Tall Vertical Card — Only on desktop (md+), hidden on mobile (<md) */}
         <div className="hidden md:block md:col-span-4 h-[420px] sm:h-[480px] md:h-[620px] lg:h-[680px]">
           <Link
-            href="/category/occasion-wear"
+            href={desktopRightTall.href}
             className="group relative block w-full h-full overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown transition-all duration-300"
-            aria-label="Explore Occasion Wear"
+            aria-label={desktopRightTall.alt}
           >
             <img
-              src="/abaya/hero/hero-4.jpg"
-              alt="Occasion Wear — Bespoke Celebratory Cuts & Opulent Drapes | Modest Studio"
+              src={desktopRightTall.image}
+              alt={desktopRightTall.alt}
               className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               onError={(e) => {
                 const target = e.currentTarget;
@@ -121,7 +124,7 @@ export default function EditorialGalleryBanner() {
             {/* Gradient & Floating Circular Arrow Button */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end justify-between p-5">
               <span className="font-serif text-base sm:text-lg font-semibold text-white drop-shadow-md">
-                Occasion Wear
+                {desktopRightTall.title}
               </span>
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-neutral-900 shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">

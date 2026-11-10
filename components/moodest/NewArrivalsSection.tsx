@@ -61,7 +61,7 @@ export default function NewArrivalsSection({ initialProducts }: NewArrivalsSecti
   }, []);
 
   return (
-    <section className="w-full px-3 sm:px-6 my-10" aria-label="New Arrivals">
+    <section className="w-full max-w-full px-3 sm:px-6 my-10 overflow-hidden" aria-label="New Arrivals">
       {/* Section Header with Refined Header Size & Underlined DISCOVER MORE */}
       <div className="flex items-center justify-between mb-3.5 sm:mb-6">
         <div>

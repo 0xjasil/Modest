@@ -203,7 +203,7 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
   if (categories.length === 0) return null;
 
   return (
-    <section className="w-full px-3 sm:px-6 my-10 relative group/section" aria-label="Explore Abaya Categories">
+    <section className="w-full max-w-full px-3 sm:px-6 my-10 relative group/section overflow-hidden" aria-label="Explore Abaya Categories">
       {/* Header with Dynamic Database Categories Subtitle & Underlined DISCOVER MORE */}
       <div className="flex items-center justify-between mb-3.5 sm:mb-6">
         <div>

@@ -105,7 +105,7 @@ export default function TrendingNowSection({ initialProducts }: TrendingNowSecti
   };
 
   return (
-    <section className="w-full px-3 sm:px-6 my-10 sm:my-16 relative block clear-both" aria-label="Trending Now">
+    <section className="w-full max-w-full px-3 sm:px-6 my-10 sm:my-16 relative block clear-both overflow-hidden" aria-label="Trending Now">
       {/* Section Header with Refined Header Size & Underlined DISCOVER MORE */}
       <div className="flex items-center justify-between mb-3.5 sm:mb-6">
         <div>

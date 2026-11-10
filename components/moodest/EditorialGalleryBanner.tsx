@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function EditorialGalleryBanner() {
   return (
-    <section className="w-full px-3 sm:px-6 my-10 sm:my-20 relative block clear-both" aria-label="Signature Visual Gallery">
+    <section className="w-full max-w-full px-3 sm:px-6 my-10 sm:my-20 relative block clear-both overflow-hidden" aria-label="Signature Visual Gallery">
       {/* Mobile-first Mosaic Gallery: 2-column asymmetrical on mobile (<md), 3-column on desktop (md+) */}
       <div className="w-full h-auto grid grid-cols-2 md:grid-cols-12 gap-2.5 sm:gap-4.5">
         

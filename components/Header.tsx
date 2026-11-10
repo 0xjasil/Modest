@@ -221,7 +221,7 @@ export default function Header() {
         Skip to main content
       </a>
 
-      <header className="sticky top-0 z-50 bg-mb-bg shadow-sm" role="banner">
+      <header className="sticky top-0 z-50 bg-mb-bg shadow-sm w-full max-w-full overflow-hidden" role="banner">
 
         {/* ══ TIER 1: Announcement + top utility links (hidden on mobile) ═════════ */}
         <div className="hidden sm:block bg-mb-surface text-mb-primary border-b border-mb-border">
@@ -254,13 +254,13 @@ export default function Header() {
         </div>
 
         {/* ══ TIER 2: Logo | Search | Actions ════ */}
-        <div className="bg-mb-bg border-b border-mb-border">
-          <div className="mx-auto max-w-content px-4 md:px-6 h-16 flex items-center gap-4">
+        <div className="bg-mb-bg border-b border-mb-border w-full max-w-full overflow-hidden">
+          <div className="mx-auto max-w-content px-2.5 sm:px-4 md:px-6 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-4 w-full">
 
             {/* Logo — brand sheet logo: increased size for mobile clarity */}
             <Link href="/" aria-label="Modest Studio — homepage"
-              className="flex-shrink-0 mr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded flex items-center">
-              <BrandLogo variant="secondary" className="h-11 sm:h-12 md:h-12 w-auto min-w-[140px] max-w-[220px] md:max-w-[260px]" />
+              className="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded flex items-center">
+              <BrandLogo variant="secondary" className="h-8 sm:h-10 md:h-12 w-auto max-w-[125px] sm:max-w-[180px] md:max-w-[260px]" />
             </Link>
 
             {/* Search — "Search on Modest Studio" placeholder from snapshot */}
@@ -345,13 +345,7 @@ export default function Header() {
             </div>
 
             {/* Right actions: Sign in + Shopping Bag (exact labels from snapshot) */}
-            <div className="flex items-center gap-1 ml-auto md:ml-0">
-
-              {/* Mobile search */}
-              <button type="button" aria-label="Search"
-                className="md:hidden p-2 text-mb-body hover:text-mb-accent-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded">
-                <SearchIcon />
-              </button>
+            <div className="flex items-center gap-1 sm:gap-1.5 ml-auto flex-shrink-0">
 
               {/* Authenticated user menu or Sign in link */}
               {isAuthenticated && user ? (
@@ -425,7 +419,7 @@ export default function Header() {
                   <Link
                     href="/orders"
                     aria-label="My Account"
-                    className="md:hidden p-2 text-mb-body hover:text-mb-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded-[2px]"
+                    className="md:hidden p-1.5 text-mb-body hover:text-mb-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded-[2px] flex-shrink-0"
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -437,9 +431,9 @@ export default function Header() {
                 <Link
                   href="/login"
                   aria-label="Sign in"
-                  className="inline-flex items-center gap-1 px-2.5 sm:px-4 py-1.5 text-xs sm:text-[13px] font-semibold text-mb-bg bg-mb-primary hover:bg-mb-primary-hover transition-colors rounded-[2px] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
+                  className="inline-flex items-center gap-1 px-2 sm:px-3.5 py-1 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-mb-bg bg-mb-primary hover:bg-mb-primary-hover transition-colors rounded-[2px] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent flex-shrink-0"
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                   </svg>
@@ -466,7 +460,7 @@ export default function Header() {
               {/* Shopping Bag — exact label from snapshot */}
               <Link href="/cart"
                 aria-label={`Shopping Bag, ${itemCount} items`}
-                className="relative flex items-center gap-1.5 p-2 text-mb-body hover:text-mb-accent-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded">
+                className="relative flex items-center gap-1.5 p-1.5 sm:p-2 text-mb-body hover:text-mb-accent-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded flex-shrink-0">
                 <BagIcon />
                 <span aria-hidden="true"
                   className="absolute top-0 right-0 w-4 h-4 bg-mb-primary text-mb-bg text-[9px] font-bold rounded-full flex items-center justify-center">
@@ -480,7 +474,7 @@ export default function Header() {
                 aria-expanded={menuOpen}
                 aria-controls="mobile-nav"
                 onClick={() => setMenuOpen(v => !v)}
-                className="lg:hidden p-2 text-mb-body hover:text-mb-accent-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded">
+                className="lg:hidden p-1.5 sm:p-2 text-mb-body hover:text-mb-accent-deep transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded flex-shrink-0">
                 {menuOpen ? <CloseIcon /> : <MenuIcon />}
               </button>
             </div>

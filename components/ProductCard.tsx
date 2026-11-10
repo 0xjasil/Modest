@@ -70,7 +70,7 @@ export default function ProductCard({ product }: { product: Product }) {
         className="flex flex-col flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-mb-accent">
 
         {/* Product image (Primary + Hover Thumbnail) — tall fashion aspect ratio */}
-        <div className="relative bg-mb-surface overflow-hidden aspect-[3/4] sm:aspect-[4/5] w-full flex items-center justify-center p-2">
+        <div className="relative bg-mb-surface overflow-hidden aspect-[3/4] sm:aspect-[4/5] w-full">
           <img
             src={product.image}
             alt={`${product.name} — ${product.brand || "Modest Studio"} Luxury Designer Abaya`}
@@ -81,7 +81,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 target.src = "/abaya/products/abaya-1.jpg";
               }
             }}
-            className={`w-full h-full object-contain object-center rounded-[2px] transition-all duration-500 ${
+            className={`w-full h-full object-cover object-top transition-all duration-700 ${
               product.images && product.images[1] ? "group-hover:opacity-0" : "group-hover:scale-105"
             }`}
           />
@@ -96,7 +96,7 @@ export default function ProductCard({ product }: { product: Product }) {
                   target.src = "/abaya/products/abaya-1.jpg";
                 }
               }}
-              className="absolute inset-0 w-full h-full object-contain object-center p-2 rounded-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             />
           )}
         </div>

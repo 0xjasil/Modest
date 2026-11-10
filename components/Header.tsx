@@ -260,7 +260,7 @@ export default function Header() {
             {/* Logo — brand sheet logo: increased size for mobile clarity */}
             <Link href="/" aria-label="Modest Studio — homepage"
               className="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded flex items-center">
-              <BrandLogo variant="secondary" className="h-8 sm:h-10 md:h-12 w-auto max-w-[125px] sm:max-w-[180px] md:max-w-[260px]" />
+              <BrandLogo variant="secondary" className="h-9 sm:h-10 md:h-12 w-auto max-w-[155px] sm:max-w-[190px] md:max-w-[260px] object-contain object-left" />
             </Link>
 
             {/* Search — "Search on Modest Studio" placeholder from snapshot */}
@@ -428,17 +428,33 @@ export default function Header() {
                   </Link>
                 </>
               ) : (
-                <Link
-                  href="/login"
-                  aria-label="Sign in"
-                  className="inline-flex items-center gap-1 px-2 sm:px-3.5 py-1 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-mb-bg bg-mb-primary hover:bg-mb-primary-hover transition-colors rounded-[2px] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent flex-shrink-0"
-                >
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
-                  <span>Sign in</span>
-                </Link>
+                <>
+                  {/* Desktop Sign in button */}
+                  <Link
+                    href="/login"
+                    aria-label="Sign in"
+                    className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-mb-bg bg-mb-primary hover:bg-mb-primary-hover transition-colors rounded-[2px] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent flex-shrink-0"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    <span>Sign in</span>
+                  </Link>
+
+                  {/* Mobile Sign in — Suitable user silhouette symbol */}
+                  <Link
+                    href="/login"
+                    aria-label="Sign in"
+                    className="md:hidden p-1.5 text-mb-body hover:text-mb-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded-[2px] flex-shrink-0"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    <span className="sr-only">Sign in</span>
+                  </Link>
+                </>
               )}
 
               {/* Wishlist */}

@@ -64,37 +64,37 @@ export default function RegisterPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen bg-white">
-        <div className="mx-auto max-w-content px-4 md:px-6 py-12">
+      <main id="main-content" className="min-h-screen bg-mb-bg py-8 sm:py-16">
+        <div className="mx-auto max-w-content px-4 md:px-6">
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-1.5 text-xs text-[#595E63]" role="list">
+          <nav aria-label="Breadcrumb" className="mb-6 max-w-md mx-auto">
+            <ol className="flex items-center gap-1.5 text-xs text-mb-muted" role="list">
               <li role="listitem">
-                <Link href="/" className="hover:text-[#E80071] hover:underline">
+                <Link href="/" className="hover:text-mb-primary transition-colors">
                   Home
                 </Link>
               </li>
-              <li role="listitem" aria-hidden="true">/</li>
-              <li role="listitem" aria-current="page">
+              <li role="listitem" aria-hidden="true" className="text-mb-border">/</li>
+              <li role="listitem" aria-current="page" className="text-mb-text font-semibold">
                 Create Account
               </li>
             </ol>
           </nav>
 
-          {/* Register Container */}
-          <div className="max-w-md mx-auto">
-            <h1 className="text-2xl font-semibold text-[#000000] mb-2">Create Account</h1>
-            <p className="text-sm text-[#595E63] mb-6">
+          {/* Register Container in Brand Theme */}
+          <div className="max-w-md mx-auto bg-mb-surface border border-mb-border rounded-[2px] shadow-2xs p-6 sm:p-8">
+            <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-mb-text mb-1.5">Create Account</h1>
+            <p className="text-xs sm:text-sm text-mb-body mb-6">
               Already have an account?{" "}
-              <Link href="/login" className="text-[#E80071] font-medium hover:underline">
+              <Link href="/login" className="text-mb-primary font-semibold hover:underline">
                 Sign in
               </Link>
             </p>
 
             {/* Error Message */}
             {displayError && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-sm text-red-700">{displayError}</p>
+              <div className="mb-4 p-3 bg-mb-error/10 border border-mb-error/30 rounded-[2px]">
+                <p className="text-xs sm:text-sm text-mb-error font-medium">{displayError}</p>
               </div>
             )}
 
@@ -102,8 +102,8 @@ export default function RegisterPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* First Name */}
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-[#000000] mb-1.5">
-                  First Name <span className="text-red-500">*</span>
+                <label htmlFor="firstName" className="block text-xs sm:text-sm font-semibold text-mb-text mb-1.5">
+                  First Name <span className="text-mb-error">*</span>
                 </label>
                 <input
                   id="firstName"
@@ -112,14 +112,14 @@ export default function RegisterPage() {
                   required
                   value={formData.firstName}
                   onChange={handleChange}
-                  placeholder="John"
-                  className="w-full px-3 py-2 border border-[#CDD3D8] rounded-lg bg-white text-[#000000] placeholder-[#595E63] focus:border-[#E80071] focus:outline-none focus:ring-1 focus:ring-[#E80071] transition-colors"
+                  placeholder="Amina"
+                  className="w-full px-3.5 py-2.5 border border-mb-border rounded-[2px] bg-mb-surface text-mb-text placeholder-mb-placeholder text-sm focus:border-mb-primary focus:ring-1 focus:ring-mb-primary outline-none transition-colors"
                 />
               </div>
 
               {/* Last Name */}
               <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-[#000000] mb-1.5">
+                <label htmlFor="lastName" className="block text-xs sm:text-sm font-semibold text-mb-text mb-1.5">
                   Last Name
                 </label>
                 <input
@@ -128,15 +128,15 @@ export default function RegisterPage() {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                  placeholder="Doe"
-                  className="w-full px-3 py-2 border border-[#CDD3D8] rounded-lg bg-white text-[#000000] placeholder-[#595E63] focus:border-[#E80071] focus:outline-none focus:ring-1 focus:ring-[#E80071] transition-colors"
+                  placeholder="Khan"
+                  className="w-full px-3.5 py-2.5 border border-mb-border rounded-[2px] bg-mb-surface text-mb-text placeholder-mb-placeholder text-sm focus:border-mb-primary focus:ring-1 focus:ring-mb-primary outline-none transition-colors"
                 />
               </div>
 
               {/* Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-[#000000] mb-1.5">
-                  Email Address <span className="text-red-500">*</span>
+                <label htmlFor="email" className="block text-xs sm:text-sm font-semibold text-mb-text mb-1.5">
+                  Email Address <span className="text-mb-error">*</span>
                 </label>
                 <input
                   id="email"
@@ -146,14 +146,14 @@ export default function RegisterPage() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className="w-full px-3 py-2 border border-[#CDD3D8] rounded-lg bg-white text-[#000000] placeholder-[#595E63] focus:border-[#E80071] focus:outline-none focus:ring-1 focus:ring-[#E80071] transition-colors"
+                  className="w-full px-3.5 py-2.5 border border-mb-border rounded-[2px] bg-mb-surface text-mb-text placeholder-mb-placeholder text-sm focus:border-mb-primary focus:ring-1 focus:ring-mb-primary outline-none transition-colors"
                 />
               </div>
 
               {/* Password */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-[#000000] mb-1.5">
-                  Password <span className="text-red-500">*</span>
+                <label htmlFor="password" className="block text-xs sm:text-sm font-semibold text-mb-text mb-1.5">
+                  Password <span className="text-mb-error">*</span>
                 </label>
                 <input
                   id="password"
@@ -163,15 +163,15 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full px-3 py-2 border border-[#CDD3D8] rounded-lg bg-white text-[#000000] placeholder-[#595E63] focus:border-[#E80071] focus:outline-none focus:ring-1 focus:ring-[#E80071] transition-colors"
+                  className="w-full px-3.5 py-2.5 border border-mb-border rounded-[2px] bg-mb-surface text-mb-text placeholder-mb-placeholder text-sm focus:border-mb-primary focus:ring-1 focus:ring-mb-primary outline-none transition-colors"
                 />
-                <p className="text-xs text-[#595E63] mt-1">Minimum 8 characters</p>
+                <p className="text-[11px] text-mb-muted mt-1">Minimum 8 characters</p>
               </div>
 
               {/* Confirm Password */}
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-[#000000] mb-1.5">
-                  Confirm Password <span className="text-red-500">*</span>
+                <label htmlFor="confirmPassword" className="block text-xs sm:text-sm font-semibold text-mb-text mb-1.5">
+                  Confirm Password <span className="text-mb-error">*</span>
                 </label>
                 <input
                   id="confirmPassword"
@@ -181,24 +181,24 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full px-3 py-2 border border-[#CDD3D8] rounded-lg bg-white text-[#000000] placeholder-[#595E63] focus:border-[#E80071] focus:outline-none focus:ring-1 focus:ring-[#E80071] transition-colors"
+                  className="w-full px-3.5 py-2.5 border border-mb-border rounded-[2px] bg-mb-surface text-mb-text placeholder-mb-placeholder text-sm focus:border-mb-primary focus:ring-1 focus:ring-mb-primary outline-none transition-colors"
                 />
               </div>
 
               {/* Terms Agreement */}
-              <label className="flex items-start gap-2">
+              <label className="flex items-start gap-2 pt-1 cursor-pointer">
                 <input
                   type="checkbox"
                   required
-                  className="w-4 h-4 border border-[#CDD3D8] rounded mt-1 cursor-pointer accent-[#E80071]"
+                  className="w-4 h-4 border border-mb-border rounded-[2px] mt-0.5 cursor-pointer accent-[#5C1A24]"
                 />
-                <span className="text-xs text-[#595E63]">
+                <span className="text-xs text-mb-body leading-relaxed">
                   I agree to the{" "}
-                  <Link href="#" className="text-[#E80071] hover:underline">
+                  <Link href="#" className="text-mb-primary hover:underline font-medium">
                     Terms of Service
                   </Link>
                   {" "}and{" "}
-                  <Link href="#" className="text-[#E80071] hover:underline">
+                  <Link href="#" className="text-mb-primary hover:underline font-medium">
                     Privacy Policy
                   </Link>
                 </span>
@@ -208,7 +208,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-2.5 bg-[#E80071] text-white font-medium rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity mt-6"
+                className="w-full py-3 bg-mb-primary hover:bg-mb-primary-hover text-white font-bold text-sm rounded-[2px] shadow-xs disabled:opacity-50 disabled:cursor-not-allowed transition-all mt-6"
               >
                 {isLoading ? "Creating Account..." : "Create Account"}
               </button>
@@ -216,17 +216,23 @@ export default function RegisterPage() {
 
             {/* Divider */}
             <div className="my-6 flex items-center gap-3">
-              <div className="flex-1 h-px bg-[#CDD3D8]" />
-              <span className="text-sm text-[#595E63]">or sign up with</span>
-              <div className="flex-1 h-px bg-[#CDD3D8]" />
+              <div className="flex-1 h-px bg-mb-border" />
+              <span className="text-xs text-mb-muted uppercase tracking-wider">or sign up with</span>
+              <div className="flex-1 h-px bg-mb-border" />
             </div>
 
-            {/* Social Signup (Placeholder) */}
+            {/* Social Signup */}
             <div className="grid grid-cols-2 gap-3">
-              <button className="py-2.5 border border-[#CDD3D8] rounded-lg font-medium text-sm text-[#000000] hover:bg-[#F4F4F4] transition-colors">
+              <button
+                type="button"
+                className="py-2.5 border border-mb-border rounded-[2px] font-semibold text-xs sm:text-sm text-mb-text bg-mb-surface hover:bg-mb-bg transition-colors"
+              >
                 Google
               </button>
-              <button className="py-2.5 border border-[#CDD3D8] rounded-lg font-medium text-sm text-[#000000] hover:bg-[#F4F4F4] transition-colors">
+              <button
+                type="button"
+                className="py-2.5 border border-mb-border rounded-[2px] font-semibold text-xs sm:text-sm text-mb-text bg-mb-surface hover:bg-mb-bg transition-colors"
+              >
                 Facebook
               </button>
             </div>

@@ -33,18 +33,18 @@ export default function ProductCard({ product }: { product: Product }) {
   const formatPrice = (val: number) => `Rs. ${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
   return (
-    <article className="group relative flex flex-col bg-mb-surface border border-mb-border rounded-[1px] transition-all overflow-hidden select-none shadow-2xs hover:border-mb-accent/60">
+    <article className="group relative flex flex-col bg-mb-surface border border-mb-border rounded-[2px] transition-all overflow-hidden select-none shadow-2xs hover:border-mb-accent/60">
 
       {/* ── Top Image Container ───────────────────────────────── */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-mb-surface border-b border-mb-border/60">
         
-        {/* Top-Left: Black Capsule Badge (1px subtle border radius) */}
+        {/* Top-Left: Black Capsule Badge (2px subtle border radius) */}
         {product.discount ? (
-          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[1px] uppercase tracking-wider shadow-xs pointer-events-none">
+          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[2px] uppercase tracking-wider shadow-xs pointer-events-none">
             {product.discount}% OFF
           </span>
         ) : product.badge ? (
-          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[1px] uppercase tracking-wider shadow-xs pointer-events-none">
+          <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-black/95 text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[2px] uppercase tracking-wider shadow-xs pointer-events-none">
             {product.badge}
           </span>
         ) : null}

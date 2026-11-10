@@ -160,7 +160,7 @@ export default function TrendingNowSection({ initialProducts }: TrendingNowSecti
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="aspect-[3/4] rounded-[1px] bg-mb-surface border border-mb-border animate-pulse"
+                className="aspect-[3/4] rounded-[2px] bg-mb-surface border border-mb-border animate-pulse"
               />
             ))}
           </div>
@@ -168,7 +168,7 @@ export default function TrendingNowSection({ initialProducts }: TrendingNowSecti
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 w-[42vw] md:w-[30vw] lg:w-[260px] aspect-[3/4] rounded-[1px] bg-mb-surface border border-mb-border animate-pulse"
+                className="flex-shrink-0 w-[42vw] md:w-[30vw] lg:w-[260px] aspect-[3/4] rounded-[2px] bg-mb-surface border border-mb-border animate-pulse"
               />
             ))}
           </div>

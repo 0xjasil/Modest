@@ -84,7 +84,7 @@ export default function NewArrivalsSection({ initialProducts }: NewArrivalsSecti
       {loading ? (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4.5">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="aspect-[3/4] rounded-[1px] bg-mb-surface border border-mb-border animate-pulse" />
+            <div key={i} className="aspect-[3/4] rounded-[2px] bg-mb-surface border border-mb-border animate-pulse" />
           ))}
         </div>
       ) : products.length > 0 ? (

@@ -192,7 +192,7 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="flex-shrink-0 w-[46vw] sm:w-[30vw] md:w-[22vw] lg:w-[calc((100%-5*1rem)/6)] aspect-[2/3] rounded-[1px] bg-mb-surface border border-mb-border animate-pulse"
+              className="flex-shrink-0 w-[46vw] sm:w-[30vw] md:w-[22vw] lg:w-[calc((100%-5*1rem)/6)] aspect-[2/3] rounded-[2px] bg-mb-surface border border-mb-border animate-pulse"
             />
           ))}
         </div>
@@ -266,7 +266,7 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
             >
               <Link
                 href={href}
-                className="group block overflow-hidden rounded-[1px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown hover:-translate-y-0.5 transition-all duration-300"
+                className="group block overflow-hidden rounded-[2px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown hover:-translate-y-0.5 transition-all duration-300"
               >
                 <div className="relative aspect-[2/3] w-full overflow-hidden bg-[#E8DDD0]">
                   {/* Reference Image Index Pill Badge (01, 02, 03...) */}

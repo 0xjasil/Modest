@@ -56,3 +56,4 @@ export const editorialGalleryItems: {
     alt: "Occasion Wear — Bespoke Celebratory Cuts & Opulent Drapes | Modest Studio"
   }
 };
+

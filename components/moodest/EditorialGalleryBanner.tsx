@@ -1,9 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { editorialGalleryItems } from "@/data/gallery";
+import { editorialGalleryItems, type GalleryItem } from "@/data/gallery";
+import { bannerAPI } from "@/lib/api";
 
 export default function EditorialGalleryBanner() {
-  const { leftTall, rightTop, rightBottom, desktopRightTall } = editorialGalleryItems;
+  const [gallery, setGallery] = useState({
+    leftTall: editorialGalleryItems.leftTall,
+    rightTop: editorialGalleryItems.rightTop,
+    rightBottom: editorialGalleryItems.rightBottom,
+    desktopRightTall: editorialGalleryItems.desktopRightTall,
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+    bannerAPI.getAll().then((banners) => {
+      if (!isMounted || !Array.isArray(banners)) return;
+
+      const g1 = banners.find(b => b.tag === "GALLERY_1" && b.isActive !== false);
+      const g2 = banners.find(b => b.tag === "GALLERY_2" && b.isActive !== false);
+      const g3 = banners.find(b => b.tag === "GALLERY_3" && b.isActive !== false);
+      const g4 = banners.find(b => b.tag === "GALLERY_4" && b.isActive !== false);
+
+      setGallery(prev => ({
+        leftTall: g1 ? {
+          id: prev.leftTall.id,
+          title: g1.title || prev.leftTall.title,
+          href: g1.buttonLink || prev.leftTall.href,
+          image: g1.image || prev.leftTall.image,
+          alt: `${g1.title || prev.leftTall.title} — Modest Studio Signature Gallery`,
+        } : prev.leftTall,
+        rightTop: g2 ? {
+          id: prev.rightTop.id,
+          title: g2.title || prev.rightTop.title,
+          href: g2.buttonLink || prev.rightTop.href,
+          image: g2.image || prev.rightTop.image,
+          alt: `${g2.title || prev.rightTop.title} — Modest Studio Signature Gallery`,
+        } : prev.rightTop,
+        rightBottom: g3 ? {
+          id: prev.rightBottom.id,
+          title: g3.title || prev.rightBottom.title,
+          href: g3.buttonLink || prev.rightBottom.href,
+          image: g3.image || prev.rightBottom.image,
+          alt: `${g3.title || prev.rightBottom.title} — Modest Studio Signature Gallery`,
+        } : prev.rightBottom,
+        desktopRightTall: g4 ? {
+          id: prev.desktopRightTall.id,
+          title: g4.title || prev.desktopRightTall.title,
+          href: g4.buttonLink || prev.desktopRightTall.href,
+          image: g4.image || prev.desktopRightTall.image,
+          alt: `${g4.title || prev.desktopRightTall.title} — Modest Studio Signature Gallery`,
+        } : prev.desktopRightTall,
+      }));
+    }).catch(() => {});
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const { leftTall, rightTop, rightBottom, desktopRightTall } = gallery;
 
   return (
     <section className="w-full max-w-full px-3 sm:px-6 my-10 sm:my-20 relative block clear-both overflow-hidden" aria-label="Signature Visual Gallery">

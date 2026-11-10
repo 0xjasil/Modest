@@ -204,24 +204,22 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
 
   return (
     <section className="w-full px-3 sm:px-6 my-10 relative group/section" aria-label="Explore Abaya Categories">
-      {/* Header with Dynamic Database Categories Subtitle */}
-      <div className="flex items-center justify-between mb-5">
+      {/* Header with Dynamic Database Categories Subtitle & Underlined DISCOVER MORE */}
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
         <div>
-          <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-mb-text">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-mb-text tracking-tight">
             Shop by Category
           </h2>
-          <p className="text-xs sm:text-sm text-mb-muted mt-0.5">
-            {categories.length > 0
-              ? `Signature Silhouettes  ${categories.slice(0, 4).map((c) => c.name).join(", ")}`
-              : "Signature Silhouettes  Curated Luxury Abayas & Modest Wears"}
+          <p className="text-xs sm:text-sm text-mb-muted mt-1">
+            Browse our curated collections
           </p>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/category/all"
-            className="text-xs sm:text-sm font-semibold text-mb-primary hover:text-mb-primary-hover flex items-center gap-1 transition-colors group"
+            className="text-xs sm:text-sm font-bold uppercase tracking-wider text-mb-text hover:text-mb-primary underline underline-offset-4 decoration-1 decoration-mb-text/80 transition-colors"
           >
-            <span>Discover More</span> <span className="transition-transform group-hover:translate-x-1">→</span>
+            DISCOVER MORE
           </Link>
           {/* Arrow navigation buttons */}
           {categories.length > 1 && (
@@ -264,13 +262,18 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
           return (
             <div
               key={cat.id || cat.slug || idx}
-              className="snap-start flex-shrink-0 w-[45vw] sm:w-[30vw] md:w-[22vw] lg:w-[calc((100%-5*1.125rem)/6)]"
+              className="snap-start flex-shrink-0 w-[46vw] sm:w-[32vw] md:w-[22vw] lg:w-[calc((100%-5*1.125rem)/6)]"
             >
               <Link
                 href={href}
-                className="group block overflow-hidden rounded-[14px] sm:rounded-[18px] bg-mb-surface border border-mb-border shadow-card hover:shadow-dropdown hover:-translate-y-1 transition-all duration-300"
+                className="group block overflow-hidden rounded-[20px] sm:rounded-[24px] bg-mb-surface border border-mb-border/80 shadow-card hover:shadow-dropdown hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="relative aspect-[2/3] w-full overflow-hidden bg-[#E8DDD0]">
+                  {/* Reference Image Index Pill Badge (01, 02, 03...) */}
+                  <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/30 flex items-center justify-center text-white text-[11px] sm:text-xs font-semibold shadow-xs">
+                    {String(idx + 1).padStart(2, "0")}
+                  </div>
+
                   {(() => {
                     const dynamicImg = getDynamicCategoryImage(cat, initialProducts);
                     return dynamicImg ? (
@@ -290,13 +293,17 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
                       </div>
                     );
                   })()}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-end p-3.5 sm:p-4">
-                    <span className="text-white font-serif text-sm sm:text-base font-semibold group-hover:text-[#D29A90] transition-colors drop-shadow-sm leading-tight">
+
+                  {/* Reference Image Bottom Layout: Category Title + White Circular Arrow Button */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end justify-between p-3.5 sm:p-4">
+                    <span className="text-white font-serif text-sm sm:text-base font-semibold group-hover:text-[#D29A90] transition-colors drop-shadow-sm leading-tight pr-2">
                       {cat.name}
                     </span>
-                    <span className="text-[11px] text-white/80 font-sans mt-1 inline-flex items-center gap-1 group-hover:underline">
-                      Explore Collection →
-                    </span>
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-neutral-900 shadow-md flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <svg className="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </Link>

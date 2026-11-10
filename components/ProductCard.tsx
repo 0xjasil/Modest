@@ -35,32 +35,27 @@ export default function ProductCard({ product }: { product: Product }) {
     : null;
 
   return (
-    <article className="group relative flex flex-col bg-mb-surface border border-mb-border rounded-[4px] sm:rounded-[6px] shadow-card hover:shadow-dropdown transition-all overflow-hidden">
+    <article className="group relative flex flex-col bg-mb-surface border border-mb-border/80 rounded-[18px] sm:rounded-[22px] shadow-card hover:shadow-dropdown transition-all overflow-hidden">
 
-      {/* ── Badges [BESTSELLER / NEW / FEATURED] ───────────────── */}
-      {(product.badge || (product.discount && product.discount > 10)) && (
-        <ul className="absolute top-2.5 left-2.5 z-10 flex flex-col gap-1" role="list" aria-label="Badges">
-          {product.discount && product.discount > 10 && (
-            <li role="listitem"
-              className="bg-mb-gold-deep text-mb-bg text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] shadow-sm">
-              BESTSELLER
-            </li>
-          )}
-          {product.badge && (
-            <li role="listitem"
-              className="bg-mb-primary text-mb-bg text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] shadow-sm">
-              {product.badge}
-            </li>
-          )}
-        </ul>
-      )}
+      {/* ── Badges [Reference Image Style: Black Pill Capsule] ───────────────── */}
+      {product.discount ? (
+        <span className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 bg-black text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm pointer-events-none">
+          {product.discount}% OFF
+        </span>
+      ) : product.badge ? (
+        <span className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 bg-black text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm pointer-events-none">
+          {product.badge}
+        </span>
+      ) : null}
 
-      {/* ── Wishlist button ────────────────────────────────────── */}
-      <button type="button"
+      {/* ── Wishlist button [Reference Image Style: White Circle at Top-Right] ────────────────── */}
+      <button
+        type="button"
         aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
         aria-pressed={wishlisted}
         onClick={onWish}
-        className="absolute top-2.5 right-2.5 z-10 w-7 h-7 flex items-center justify-center bg-mb-bg border border-mb-border text-mb-accent hover:text-mb-primary rounded-full shadow-sm transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent">
+        className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-10 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-white text-gray-900 rounded-full shadow-md transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent"
+      >
         <HeartIcon filled={wishlisted} />
       </button>
 

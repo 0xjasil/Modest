@@ -107,21 +107,21 @@ export default function TrendingNowSection({ initialProducts }: TrendingNowSecti
   return (
     <section className="w-full px-3 sm:px-6 my-16 sm:my-24 relative block clear-both" aria-label="Trending Now">
       {/* Section Header */}
-      <div className="flex items-center justify-between mb-4 sm:mb-6">
+      <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-mb-text">
+          <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-mb-text">
             Trending Now
           </h2>
           <p className="text-xs sm:text-sm text-mb-muted mt-0.5">
-            Most loved designs trending this week
+            Most Coveted Silhouettes &amp; Client Favorites
           </p>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/category/all?sort=trending"
-            className="font-bold text-xs sm:text-sm uppercase tracking-wider text-neutral-900 hover:text-mb-primary transition-colors underline underline-offset-4 decoration-[1.5px]"
+            className="text-xs sm:text-sm font-semibold text-mb-primary hover:text-mb-primary-hover flex items-center gap-1 transition-colors group"
           >
-            DISCOVER MORE
+            <span>Discover More</span> <span className="transition-transform group-hover:translate-x-1">→</span>
           </Link>
           {/* Arrow navigation buttons */}
           {products.length > 1 && (

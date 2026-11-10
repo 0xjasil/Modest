@@ -266,7 +266,7 @@ export default function DiscoverCategories({ initialCategories, initialProducts 
             >
               <Link
                 href={href}
-                className="group block overflow-hidden rounded-[20px] sm:rounded-[24px] bg-mb-surface border border-mb-border/80 shadow-card hover:shadow-dropdown hover:-translate-y-1 transition-all duration-300"
+                className="group block overflow-hidden rounded-[10px] sm:rounded-[12px] bg-mb-surface border border-mb-border/80 shadow-card hover:shadow-dropdown hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="relative aspect-[2/3] w-full overflow-hidden bg-[#E8DDD0]">
                   {/* Reference Image Index Pill Badge (01, 02, 03...) */}

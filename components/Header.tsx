@@ -255,12 +255,12 @@ export default function Header() {
 
         {/* ══ TIER 2: Logo | Search | Actions ════ */}
         <div className="bg-mb-bg border-b border-mb-border">
-          <div className="mx-auto max-w-content px-4 md:px-6 h-14 flex items-center gap-4">
+          <div className="mx-auto max-w-content px-4 md:px-6 h-16 flex items-center gap-4">
 
-            {/* Logo — brand sheet logo: 40px mobile / 44px desktop */}
+            {/* Logo — brand sheet logo: increased size for mobile clarity */}
             <Link href="/" aria-label="Modest Studio — homepage"
               className="flex-shrink-0 mr-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded flex items-center">
-              <BrandLogo variant="secondary" className="h-10 md:h-12 w-auto min-w-[140px] max-w-[220px] md:max-w-[260px]" />
+              <BrandLogo variant="secondary" className="h-11 sm:h-12 md:h-12 w-auto min-w-[140px] max-w-[220px] md:max-w-[260px]" />
             </Link>
 
             {/* Search — "Search on Modest Studio" placeholder from snapshot */}
@@ -464,6 +464,32 @@ export default function Header() {
                 {menuOpen ? <CloseIcon /> : <MenuIcon />}
               </button>
             </div>
+          </div>
+
+          {/* Mobile Search Capsule Bar (Matches Reference Image) */}
+          <div className="md:hidden px-3.5 pb-2.5 pt-0.5 bg-mb-bg">
+            <form
+              onSubmit={handleSearchSubmit}
+              className="flex items-center bg-[#181818] text-white rounded-full px-3.5 h-10 border border-white/10 shadow-xs focus-within:ring-2 focus-within:ring-mb-accent/60 transition-all"
+            >
+              <span className="text-gray-400 mr-2 flex-shrink-0">
+                <SearchIcon />
+              </span>
+              <input
+                type="search"
+                name="q"
+                placeholder="What are you looking for?"
+                value={searchVal}
+                onChange={(e) => setSearchVal(e.target.value)}
+                className="flex-1 min-w-0 bg-transparent text-xs text-white placeholder-gray-400 outline-none"
+              />
+              <button type="button" aria-label="Visual Search" className="text-gray-400 hover:text-white transition-colors p-1 flex-shrink-0">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="3" strokeWidth="2" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                </svg>
+              </button>
+            </form>
           </div>
         </div>
 

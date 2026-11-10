@@ -35,9 +35,9 @@ export default function ProductCard({ product }: { product: Product }) {
     : null;
 
   return (
-    <article className="group relative flex flex-col bg-mb-surface border border-mb-border/80 rounded-[18px] sm:rounded-[22px] shadow-card hover:shadow-dropdown transition-all overflow-hidden">
+    <article className="group relative flex flex-col bg-mb-surface border border-mb-border/80 rounded-[10px] sm:rounded-[12px] shadow-card hover:shadow-dropdown transition-all overflow-hidden">
 
-      {/* ── Badges [Reference Image Style: Black Pill Capsule] ───────────────── */}
+      {/* ── Badges [Single Percentage Badge — Reference Image Style] ───────────────── */}
       {product.discount ? (
         <span className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 z-10 bg-black text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm pointer-events-none">
           {product.discount}% OFF
@@ -110,7 +110,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.name}
           </h2>
 
-          {/* Prices */}
+          {/* Prices — Single percentage rule: discount already displayed on top badge */}
           <div aria-hidden="true" className="flex items-baseline gap-2 flex-wrap mb-1.5">
             <span className="text-[14px] font-bold text-mb-text">
               ₹{product.price.toLocaleString()}
@@ -118,11 +118,6 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.originalPrice && (
               <span className="text-[12px] text-mb-muted line-through">
                 ₹{product.originalPrice.toLocaleString()}
-              </span>
-            )}
-            {product.discount && (
-              <span className="text-[11px] text-mb-accent-deep font-bold">
-                {product.discount}% Off
               </span>
             )}
           </div>

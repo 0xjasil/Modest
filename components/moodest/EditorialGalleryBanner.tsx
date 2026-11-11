@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { categoryAPI, productAPI, mapBackendProductToProduct } from "@/lib/api";
+import { bannerAPI, categoryAPI, productAPI, mapBackendProductToProduct } from "@/lib/api";
 import { getDynamicCategoryImage, type CategoryItem } from "@/components/moodest/DiscoverCategories";
-import type { Product } from "@/lib/types";
+import type { Banner, Product } from "@/lib/types";
 
 interface EditorialGalleryBannerProps {
+  initialBanners?: Banner[];
   initialCategories?: CategoryItem[];
   initialProducts?: Product[];
 }
@@ -19,38 +20,79 @@ interface GalleryCardItem {
   ariaLabel: string;
 }
 
+const DEFAULT_GALLERY_SLOTS = [
+  {
+    tag: "GALLERY_1",
+    title: "Syrian Edits",
+    subtitle: "Exclusive Edition",
+    href: "/category/syrian-collection",
+    image: "/abaya/hero/hero-6.jpg",
+  },
+  {
+    tag: "GALLERY_2",
+    title: "The Classics",
+    subtitle: "Timeless Silhouettes",
+    href: "/category/the-classics",
+    image: "/abaya/hero/hero-2.jpg",
+  },
+  {
+    tag: "GALLERY_3",
+    title: "The Luxe Edit",
+    subtitle: "Signature Atelier",
+    href: "/category/the-luxe-edit",
+    image: "/abaya/hero/hero-3.jpg",
+  },
+  {
+    tag: "GALLERY_4",
+    title: "Occasion Wear",
+    subtitle: "Evening Collection",
+    href: "/category/occasion-wear",
+    image: "/abaya/hero/hero-4.jpg",
+  },
+];
+
 export default function EditorialGalleryBanner({
+  initialBanners,
   initialCategories,
   initialProducts,
 }: EditorialGalleryBannerProps) {
+  const [banners, setBanners] = useState<Banner[]>(initialBanners || []);
   const [categories, setCategories] = useState<CategoryItem[]>(initialCategories || []);
   const [products, setProducts] = useState<Product[]>(initialProducts || []);
   const [loading, setLoading] = useState(
+    (!initialBanners || initialBanners.length === 0) &&
     (!initialCategories || initialCategories.length === 0) &&
     (!initialProducts || initialProducts.length === 0)
   );
 
   useEffect(() => {
+    if (initialBanners && initialBanners.length > 0) {
+      setBanners(initialBanners);
+    }
     if (initialCategories && initialCategories.length > 0) {
       setCategories(initialCategories);
     }
     if (initialProducts && initialProducts.length > 0) {
       setProducts(initialProducts);
     }
-  }, [initialCategories, initialProducts]);
+  }, [initialBanners, initialCategories, initialProducts]);
 
   useEffect(() => {
     let isMounted = true;
     async function loadData() {
-      if (categories.length > 0 && products.length > 0) return;
       try {
-        setLoading(true);
-        const [catsRes, prodsRes] = await Promise.all([
+        // Always refresh banners silently so admin updates show on client navigation too
+        const [bannersRes, catsRes, prodsRes] = await Promise.all([
+          bannerAPI.getAll().catch(() => null),
           categories.length === 0 ? categoryAPI.getAll().catch(() => []) : Promise.resolve(null),
           products.length === 0 ? productAPI.getAll({ limit: 12 }).catch(() => null) : Promise.resolve(null),
         ]);
 
         if (!isMounted) return;
+
+        if (Array.isArray(bannersRes) && bannersRes.length > 0) {
+          setBanners(bannersRes);
+        }
 
         if (catsRes && Array.isArray(catsRes) && catsRes.length > 0) {
           setCategories(
@@ -80,36 +122,68 @@ export default function EditorialGalleryBanner({
     };
   }, [categories.length, products.length]);
 
-  // Construct dynamic cards from live categories or products
+  // Construct 4 gallery cards: prioritize CMS GALLERY_1..4 banners, then fallback to categories/products/defaults
   const cards: GalleryCardItem[] = React.useMemo(() => {
-    if (categories.length >= 3) {
-      // Prioritize categories with dynamic image resolution
-      return categories.slice(0, 4).map((cat) => {
-        const resolvedImg = getDynamicCategoryImage(cat, products) || "/banners/category-highlights-banner.jpg";
+    return DEFAULT_GALLERY_SLOTS.map((slotDef, idx) => {
+      const slotNum = idx + 1;
+      const cmsMatch = banners.find((b) => {
+        if (b.isActive === false) return false;
+        const tag = (b.tag || "").toUpperCase();
+        const alt = (b.alt || "").toUpperCase();
+        return (
+          tag === slotDef.tag ||
+          alt === slotDef.tag ||
+          (tag.startsWith("GALLERY_") && (b.order === slotNum || b.sortOrder === slotNum))
+        );
+      });
+
+      if (cmsMatch && (cmsMatch.imageUrl || cmsMatch.image)) {
+        const title = cmsMatch.title || slotDef.title;
+        return {
+          id: cmsMatch.id || slotDef.tag,
+          title,
+          subtitle: slotDef.subtitle,
+          href: cmsMatch.buttonLink || cmsMatch.linkUrl || cmsMatch.link || slotDef.href,
+          image: cmsMatch.imageUrl || cmsMatch.image || slotDef.image,
+          ariaLabel: `Explore ${title} Collection`,
+        };
+      }
+
+      const cat = categories[idx];
+      if (cat) {
+        const resolvedImg = getDynamicCategoryImage(cat, products) || slotDef.image;
         return {
           id: cat.id,
           title: cat.name,
-          subtitle: cat.description ? cat.description.slice(0, 45) : "Exclusive Edition",
+          subtitle: cat.description ? cat.description.slice(0, 45) : slotDef.subtitle,
           href: `/category/${cat.slug}`,
           image: resolvedImg,
           ariaLabel: `Explore ${cat.name} Collection`,
         };
-      });
-    }
+      }
 
-    if (products.length >= 3) {
-      return products.slice(0, 4).map((p) => ({
-        id: String(p.id),
-        title: p.name,
-        subtitle: p.brand || "Modest Studio",
-        href: `/product/${p.id}`,
-        image: p.image || "/banners/top-promo-banner.jpg",
-        ariaLabel: `View ${p.name}`,
-      }));
-    }
+      const prod = products[idx];
+      if (prod) {
+        return {
+          id: String(prod.id),
+          title: prod.name,
+          subtitle: prod.brand || "Modest Studio",
+          href: `/product/${prod.id}`,
+          image: prod.image || slotDef.image,
+          ariaLabel: `View ${prod.name}`,
+        };
+      }
 
-    return [];
-  }, [categories, products]);
+      return {
+        id: slotDef.tag,
+        title: slotDef.title,
+        subtitle: slotDef.subtitle,
+        href: slotDef.href,
+        image: slotDef.image,
+        ariaLabel: `Explore ${slotDef.title} Collection`,
+      };
+    });
+  }, [banners, categories, products]);
 
   // Loading skeleton state
   if (loading && cards.length === 0) {
@@ -125,11 +199,6 @@ export default function EditorialGalleryBanner({
         </div>
       </section>
     );
-  }
-
-  // If no dynamic cards available, return null
-  if (cards.length === 0) {
-    return null;
   }
 
   const card1 = cards[0];

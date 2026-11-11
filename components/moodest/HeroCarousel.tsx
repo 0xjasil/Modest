@@ -91,9 +91,16 @@ export default function HeroCarousel({ initialBanners }: HeroCarouselProps) {
     }
   }, [initialBanners]);
 
-  // Map CMS banners to slide objects with rich SEO alt support
+  // Map CMS banners to slide objects with rich SEO alt support (excluding GALLERY_* slots)
   const cmsSlides: HeroSlideItem[] = banners
-    .filter((b) => b.isActive !== false && (b.imageUrl || b.image))
+    .filter((b) => {
+      if (b.isActive === false) return false;
+      const isGallery =
+        (b.tag && b.tag.toUpperCase().startsWith("GALLERY_")) ||
+        (b.alt && b.alt.toUpperCase().startsWith("GALLERY_"));
+      if (isGallery) return false;
+      return Boolean(b.imageUrl || b.image);
+    })
     .map((b) => ({
       id: b.id,
       img: b.imageUrl || b.image || "/banners/top-promo-banner.jpg",

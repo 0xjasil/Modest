@@ -19,7 +19,7 @@ import ShippingSelector from "@/components/ShippingSelector";
 export default function CheckoutPage() {
   const router = useRouter();
   const { isAuthenticated, isLoading: authLoading } = useAuth();
-  const { items, total, reserveCart, clearCart } = useCart();
+  const { items, total, reserveCart, clearCart, isLoading: cartLoading } = useCart();
   const { placeOrder } = useOrder();
   const {
     addresses,
@@ -61,12 +61,12 @@ export default function CheckoutPage() {
     }
   }, [isAuthenticated, fetchAddresses]);
 
-  // Redirect if cart is empty
+  // Redirect if cart is empty (only after initial auth & cart sync complete)
   useEffect(() => {
-    if (!isProcessing && items.length === 0 && !currentOrderId) {
+    if (!authLoading && !cartLoading && !isProcessing && items.length === 0 && !currentOrderId) {
       router.push("/cart");
     }
-  }, [items, router, isProcessing, currentOrderId]);
+  }, [items, router, isProcessing, currentOrderId, authLoading, cartLoading]);
 
   const handleApplyCoupon = async () => {
     const trimmedCode = couponCode.trim().toUpperCase();
@@ -532,10 +532,12 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={handlePlaceOrder}
-                  disabled={isProcessing || !selectedAddress || !selectedShipping || items.length === 0}
+                  disabled={isProcessing || cartLoading || !selectedAddress || !selectedShipping || items.length === 0 || total <= 0}
                   className="mt-5 w-full py-3.5 bg-mb-primary hover:bg-mb-primary-hover text-mb-bg font-semibold text-sm rounded-[10px] shadow-sm disabled:opacity-50 transition-all mb-2.5"
                 >
-                  {isProcessing
+                  {cartLoading
+                    ? "Syncing Bag & Prices..."
+                    : isProcessing
                     ? "Reserving & Creating Order..."
                     : paymentMethod === "COD"
                     ? `Place Order (COD ₹${finalTotal.toLocaleString("en-IN")})`

@@ -116,19 +116,31 @@ export interface Product {
 }
 
 export interface CartItem {
-  id: number;
-  cartId: number;
-  variantId: number;
+  id: number | string;
+  cartId?: number | string;
+  productId?: number | string;
+  variantId: number | string;
   quantity: number;
+  price?: number;
+  total?: number;
+  product?: Partial<BackendProduct> & {
+    id?: number | string;
+    name?: string;
+    slug?: string;
+    image?: string;
+  };
   variant?: Variant & {
     product?: BackendProduct;
   };
 }
 
 export interface Cart {
-  id: number;
-  userId: number;
+  id: number | string;
+  userId: number | string;
   items: CartItem[];
+  subtotal?: number;
+  total?: number;
+  itemCount?: number;
   createdAt?: string;
   updatedAt?: string;
 }

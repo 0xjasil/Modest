@@ -27,20 +27,46 @@ import type {
 /* ── Product Mapping Helper ──────────────────────────────────── */
 
 export function mapBackendProductToProduct(item: BackendProduct): Product {
-  const defaultPrice = item.basePrice || 0;
+  const firstVariant = item.variants?.[0];
+  const variantMrp = firstVariant?.price != null ? Number(firstVariant.price) : 0;
+  const variantOffer =
+    firstVariant?.offerPrice != null ? Number(firstVariant.offerPrice) : 0;
+  const rawPrice = Number((item as any).price ?? 0);
+  const rawBasePrice = Number(item.basePrice ?? 0);
+
+  const defaultPrice = rawBasePrice || variantMrp || rawPrice || 0;
   const discountPct = item.discountPct ?? 0;
+
   const effectivePrice =
-    discountPct > 0
+    rawPrice > 0
+      ? rawPrice
+      : variantOffer > 0
+      ? variantOffer
+      : discountPct > 0 && defaultPrice > 0
       ? Math.round(defaultPrice * (1 - discountPct / 100))
       : defaultPrice;
+
+  const computedOriginal =
+    (item as any).originalPrice && Number((item as any).originalPrice) > effectivePrice
+      ? Number((item as any).originalPrice)
+      : defaultPrice > effectivePrice
+      ? defaultPrice
+      : undefined;
+
+  const computedDiscount =
+    discountPct > 0
+      ? discountPct
+      : computedOriginal && effectivePrice > 0
+      ? Math.round(((computedOriginal - effectivePrice) / computedOriginal) * 100)
+      : undefined;
 
   return {
     id: String(item.id),
     backendId: item.id,
     name: item.name,
     price: effectivePrice,
-    originalPrice: discountPct > 0 ? defaultPrice : undefined,
-    discount: discountPct > 0 ? discountPct : undefined,
+    originalPrice: computedOriginal,
+    discount: computedDiscount,
     rating: item.avgRating ?? 4.5,
     reviewCount: item.reviewCount ?? (item.reviews?.length ?? 0),
     image: item.images?.[0] || "/placeholder.png",

@@ -15,7 +15,7 @@ import type { CreatedReservation } from "@/lib/types";
 export interface CartItem {
   product: Product;
   qty: number;
-  serverItemId?: number;
+  serverItemId?: number | string;
 }
 
 interface CartState {
@@ -190,9 +190,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
               const variantId =
                 item.product.variantId ||
                 item.product.variants?.[0]?.id ||
-                Number(item.product.id);
-              if (variantId && !isNaN(Number(variantId))) {
-                await cartAPI.addItem(Number(variantId), item.qty).catch(() => {});
+                item.product.backendId ||
+                item.product.id;
+              if (variantId !== undefined && variantId !== null && String(variantId).trim() !== "") {
+                await cartAPI.addItem(variantId, item.qty).catch(() => {});
               }
             }
           }
@@ -221,9 +222,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         const variantId =
           product.variantId ||
           product.variants?.[0]?.id ||
-          Number(product.id);
-        if (variantId && !isNaN(Number(variantId))) {
-          await cartAPI.addItem(Number(variantId), 1).catch(() => {});
+          product.backendId ||
+          product.id;
+        if (variantId !== undefined && variantId !== null && String(variantId).trim() !== "") {
+          await cartAPI.addItem(variantId, 1).catch(() => {});
           await refreshCart();
         }
       }

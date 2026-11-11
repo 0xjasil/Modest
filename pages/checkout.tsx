@@ -53,7 +53,7 @@ export default function CheckoutPage() {
   // Redirect if not logged in
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      router.push("/login");
+      router.push("/login?redirect=/checkout");
     }
   }, [isAuthenticated, authLoading, router]);
 

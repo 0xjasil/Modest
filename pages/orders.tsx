@@ -32,7 +32,7 @@ export default function OrdersPage() {
   // Redirect if not logged in
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      router.push("/login");
+      router.push("/login?redirect=/orders");
     }
   }, [isAuthenticated, authLoading, router]);
 

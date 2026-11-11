@@ -63,12 +63,24 @@ export function mapBackendProductToProduct(item: BackendProduct): Product {
 
 /* ── Auth API ─────────────────────────────────────────────────── */
 
+export interface AuthTokenResponse {
+  access_token?: string;
+  accessToken?: string;
+  refresh_token?: string;
+  refreshToken?: string;
+  user?: User;
+  data?: {
+    access_token?: string;
+    accessToken?: string;
+    refresh_token?: string;
+    refreshToken?: string;
+    user?: User;
+  };
+}
+
 export const authAPI = {
   login: async (email: string, password: string) => {
-    return apiFetchJson<{
-      access_token: string;
-      refresh_token: string;
-    }>("/api/auth/login", {
+    return apiFetchJson<AuthTokenResponse>("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
@@ -80,16 +92,40 @@ export const authAPI = {
     firstName?: string,
     lastName?: string
   ) => {
-    return apiFetchJson<User>("/api/auth/register", {
+    const fullName = [firstName, lastName]
+      .map((part) => part?.trim())
+      .filter(Boolean)
+      .join(" ");
+    return apiFetchJson<AuthTokenResponse>("/api/auth/register", {
       method: "POST",
-      body: JSON.stringify({ email, password, firstName, lastName }),
+      body: JSON.stringify({
+        email,
+        password,
+        ...(fullName ? { name: fullName } : {}),
+      }),
     });
   },
 
   refresh: async (refreshToken: string) => {
-    return apiFetchJson<{ access_token: string }>("/api/auth/refresh", {
+    return apiFetchJson<AuthTokenResponse>("/api/auth/refresh", {
       method: "POST",
-      body: JSON.stringify({ refresh_token: refreshToken }),
+      body: JSON.stringify({ refreshToken }),
+    });
+  },
+
+  logout: async (refreshToken?: string) => {
+    return apiFetchJson<{ message?: string }>("/api/auth/logout", {
+      method: "POST",
+      skipRefresh: true,
+      body: JSON.stringify(refreshToken ? { refreshToken } : {}),
+    });
+  },
+
+  forgotPassword: async (email: string) => {
+    return apiFetchJson<{ message?: string }>("/api/auth/forgot-password", {
+      method: "POST",
+      skipRefresh: true,
+      body: JSON.stringify({ email }),
     });
   },
 
@@ -209,21 +245,21 @@ export const cartAPI = {
     return apiFetchJson<Cart>("/api/cart");
   },
 
-  addItem: async (variantId: number, quantity: number = 1): Promise<CartItem> => {
+  addItem: async (variantId: number | string, quantity: number = 1): Promise<CartItem> => {
     return apiFetchJson<CartItem>("/api/cart/items", {
       method: "POST",
-      body: JSON.stringify({ variantId, quantity }),
+      body: JSON.stringify({ variantId: String(variantId), quantity }),
     });
   },
 
-  updateItem: async (id: number, quantity: number): Promise<CartItem> => {
+  updateItem: async (id: number | string, quantity: number): Promise<CartItem> => {
     return apiFetchJson<CartItem>(`/api/cart/items/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ quantity }),
     });
   },
 
-  removeItem: async (id: number): Promise<{ message?: string }> => {
+  removeItem: async (id: number | string): Promise<{ message?: string }> => {
     return apiFetchJson<{ message?: string }>(`/api/cart/items/${id}`, {
       method: "DELETE",
     });

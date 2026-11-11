@@ -322,6 +322,13 @@ export default function Header() {
                           <p className="text-[11px] text-mb-placeholder truncate">{user.email}</p>
                         </div>
                         <Link
+                          href="/profile"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
+                        >
+                          My Profile
+                        </Link>
+                        <Link
                           href="/orders"
                           onClick={() => setUserDropdownOpen(false)}
                           className="block px-3 py-2 text-mb-text hover:bg-mb-surface hover:text-mb-accent-deep transition-colors"
@@ -367,7 +374,7 @@ export default function Header() {
 
                   {/* Mobile user icon button */}
                   <Link
-                    href="/orders"
+                    href="/profile"
                     aria-label="My Account"
                     className="md:hidden p-1.5 text-mb-body hover:text-mb-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded-[2px] flex-shrink-0"
                   >
@@ -591,6 +598,11 @@ export default function Header() {
                       Hi, {user.firstName || user.email.split('@')[0] || "Customer"}
                     </p>
                     <p className="text-[11px] text-mb-placeholder truncate">{user.email}</p>
+                  </li>
+                  <li role="listitem">
+                    <Link href="/profile" onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 text-[13px] font-medium border-b border-mb-border-lite hover:bg-mb-surface">
+                      My Profile
+                    </Link>
                   </li>
                   <li role="listitem">
                     <Link href="/orders" onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 text-[13px] font-medium border-b border-mb-border-lite hover:bg-mb-surface">

@@ -134,20 +134,22 @@ export interface Cart {
 }
 
 export interface CreatedReservation {
-  reservationId: number;
+  id?: string | number;
+  reservationId: number | string;
+  orderId?: number | string;
   expiresAt: string | Date;
   items: {
-    variantId: number;
+    variantId: number | string;
     quantity: number;
     lockedPrice: number;
     lockedMrp: number;
   }[];
-  subtotal: number;
+  subtotal?: number;
 }
 
 export interface Address {
-  id: number;
-  userId?: number;
+  id: number | string;
+  userId?: number | string;
   fullName: string;
   phone: string;
   line1: string;
@@ -173,9 +175,9 @@ export type OrderStatus =
   | "CANCELLED";
 
 export interface OrderItem {
-  id: number;
-  orderId: number;
-  variantId: number;
+  id: number | string;
+  orderId: number | string;
+  variantId: number | string;
   quantity: number;
   price: number;
   variant?: Variant & {
@@ -184,17 +186,18 @@ export interface OrderItem {
 }
 
 export interface Order {
-  id: number;
-  userId: number;
-  addressId: number;
-  reservationId?: number | null;
+  id: number | string;
+  orderNumber?: string;
+  userId: number | string;
+  addressId: number | string;
+  reservationId?: number | string | null;
   status: OrderStatus;
   subtotal: number;
   tax: number;
   shippingFee: number;
   discount: number;
   total: number;
-  currency: string;
+  currency?: string;
   paymentStatus: "PENDING" | "PAID" | "FAILED" | "REFUNDED";
   paymentId?: string | null;
   couponCode?: string | null;

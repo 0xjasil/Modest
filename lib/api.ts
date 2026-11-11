@@ -277,7 +277,7 @@ export const cartAPI = {
     });
   },
 
-  releaseReservation: async (id: number): Promise<{ message?: string }> => {
+  releaseReservation: async (id: number | string): Promise<{ message?: string }> => {
     return apiFetchJson<{ message?: string }>(`/api/cart/reserve/${id}`, {
       method: "DELETE",
     });
@@ -287,10 +287,11 @@ export const cartAPI = {
 /* ── Order API ────────────────────────────────────────────────── */
 
 export interface PlaceOrderPayload {
-  addressId: number;
-  reservationId: number;
+  addressId: number | string;
+  reservationId?: number | string;
   couponCode?: string;
   walletAmountUsed?: number;
+  paymentMethod?: "COD" | "RAZORPAY";
 }
 
 export const orderAPI = {
@@ -326,7 +327,7 @@ export const orderAPI = {
 
 export const paymentAPI = {
   createIntent: async (
-    orderId: number,
+    orderId: number | string,
     currency?: string
   ): Promise<PaymentIntentResult> => {
     return apiFetchJson<PaymentIntentResult>("/api/payments/create-intent", {
@@ -336,7 +337,7 @@ export const paymentAPI = {
   },
 
   retry: async (
-    orderId: number,
+    orderId: number | string,
     currency?: string
   ): Promise<PaymentIntentResult> => {
     return apiFetchJson<PaymentIntentResult>(`/api/payments/retry/${orderId}`, {
@@ -371,20 +372,20 @@ export const addressAPI = {
     });
   },
 
-  update: async (id: number, dto: Partial<CreateAddressDto>): Promise<Address> => {
+  update: async (id: number | string, dto: Partial<CreateAddressDto>): Promise<Address> => {
     return apiFetchJson<Address>(`/api/users/me/addresses/${id}`, {
       method: "PATCH",
       body: JSON.stringify(dto),
     });
   },
 
-  delete: async (id: number): Promise<{ message?: string }> => {
+  delete: async (id: number | string): Promise<{ message?: string }> => {
     return apiFetchJson<{ message?: string }>(`/api/users/me/addresses/${id}`, {
       method: "DELETE",
     });
   },
 
-  setDefault: async (id: number): Promise<Address> => {
+  setDefault: async (id: number | string): Promise<Address> => {
     return apiFetchJson<Address>(`/api/users/me/addresses/${id}/default`, {
       method: "PATCH",
     });

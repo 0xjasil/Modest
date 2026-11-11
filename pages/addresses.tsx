@@ -14,7 +14,7 @@ export default function AddressesPage() {
   const { addresses, fetchAddresses, isLoading } = useAddress();
 
   const [showForm, setShowForm] = useState(false);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<number | string | null>(null);
 
   // Redirect if not logged in
   useEffect(() => {

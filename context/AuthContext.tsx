@@ -49,7 +49,9 @@ export interface AuthContextValue {
     email: string,
     password: string,
     firstName?: string,
-    lastName?: string
+    lastName?: string,
+    otp?: string,
+    verificationToken?: string
   ): Promise<void>;
   logout(): void;
   me(): Promise<void>;
@@ -232,7 +234,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email: string,
       password: string,
       firstName?: string,
-      lastName?: string
+      lastName?: string,
+      otp?: string,
+      verificationToken?: string
     ) => {
       dispatch({ type: "LOGIN_START" });
       try {
@@ -240,7 +244,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           email,
           password,
           firstName,
-          lastName
+          lastName,
+          otp,
+          verificationToken
         );
         const { accessToken, refreshToken } = extractTokens(response);
         if (accessToken) {

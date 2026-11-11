@@ -21,6 +21,8 @@ import type {
   Wallet,
   WalletTransaction,
   PaymentIntentResult,
+  VerifyPaymentPayload,
+  VerifyPaymentResult,
   Banner,
 } from "./types";
 
@@ -112,11 +114,26 @@ export const authAPI = {
     });
   },
 
+  sendVerificationOtp: async (email: string) => {
+    return apiFetchJson<{
+      message?: string;
+      verificationToken?: string;
+      expiresInSeconds?: number;
+      data?: { verificationToken?: string; expiresInSeconds?: number };
+    }>("/api/auth/send-verification-otp", {
+      method: "POST",
+      skipRefresh: true,
+      body: JSON.stringify({ email }),
+    });
+  },
+
   register: async (
     email: string,
     password: string,
     firstName?: string,
-    lastName?: string
+    lastName?: string,
+    otp?: string,
+    verificationToken?: string
   ) => {
     const fullName = [firstName, lastName]
       .map((part) => part?.trim())
@@ -128,6 +145,8 @@ export const authAPI = {
         email,
         password,
         ...(fullName ? { name: fullName } : {}),
+        ...(otp ? { otp } : {}),
+        ...(verificationToken ? { verificationToken } : {}),
       }),
     });
   },
@@ -369,6 +388,13 @@ export const paymentAPI = {
     return apiFetchJson<PaymentIntentResult>(`/api/payments/retry/${orderId}`, {
       method: "POST",
       body: JSON.stringify({ currency }),
+    });
+  },
+
+  verify: async (payload: VerifyPaymentPayload): Promise<VerifyPaymentResult> => {
+    return apiFetchJson<VerifyPaymentResult>("/api/payments/verify", {
+      method: "POST",
+      body: JSON.stringify(payload),
     });
   },
 };

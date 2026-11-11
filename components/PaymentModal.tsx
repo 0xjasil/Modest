@@ -52,32 +52,75 @@ export default function PaymentModal({
     setError(null);
 
     try {
-      let clientSecret = '';
+      const razorpayActive = isRazorpayEnabled();
+      let razorpayOrderId = '';
+      let intentKeyId = '';
+      let amountInPaise = Math.round(amount * 100);
+      let currency = 'INR';
+      let alreadyPaid = false;
 
       // Step 1: Obtain payment intent from NestJS backend: POST /api/payments/create-intent
       if (orderId) {
+        let intent = null;
         try {
-          const intent = await paymentAPI.createIntent(orderId, 'INR');
-          clientSecret = intent.clientSecret || '';
+          intent = await paymentAPI.createIntent(orderId, 'INR');
         } catch (intentErr) {
           console.warn('Intent creation check, trying retry endpoint:', intentErr);
           try {
-            const retryIntent = await paymentAPI.retry(orderId, 'INR');
-            clientSecret = retryIntent.clientSecret || '';
-          } catch {
-            // Proceed with fallback authorization
+            intent = await paymentAPI.retry(orderId, 'INR');
+          } catch (retryErr) {
+            if (razorpayActive) {
+              throw retryErr instanceof Error
+                ? retryErr
+                : new Error('Failed to initialize payment intent with gateway.');
+            }
           }
+        }
+
+        if (intent) {
+          const payload = intent.data ?? intent;
+          alreadyPaid = Boolean(intent.alreadyPaid ?? payload.alreadyPaid);
+          razorpayOrderId =
+            intent.razorpayOrderId ||
+            payload.razorpayOrderId ||
+            '';
+          intentKeyId = intent.keyId || payload.keyId || '';
+          amountInPaise =
+            intent.amountInPaise ?? payload.amountInPaise ?? amountInPaise;
+          currency = intent.currency || payload.currency || currency;
         }
       }
 
-      // Step 2: If Razorpay is explicitly enabled and available, open Razorpay Checkout
-      if (isRazorpayEnabled() && typeof window !== 'undefined' && window.Razorpay) {
-        const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || '';
+      if (alreadyPaid) {
+        setIsLoading(false);
+        onSuccess(razorpayOrderId || 'already_paid');
+        return;
+      }
+
+      // Step 2: If Razorpay is explicitly enabled, ensure script is loaded & open Razorpay Checkout
+      if (razorpayActive && typeof window !== 'undefined') {
+        const scriptLoaded = window.Razorpay ? true : await loadRazorpayScript();
+        if (!scriptLoaded || !window.Razorpay) {
+          throw new Error('Unable to load Razorpay checkout. Please check your connection and try again.');
+        }
+
+        const resolvedKey =
+          (intentKeyId && !intentKeyId.includes('placeholder') ? intentKeyId : '') ||
+          process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
+          '';
+
+        if (!resolvedKey || resolvedKey.includes('placeholder')) {
+          throw new Error('Razorpay Key ID is not configured.');
+        }
+
+        if (orderId && !razorpayOrderId) {
+          throw new Error('Missing Razorpay order ID from payment service.');
+        }
 
         const options: Record<string, any> = {
-          key: razorpayKey,
-          amount: Math.round(amount * 100), // amount in paise
-          currency: 'INR',
+          key: resolvedKey,
+          amount: amountInPaise,
+          currency,
           name: 'Modest Studio',
           description: type === 'wallet' ? `Wallet Top-up ₹${amount}` : `Order #${orderId} Payment`,
           notes: {
@@ -92,13 +135,30 @@ export default function PaymentModal({
           theme: {
             color: '#5C1A24',
           },
-          handler: (response: {
+          handler: async (response: {
             razorpay_payment_id: string;
             razorpay_order_id?: string;
             razorpay_signature?: string;
           }) => {
-            setIsLoading(false);
-            onSuccess(response?.razorpay_payment_id || clientSecret || `pay_${Date.now()}`);
+            try {
+              if (orderId) {
+                await paymentAPI.verify({
+                  orderId: String(orderId),
+                  razorpayPaymentId: response.razorpay_payment_id,
+                  razorpayOrderId: response.razorpay_order_id || razorpayOrderId,
+                  razorpaySignature: response.razorpay_signature || '',
+                });
+              }
+              setIsLoading(false);
+              onSuccess(response.razorpay_payment_id || razorpayOrderId || `pay_${Date.now()}`);
+            } catch (verifyErr) {
+              setIsLoading(false);
+              const message =
+                verifyErr instanceof Error
+                  ? verifyErr.message
+                  : 'Payment verification failed. Please contact support if amount was debited.';
+              setError(message);
+            }
           },
           modal: {
             ondismiss: () => {
@@ -108,8 +168,12 @@ export default function PaymentModal({
           },
         };
 
-        if (clientSecret && clientSecret.startsWith('order_')) {
-          options.order_id = clientSecret;
+        if (
+          razorpayOrderId &&
+          razorpayOrderId.startsWith('order_') &&
+          !razorpayOrderId.startsWith('order_mock_')
+        ) {
+          options.order_id = razorpayOrderId;
         }
 
         const rzp = new window.Razorpay(options);
@@ -123,7 +187,7 @@ export default function PaymentModal({
       }
 
       // Operational payment flow (when Razorpay is disabled by default)
-      onSuccess(clientSecret || `pay_${Date.now()}`);
+      onSuccess(razorpayOrderId || `pay_${Date.now()}`);
       setIsLoading(false);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Payment authorization failed';

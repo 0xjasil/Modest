@@ -288,8 +288,39 @@ export interface WalletTransaction {
 }
 
 export interface PaymentIntentResult {
-  clientSecret: string;
-  amount: number;
+  orderId?: string;
+  razorpayOrderId?: string;
+  amount?: number;
+  amountInPaise?: number;
+  currency?: string;
+  keyId?: string;
+  alreadyPaid?: boolean;
+  message?: string;
+  data?: {
+    orderId?: string;
+    razorpayOrderId?: string;
+    amount?: number;
+    amountInPaise?: number;
+    currency?: string;
+    keyId?: string;
+    alreadyPaid?: boolean;
+  };
+}
+
+export interface VerifyPaymentPayload {
+  orderId: string;
+  razorpayPaymentId: string;
+  razorpayOrderId: string;
+  razorpaySignature: string;
+}
+
+export interface VerifyPaymentResult {
+  orderId: string;
+  gatewayEventId?: string;
+  isDuplicate?: boolean;
+  status: string;
+  stockAllocated?: boolean;
+  message?: string;
 }
 
 export interface Banner {

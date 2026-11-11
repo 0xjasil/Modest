@@ -171,7 +171,7 @@ export default function Header() {
         Skip to main content
       </a>
 
-      <header className="sticky top-0 z-50 bg-mb-bg shadow-sm w-full max-w-full overflow-hidden" role="banner">
+      <header className="sticky top-0 z-50 bg-mb-bg shadow-sm w-full max-w-full overflow-x-clip" role="banner">
 
         {/* ══ TIER 1: Announcement + top utility links (hidden on mobile) ═════════ */}
         <div className="hidden sm:block bg-mb-surface text-mb-primary border-b border-mb-border">
@@ -204,17 +204,17 @@ export default function Header() {
         </div>
 
         {/* ══ TIER 2: Logo | Search | Actions ════ */}
-        <div className="bg-mb-bg border-b border-mb-border w-full max-w-full overflow-hidden">
-          <div className="mx-auto max-w-content px-2.5 sm:px-4 md:px-6 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-4 w-full">
+        <div className="bg-mb-bg border-b border-mb-border w-full max-w-full overflow-x-clip">
+          <div className="mx-auto max-w-content px-3 sm:px-4 md:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4 md:gap-6 lg:gap-8 w-full">
 
-            {/* Logo — brand sheet logo: increased size for mobile clarity */}
+            {/* Logo — brand sheet logo */}
             <Link href="/" aria-label="Modest Studio — homepage"
               className="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded flex items-center">
-              <BrandLogo variant="secondary" className="h-9 sm:h-10 md:h-12 w-auto max-w-[155px] sm:max-w-[190px] md:max-w-[260px] object-contain object-left" />
+              <BrandLogo variant="secondary" className="h-9 sm:h-10 md:h-11 w-auto max-w-[155px] sm:max-w-[185px] md:max-w-[220px] object-contain object-left" />
             </Link>
 
             {/* Search — "Search on Modest Studio" placeholder from snapshot */}
-            <div ref={searchContainerRef} className="flex-1 hidden md:block max-w-2xl mx-auto relative">
+            <div ref={searchContainerRef} className="flex-1 hidden md:block min-w-0 relative">
               <form
                 onSubmit={handleSearchSubmit}
                 className="flex items-center bg-mb-surface border border-mb-border rounded h-9 focus-within:border-mb-accent focus-within:ring-2 focus-within:ring-mb-accent transition-colors"
@@ -294,8 +294,8 @@ export default function Header() {
               )}
             </div>
 
-            {/* Right actions: Sign in + Shopping Bag (exact labels from snapshot) */}
-            <div className="flex items-center gap-1 sm:gap-1.5 ml-auto flex-shrink-0">
+            {/* Right actions: Sign in + Wishlist + Shopping Bag */}
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
 
               {/* Authenticated user menu or Sign in link */}
               {isAuthenticated && user ? (
@@ -380,7 +380,7 @@ export default function Header() {
                   <Link
                     href="/login"
                     aria-label="Sign in"
-                    className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-mb-bg bg-mb-primary hover:bg-mb-primary-hover transition-colors rounded-[2px] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent flex-shrink-0"
+                    className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-[13px] font-semibold text-mb-bg bg-mb-primary hover:bg-mb-primary-hover transition-colors rounded-[2px] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent flex-shrink-0 whitespace-nowrap"
                   >
                     <Icon icon="lucide:user" className="w-3.5 h-3.5" />
                     <span>Sign in</span>

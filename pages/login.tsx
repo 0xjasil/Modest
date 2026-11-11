@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import BrandLogo from "@/components/BrandLogo";
 import Button from "@/components/Button";
 
 export default function LoginPage() {
@@ -30,11 +29,18 @@ export default function LoginPage() {
   const displayError = localError || error;
 
   return (
-    <>
-      <Header />
-      <main id="main-content" className="min-h-screen bg-mb-bg py-8 sm:py-16">
-        <div className="mx-auto max-w-content px-4 md:px-6">
-          {/* Breadcrumb */}
+    <main id="main-content" className="min-h-screen bg-mb-bg flex flex-col justify-center py-8 sm:py-12">
+      <div className="mx-auto w-full max-w-content px-4 md:px-6">
+        <div className="max-w-md mx-auto mb-6 flex justify-center">
+          <Link
+            href="/"
+            aria-label="Modest Studio — homepage"
+            className="inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mb-accent rounded"
+          >
+            <BrandLogo variant="secondary" className="h-10 sm:h-11 w-auto object-contain" />
+          </Link>
+        </div>
+        {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-6 max-w-md mx-auto">
             <ol className="flex items-center gap-1.5 text-xs text-mb-muted" role="list">
               <li role="listitem">
@@ -160,8 +166,6 @@ export default function LoginPage() {
             </p>
           </div>
         </div>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

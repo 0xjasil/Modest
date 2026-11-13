@@ -42,12 +42,12 @@ export default function RecommendationsPage() {
     return (
       <>
         <Head>
-          <title>Recommendations | Moryella</title>
+          <title>Recommendations | Modest Studio</title>
         </Head>
         <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600"></div>
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-mb-primary"></div>
             <p className="mt-4 text-gray-600">Loading recommendations...</p>
           </div>
         </div>
@@ -62,7 +62,7 @@ export default function RecommendationsPage() {
   return (
     <>
       <Head>
-        <title>Recommendations | Moryella</title>
+        <title>Recommendations | Modest Studio</title>
         <meta name="description" content="Personalized product recommendations" />
       </Head>
       <Header />
@@ -84,7 +84,7 @@ export default function RecommendationsPage() {
               onClick={() => setActiveTab("personalized")}
               className={`px-4 py-3 font-medium border-b-2 transition ${
                 activeTab === "personalized"
-                  ? "border-pink-600 text-pink-600"
+                  ? "border-mb-primary text-mb-primary"
                   : "border-transparent text-gray-600 hover:text-gray-900"
               }`}
             >
@@ -94,7 +94,7 @@ export default function RecommendationsPage() {
               onClick={() => setActiveTab("trending")}
               className={`px-4 py-3 font-medium border-b-2 transition ${
                 activeTab === "trending"
-                  ? "border-pink-600 text-pink-600"
+                  ? "border-mb-primary text-mb-primary"
                   : "border-transparent text-gray-600 hover:text-gray-900"
               }`}
             >
@@ -111,7 +111,7 @@ export default function RecommendationsPage() {
                     No personalized recommendations yet. Start exploring!
                   </p>
                   <Link href="/search">
-                    <button className="bg-pink-600 text-white px-6 py-2 rounded-lg hover:bg-pink-700">
+                    <button className="bg-mb-primary text-white px-6 py-2 rounded-lg hover:bg-mb-primary-hover">
                       Browse Products
                     </button>
                   </Link>
@@ -230,7 +230,7 @@ function TrendingProductCard({ product }: ProductCardProps) {
             alt={`${product.name} — Recommended Luxury Abaya | Modest Studio`}
             className="w-full h-full object-contain group-hover:scale-105 transition"
           />
-          <div className="absolute top-2 left-2 bg-gradient-to-r from-pink-500 to-red-500 text-white px-2 py-1 rounded-lg text-xs font-bold flex items-center space-x-1">
+          <div className="absolute top-2 left-2 bg-gradient-to-r from-mb-accent to-red-500 text-white px-2 py-1 rounded-lg text-xs font-bold flex items-center space-x-1">
             <span>🔥</span>
             <span>Trending</span>
           </div>

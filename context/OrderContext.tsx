@@ -17,6 +17,10 @@ export interface OrderItem {
   quantity: number;
   price: number;
   product?: Product;
+  /** Flattened display fields so order history can name the item without extra fetches */
+  productName?: string;
+  productImage?: string;
+  variantLabel?: string;
 }
 
 export interface Order extends BaseOrder {
@@ -94,10 +98,19 @@ function normalizeOrder(o: any): Order {
     totalAmount: o.total ?? o.totalAmount ?? 0,
     shippingAddress: formattedAddress,
     paymentMethod: o.paymentMethod || "RAZORPAY",
-    items: (o.items || []).map((item: any) => ({
-      ...item,
-      productId: item.variant?.productId || item.productId || 0,
-    })),
+    items: (o.items || []).map((item: any) => {
+      const backendProduct = item.variant?.product || item.product || null;
+      const variantLabel = [item.variant?.color, item.variant?.size]
+        .filter(Boolean)
+        .join(" / ");
+      return {
+        ...item,
+        productId: item.variant?.productId || backendProduct?.id || item.productId || 0,
+        productName: backendProduct?.name || item.productName || item.name,
+        productImage: backendProduct?.images?.[0] || item.productImage,
+        variantLabel: variantLabel || item.variant?.sku || undefined,
+      };
+    }),
   };
 }
 

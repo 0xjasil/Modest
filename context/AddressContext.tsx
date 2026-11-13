@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { addressAPI, type CreateAddressDto } from "@/lib/api";
 import type { Address as BaseAddress } from "@/lib/types";
+import { getShippingFee, FREE_SHIPPING_THRESHOLD } from "@/lib/constants";
 
 /* ── Types ────────────────────────────────────────────────────── */
 export interface Address extends BaseAddress {
@@ -83,18 +84,20 @@ function normalizeAddress(a: any): Address {
   };
 }
 
-/* ── Standard Store Shipping Rules (Matches OrdersService: subtotal > 1500 ? 0 : 99) ──── */
+/* ── Standard Store Shipping Rules — single source of truth in lib/constants ──── */
 function buildShippingOptions(subtotal?: number): ShippingOption[] {
-  const isComplimentary = (subtotal ?? 0) > 1500;
+  const cost = getShippingFee(subtotal ?? 0);
+  const threshold = `₹${FREE_SHIPPING_THRESHOLD.toLocaleString("en-IN")}`;
   return [
     {
       id: "standard",
       name: "Standard Delivery",
-      description: isComplimentary
-        ? "Complimentary delivery applied on orders above ₹1,500"
-        : "Complimentary delivery on orders above ₹1,500 (₹99 standard fee)",
+      description:
+        cost === 0
+          ? `Complimentary delivery applied on orders above ${threshold}`
+          : `Complimentary delivery on orders above ${threshold} (₹${cost} standard fee)`,
       estimatedDays: 4,
-      cost: isComplimentary ? 0 : 99,
+      cost,
       carrier: "Modest Studio Courier",
     },
   ];

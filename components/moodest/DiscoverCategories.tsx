@@ -23,6 +23,14 @@ interface DiscoverCategoriesProps {
 }
 
 /**
+ * Origin that serves admin-uploaded media (category art, banners).
+ * Override with NEXT_PUBLIC_MEDIA_URL so a redeploy/domain change never needs a code change.
+ */
+const MEDIA_BASE_URL = (
+  process.env.NEXT_PUBLIC_MEDIA_URL || "https://admin-moodest-25.vercel.app"
+).replace(/\/$/, "");
+
+/**
  * Dynamically resolves category image from:
  * 1. Direct dynamically uploaded category image (Cloudinary URL, external URL, or uploaded path)
  * 2. Dynamically matched product image for this category from live products

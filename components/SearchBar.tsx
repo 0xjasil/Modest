@@ -83,12 +83,12 @@ export default function SearchBar({
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => query && setIsOpen(true)}
             placeholder={placeholder}
-            className="w-full px-4 py-2.5 pr-12 border border-[#CDD3D8] rounded-lg bg-white text-[#000000] placeholder-[#595E63] focus:border-[#E80071] focus:outline-none focus:ring-1 focus:ring-[#E80071]"
+            className="w-full px-4 py-2.5 pr-12 border border-[#DCC1B9] rounded-lg bg-white text-[#2D1A1F] placeholder-[#514044] focus:border-[#5C1A24] focus:outline-none focus:ring-1 focus:ring-[#5C1A24]"
           />
           <button
             type="submit"
             aria-label="Search"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#595E63] hover:text-[#E80071] transition-colors cursor-pointer"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#514044] hover:text-[#5C1A24] transition-colors cursor-pointer"
           >
             <Icon icon="lucide:search" className="w-5 h-5" />
           </button>
@@ -97,15 +97,15 @@ export default function SearchBar({
 
       {/* Suggestions Dropdown */}
       {isOpen && suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-[#CDD3D8] rounded-lg shadow-md z-50">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-[#DCC1B9] rounded-lg shadow-md z-50">
           <div className="p-2">
             {suggestions.map((suggestion, index) => (
               <button
                 key={index}
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="w-full text-left px-3 py-2 hover:bg-[#F4F4F4] rounded text-sm text-[#595E63] hover:text-[#000000] transition-colors"
+                className="w-full text-left px-3 py-2 hover:bg-[#FBF7F3] rounded text-sm text-[#514044] hover:text-[#2D1A1F] transition-colors"
               >
-                <span className="text-[#E80071] mr-2">🔍</span>
+                <span className="text-[#5C1A24] mr-2">🔍</span>
                 {suggestion}
               </button>
             ))}

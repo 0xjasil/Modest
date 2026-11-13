@@ -48,7 +48,7 @@ export default function NotificationsPage() {
   };
 
   const typeColors: Record<string, string> = {
-    info: "border-blue-200 bg-blue-50",
+    info: "border-mb-info bg-mb-info-bg",
     success: "border-green-200 bg-green-50",
     warning: "border-yellow-200 bg-yellow-50",
     error: "border-red-200 bg-red-50",
@@ -58,12 +58,12 @@ export default function NotificationsPage() {
     return (
       <>
         <Head>
-          <title>Notifications | Moryella</title>
+          <title>Notifications | Modest Studio</title>
         </Head>
         <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600"></div>
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-mb-primary"></div>
             <p className="mt-4 text-gray-600">Loading notifications...</p>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default function NotificationsPage() {
   return (
     <>
       <Head>
-        <title>Notifications | Moryella</title>
+        <title>Notifications | Modest Studio</title>
         <meta name="description" content="View your notifications and updates" />
       </Head>
       <Header />
@@ -87,14 +87,15 @@ export default function NotificationsPage() {
               <h1 className="text-3xl font-bold text-gray-900 mb-1">
                 Notifications
               </h1>
-              <p className="text-gray-600">
-                {unreadCount > 0 ? `${unreadCount} unread` : "All read"}
+              <p className="mt-2 inline-flex items-center gap-2 rounded-full border border-mb-info-border bg-mb-info-bg px-3 py-1 text-xs font-semibold text-mb-info-deep">
+                <span className="inline-block size-1.5 rounded-full bg-mb-info" aria-hidden="true" />
+                {unreadCount > 0 ? `${unreadCount} unread` : "You are all caught up"}
               </p>
             </div>
             {unreadCount > 0 && (
               <button
                 onClick={markAllAsRead}
-                className="text-pink-600 hover:text-pink-700 font-medium text-sm"
+                className="text-mb-primary hover:text-mb-primary-hover font-medium text-sm"
               >
                 Mark all as read
               </button>
@@ -110,7 +111,7 @@ export default function NotificationsPage() {
                   onClick={() => setFilterType(filter)}
                   className={`px-4 py-2 rounded-lg font-medium transition ${
                     filterType === filter
-                      ? "bg-pink-600 text-white"
+                      ? "bg-mb-primary text-white"
                       : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
                   }`}
                 >
@@ -133,7 +134,7 @@ export default function NotificationsPage() {
                   : "No notifications"}
               </p>
               <Link href="/">
-                <button className="text-pink-600 hover:text-pink-700 font-medium">
+                <button className="text-mb-primary hover:text-mb-primary-hover font-medium">
                   Go back home
                 </button>
               </Link>
@@ -198,7 +199,7 @@ function NotificationCard({
             <div className="flex items-center justify-between mb-1">
               <h3 className="font-bold text-gray-900">{notification.title}</h3>
               {!notification.read && (
-                <span className="w-2 h-2 bg-pink-600 rounded-full"></span>
+                <span className="w-2 h-2 bg-mb-info rounded-full" aria-label="Unread"></span>
               )}
             </div>
             <p className="text-sm text-gray-700 mb-2">{notification.message}</p>
@@ -211,7 +212,7 @@ function NotificationCard({
                 })}
               </p>
               {notification.action && (
-                <span className="text-xs text-pink-600 font-medium hover:underline">
+                <span className="text-xs text-mb-primary font-medium hover:underline">
                   → {notification.action.text}
                 </span>
               )}

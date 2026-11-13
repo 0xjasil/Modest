@@ -34,7 +34,7 @@ export default function RecommendedProducts() {
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center h-64">
             <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-pink-600"></div>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-mb-primary"></div>
               <p className="mt-2 text-gray-600">Loading recommendations...</p>
             </div>
           </div>
@@ -61,7 +61,7 @@ export default function RecommendedProducts() {
             </p>
           </div>
           <Link href="/recommendations">
-            <button className="text-pink-600 hover:text-pink-700 font-medium text-sm">
+            <button className="text-mb-primary hover:text-mb-primary-hover font-medium text-sm">
               View All →
             </button>
           </Link>
@@ -105,7 +105,7 @@ function ProductCard({ product }: ProductCardProps) {
           <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
             {product.category}
           </p>
-          <h4 className="font-medium text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-pink-600 transition">
+          <h4 className="font-medium text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-mb-primary transition">
             {product.name}
           </h4>
           <div className="flex items-center justify-between">

@@ -105,12 +105,12 @@ export default function Analytics() {
     return (
       <>
         <Head>
-          <title>My Analytics | Moryella</title>
+          <title>My Analytics | Modest Studio</title>
         </Head>
         <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600"></div>
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-mb-primary"></div>
             <p className="mt-4 text-gray-600">Loading your analytics...</p>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function Analytics() {
     return (
       <>
         <Head>
-          <title>My Analytics | Moryella</title>
+          <title>My Analytics | Modest Studio</title>
         </Head>
         <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -142,7 +142,7 @@ export default function Analytics() {
   return (
     <>
       <Head>
-        <title>My Analytics | Moryella</title>
+        <title>My Analytics | Modest Studio</title>
         <meta name="description" content="View your shopping analytics and insights" />
       </Head>
       <Header />
@@ -166,7 +166,7 @@ export default function Analytics() {
                 onClick={() => setTimePeriod(period)}
                 className={`px-4 py-2 rounded-lg font-medium transition ${
                   timePeriod === period
-                    ? "bg-pink-600 text-white"
+                    ? "bg-mb-primary text-white"
                     : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
                 }`}
               >
@@ -226,7 +226,7 @@ export default function Analytics() {
                     </div>
                     <div className="text-right">
                       <div
-                        className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white font-bold text-sm"
+                        className="w-12 h-12 rounded-full bg-gradient-to-br from-mb-accent to-mb-primary flex items-center justify-center text-white font-bold text-sm"
                         style={{
                           opacity: 0.6 + (cat.purchases / 15) * 0.4,
                         }}
@@ -253,7 +253,7 @@ export default function Analytics() {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
-                        className="bg-gradient-to-r from-pink-400 to-pink-600 h-2 rounded-full"
+                        className="bg-gradient-to-r from-mb-accent to-mb-primary h-2 rounded-full"
                         style={{ width: `${device.percentage}%` }}
                       ></div>
                     </div>
@@ -364,7 +364,7 @@ export default function Analytics() {
                     <p className="font-medium text-gray-900">{purchase.date}</p>
                     <p className="text-xs text-gray-500">{purchase.items} item(s)</p>
                   </div>
-                  <p className="font-bold text-pink-600">₹{purchase.amount.toLocaleString()}</p>
+                  <p className="font-bold text-mb-primary">₹{purchase.amount.toLocaleString()}</p>
                 </div>
               ))}
             </div>
@@ -386,7 +386,7 @@ function MetricCard({
   icon: string;
 }) {
   return (
-    <div className="bg-white rounded-lg shadow p-4 border-l-4 border-pink-600">
+    <div className="bg-white rounded-lg shadow p-4 border-l-4 border-mb-primary">
       <p className="text-xs text-gray-600 uppercase tracking-wide mb-1">{label}</p>
       <p className="text-2xl font-bold text-gray-900">{value}</p>
       <p className="text-xl mt-2">{icon}</p>

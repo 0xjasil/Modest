@@ -5,15 +5,25 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import BrandLogo from "@/components/BrandLogo";
+import { getShippingFee, FREE_SHIPPING_THRESHOLD } from "@/lib/constants";
+import InfoNote from "@/components/InfoNote";
 
 export default function Cart() {
-  const { items, updateQty, removeItem, total, itemCount } = useCart();
+  const { items, updateQty, removeItem, total, itemCount, isLoading } = useCart();
 
+  // Only count genuine markdowns (never surface a negative "saving")
   const savings = items.reduce(
     (s, i) =>
-      s + ((i.product.originalPrice ?? i.product.price) - i.product.price) * i.qty,
+      s +
+      Math.max(0, (i.product.originalPrice ?? i.product.price) - i.product.price) * i.qty,
     0
   );
+
+  // Same rule the backend uses when the order is placed, so the bag never
+  // promises "free shipping" that checkout then charges for.
+  const shippingFee = getShippingFee(total);
+  const grandTotal = total + shippingFee;
+  const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD + 1 - Math.floor(total));
 
   return (
     <>
@@ -43,7 +53,23 @@ export default function Cart() {
             Shopping Bag ({itemCount} {itemCount === 1 ? "creation" : "creations"})
           </h1>
 
-          {items.length === 0 ? (
+          {isLoading && items.length === 0 ? (
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_360px]" aria-busy="true" aria-label="Loading your bag">
+              <div className="flex flex-col gap-4">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="bg-mb-surface rounded-[6px] border border-mb-border shadow-card p-4 sm:p-5 flex gap-4 animate-pulse">
+                    <div className="h-24 w-24 sm:h-28 sm:w-28 rounded-[8px] bg-mb-border/40" />
+                    <div className="flex-1 space-y-2 py-1">
+                      <div className="h-3 w-24 bg-mb-border/40 rounded" />
+                      <div className="h-4 w-2/3 bg-mb-border/40 rounded" />
+                      <div className="h-4 w-20 bg-mb-border/40 rounded" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-mb-surface rounded-[6px] border border-mb-border shadow-card p-6 h-64 animate-pulse" />
+            </div>
+          ) : items.length === 0 ? (
             /* ── Empty state with Emblem Only ───────────────── */
             <div className="bg-mb-surface rounded-[6px] md:rounded-[8px] border border-mb-border shadow-card p-12 text-center max-w-md mx-auto my-8">
               <div className="flex justify-center mb-4">
@@ -177,14 +203,27 @@ export default function Cart() {
                       </div>
                     )}
                     <div className="flex justify-between">
-                      <dt>Complimentary Shipping</dt>
-                      <dd className="text-mb-success font-semibold">Free</dd>
+                      <dt>Shipping</dt>
+                      <dd className={shippingFee === 0 ? "text-mb-success font-semibold" : "font-medium text-mb-text"}>
+                        {shippingFee === 0 ? "Complimentary" : `₹${shippingFee.toLocaleString("en-IN")}`}
+                      </dd>
                     </div>
                     <div className="flex justify-between text-base font-bold text-mb-text pt-3 border-t border-mb-border-lite">
                       <dt>Total</dt>
-                      <dd className="text-mb-primary font-bold">₹{total.toLocaleString()}</dd>
+                      <dd className="text-mb-primary font-bold">₹{grandTotal.toLocaleString("en-IN")}</dd>
                     </div>
                   </dl>
+
+                  {shippingFee > 0 && amountToFreeShipping > 0 && (
+                    <InfoNote icon="lucide:truck" className="mt-4">
+                      Add{" "}
+                      <span className="font-semibold">
+                        ₹{amountToFreeShipping.toLocaleString("en-IN")}
+                      </span>{" "}
+                      more for complimentary shipping (orders above ₹
+                      {FREE_SHIPPING_THRESHOLD.toLocaleString("en-IN")}).
+                    </InfoNote>
+                  )}
 
                   {savings > 0 && (
                     <p className="mt-4 text-xs text-mb-success font-semibold bg-mb-bg border border-mb-border-lite rounded-[8px] px-3 py-2">

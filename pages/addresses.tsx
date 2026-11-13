@@ -41,15 +41,15 @@ export default function AddressesPage() {
         <div className="mx-auto max-w-content px-4 md:px-6 py-12">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-1.5 text-xs text-[#595E63]" role="list">
+            <ol className="flex items-center gap-1.5 text-xs text-[#514044]" role="list">
               <li role="listitem">
-                <Link href="/" className="hover:text-[#E80071] hover:underline">
+                <Link href="/" className="hover:text-[#5C1A24] hover:underline">
                   Home
                 </Link>
               </li>
               <li role="listitem" aria-hidden="true">/</li>
               <li role="listitem">
-                <Link href="/profile" className="hover:text-[#E80071] hover:underline">
+                <Link href="/profile" className="hover:text-[#5C1A24] hover:underline">
                   Profile
                 </Link>
               </li>
@@ -64,10 +64,10 @@ export default function AddressesPage() {
             {/* Main Content */}
             <div className="md:col-span-2">
               <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-semibold text-[#000000]">Saved Addresses</h1>
+                <h1 className="text-2xl font-semibold text-[#2D1A1F]">Saved Addresses</h1>
                 <button
                   onClick={() => setShowForm(!showForm)}
-                  className="px-4 py-2 bg-[#E80071] text-white font-medium rounded-lg hover:opacity-90 transition-colors"
+                  className="px-4 py-2 bg-[#5C1A24] text-white font-medium rounded-lg hover:opacity-90 transition-colors"
                 >
                   {showForm ? '✕ Cancel' : '+ Add New Address'}
                 </button>
@@ -75,8 +75,8 @@ export default function AddressesPage() {
 
               {/* Form */}
               {showForm && (
-                <div className="bg-[#F4F4F4] rounded-lg p-6 mb-6 border border-[#CDD3D8]">
-                  <h2 className="text-lg font-semibold text-[#000000] mb-4">Add New Address</h2>
+                <div className="bg-[#FBF7F3] rounded-lg p-6 mb-6 border border-[#DCC1B9]">
+                  <h2 className="text-lg font-semibold text-[#2D1A1F] mb-4">Add New Address</h2>
                   <AddressForm
                     onSuccess={() => {
                       setShowForm(false);
@@ -93,7 +93,7 @@ export default function AddressesPage() {
                   {[1, 2, 3].map((i) => (
                     <div
                       key={i}
-                      className="p-6 bg-[#F4F4F4] rounded-lg animate-pulse h-40"
+                      className="p-6 bg-[#FBF7F3] rounded-lg animate-pulse h-40"
                     />
                   ))}
                 </div>
@@ -104,37 +104,37 @@ export default function AddressesPage() {
 
             {/* Sidebar */}
             <div>
-              <div className="bg-[#F4F4F4] rounded-lg p-6 border border-[#CDD3D8] sticky top-20">
-                <h3 className="text-lg font-semibold text-[#000000] mb-4">Quick Links</h3>
+              <div className="bg-[#FBF7F3] rounded-lg p-6 border border-[#DCC1B9] sticky top-20">
+                <h3 className="text-lg font-semibold text-[#2D1A1F] mb-4">Quick Links</h3>
                 <nav className="space-y-2">
                   <Link
                     href="/profile"
-                    className="block px-3 py-2.5 text-sm font-medium text-[#000000] hover:bg-white hover:text-[#E80071] rounded-lg transition-colors"
+                    className="block px-3 py-2.5 text-sm font-medium text-[#2D1A1F] hover:bg-white hover:text-[#5C1A24] rounded-lg transition-colors"
                   >
                     Profile Settings
                   </Link>
                   <Link
                     href="/wallet"
-                    className="block px-3 py-2.5 text-sm font-medium text-[#000000] hover:bg-white hover:text-[#E80071] rounded-lg transition-colors"
+                    className="block px-3 py-2.5 text-sm font-medium text-[#2D1A1F] hover:bg-white hover:text-[#5C1A24] rounded-lg transition-colors"
                   >
                     Wallet
                   </Link>
                   <Link
                     href="/orders"
-                    className="block px-3 py-2.5 text-sm font-medium text-[#000000] hover:bg-white hover:text-[#E80071] rounded-lg transition-colors"
+                    className="block px-3 py-2.5 text-sm font-medium text-[#2D1A1F] hover:bg-white hover:text-[#5C1A24] rounded-lg transition-colors"
                   >
                     My Orders
                   </Link>
                   <Link
                     href="/cart"
-                    className="block px-3 py-2.5 text-sm font-medium text-[#000000] hover:bg-white hover:text-[#E80071] rounded-lg transition-colors"
+                    className="block px-3 py-2.5 text-sm font-medium text-[#2D1A1F] hover:bg-white hover:text-[#5C1A24] rounded-lg transition-colors"
                   >
                     Shopping Cart
                   </Link>
                 </nav>
 
                 {/* Info */}
-                <div className="mt-6 pt-6 border-t border-[#CDD3D8] space-y-2 text-xs text-[#595E63]">
+                <div className="mt-6 pt-6 border-t border-[#DCC1B9] space-y-2 text-xs text-[#514044]">
                   <p>💡 Set one address as default for quick checkout</p>
                   <p>📌 You can manage multiple addresses here</p>
                   <p>✓ All addresses are securely stored</p>

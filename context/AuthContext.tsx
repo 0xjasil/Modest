@@ -284,6 +284,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         : undefined;
     clearAuthTokens(false);
     dispatch({ type: "LOGOUT" });
+    // Let cart / wishlist providers discard user-scoped local state
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("moryelle:logout"));
+    }
     authAPI.logout(refreshToken).catch(() => {});
   }, []);
 

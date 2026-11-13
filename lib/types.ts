@@ -132,6 +132,10 @@ export interface CartItem {
   variant?: Variant & {
     product?: BackendProduct;
   };
+  /** Flattened display fields derived from `variant.product` on the client */
+  productName?: string;
+  productImage?: string;
+  variantLabel?: string;
 }
 
 export interface Cart {
@@ -195,6 +199,10 @@ export interface OrderItem {
   variant?: Variant & {
     product?: BackendProduct;
   };
+  /** Flattened display fields derived from `variant.product` on the client */
+  productName?: string;
+  productImage?: string;
+  variantLabel?: string;
 }
 
 export interface Order {

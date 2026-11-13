@@ -46,6 +46,13 @@
   --color-success:          #55765A;
   --color-error:            #A83A45;
 
+  /* Baby-blue informational accent — notices, delivery info, notifications.
+     Deliberately reserved for "information", never for success/error states. */
+  --color-info:             #3C7A93;
+  --color-info-deep:        #2C6379;
+  --color-info-bg:          #EAF4F8;
+  --color-info-border:      #C7DFE9;
+
   /* Compatibility aliases */
   --white:                  #FFFFFF;
   --surface:                var(--color-surface);

@@ -26,6 +26,10 @@ module.exports = {
           "border-lite":   "var(--color-border-lite)",
           success:         "var(--color-success)",
           error:           "var(--color-error)",
+          info:            "var(--color-info)",
+          "info-deep":     "var(--color-info-deep)",
+          "info-bg":       "var(--color-info-bg)",
+          "info-border":   "var(--color-info-border)",
           // Direct brand palette hex mappings
           cream:           "#FFF7F2",
           blush:           "#F7E7E9",

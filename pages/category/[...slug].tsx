@@ -134,36 +134,28 @@ export default function Category({
     return categorySlug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
   }, [searchQuery, q, categorySlug, subcategorySlug, liveCategories]);
 
-  // Filter products by category, subcategory, search query, price, rating
+  // Narrow the server-provided result set. The backend already filters by
+  // category/slug, so re-matching category text client-side only risked hiding
+  // valid products (e.g. slug "syrian-collection" vs category "Syrian").
+  // Price and rating filters must apply in search mode too.
   const baseProducts = useMemo(() => {
     let list = catalogItems;
 
-    // Search query filter
     if (searchQuery) {
       list = list.filter(p =>
         p.name.toLowerCase().includes(searchQuery) ||
         p.brand.toLowerCase().includes(searchQuery) ||
         p.category.toLowerCase().includes(searchQuery)
       );
-      return list;
-    }
-
-    // Category / Subcategory filter
-    if (categorySlug !== "all") {
-      const targetSlug = categorySlug.toLowerCase();
-      const targetSub = subcategorySlug?.toLowerCase();
-
-      list = list.filter(p => {
-        const catName = p.category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-        const brandName = p.brand.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-        const prodName = p.name.toLowerCase();
-
-        const matchesCat = catName.includes(targetSlug) || brandName.includes(targetSlug) || prodName.includes(targetSlug.replace(/-/g, ' '));
-        if (targetSub) {
-          return matchesCat && prodName.includes(targetSub.replace(/-/g, ' '));
-        }
-        return matchesCat;
-      });
+    } else if (subcategorySlug) {
+      const needle = subcategorySlug.toLowerCase().replace(/-/g, " ");
+      const narrowed = list.filter(
+        p =>
+          p.name.toLowerCase().includes(needle) ||
+          p.category.toLowerCase().replace(/[^a-z0-9]+/g, " ").includes(needle)
+      );
+      // Only narrow when the sub-slug actually resolves, never blank the grid
+      if (narrowed.length > 0) list = narrowed;
     }
 
     // Price filter
@@ -199,7 +191,7 @@ export default function Category({
   return (
     <>
       <Head>
-        <title>{categoryDisplay} | Modest Studio</title>
+        <title>{`${categoryDisplay} | Modest Studio`}</title>
       </Head>
       <Header />
       <main id="main-content" className="min-h-screen bg-mb-bg py-8">
@@ -396,7 +388,21 @@ export default function Category({
                 </div>
               </div>
 
-              {sorted.length === 0 ? (
+              {loading && sorted.length === 0 ? (
+                <div
+                  className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4"
+                  aria-busy="true"
+                  aria-label="Loading products"
+                >
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="animate-pulse space-y-2">
+                      <div className="aspect-[3/4] w-full bg-mb-border/40 rounded-[2px]" />
+                      <div className="h-3 w-3/4 bg-mb-border/40 rounded" />
+                      <div className="h-3 w-1/3 bg-mb-border/40 rounded" />
+                    </div>
+                  ))}
+                </div>
+              ) : sorted.length === 0 ? (
                 <div className="bg-mb-surface border border-mb-border rounded-[2px] shadow-2xs p-12 text-center">
                   <p className="text-sm text-mb-body font-medium">No designs found matching your selection.</p>
                   <button

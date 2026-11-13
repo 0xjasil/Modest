@@ -124,11 +124,51 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     }
   }, [isAuthenticated]);
 
+  /* On login: push any guest-saved items to the account, then load the server list.
+     Without this, a guest wishlist is silently discarded on sign-in. */
   useEffect(() => {
-    if (isAuthenticated) {
-      refreshWishlist();
-    }
+    if (!isAuthenticated) return;
+    let isSubscribed = true;
+
+    (async () => {
+      try {
+        const raw = typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
+        if (raw) {
+          const parsed = JSON.parse(raw) as { ids?: string[] };
+          const localIds = Array.isArray(parsed?.ids) ? parsed.ids : [];
+          if (localIds.length > 0) {
+            await Promise.all(
+              localIds.map((id) => wishlistAPI.add(id).catch(() => undefined))
+            );
+          }
+        }
+      } catch {
+        /* ignore malformed cache */
+      }
+      if (isSubscribed) {
+        await refreshWishlist();
+      }
+    })();
+
+    return () => {
+      isSubscribed = false;
+    };
   }, [isAuthenticated, refreshWishlist]);
+
+  /* Discard user-scoped local wishlist on logout so it is not shown to the next visitor. */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleLogout = () => {
+      dispatch({ type: "SET_WISHLIST", ids: new Set<string>(), products: [] });
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        /* ignore */
+      }
+    };
+    window.addEventListener("moryelle:logout", handleLogout);
+    return () => window.removeEventListener("moryelle:logout", handleLogout);
+  }, []);
 
   /* Persist to localStorage on change */
   useEffect(() => {

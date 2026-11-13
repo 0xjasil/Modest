@@ -28,6 +28,12 @@ const nextConfig = {
         hostname: 'via.placeholder.com',
         pathname: '/**',
       },
+      {
+        // Media uploaded through the admin panel (see NEXT_PUBLIC_MEDIA_URL)
+        protocol: 'https',
+        hostname: 'admin-moodest-25.vercel.app',
+        pathname: '/**',
+      },
     ],
   },
 };

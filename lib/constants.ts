@@ -23,9 +23,26 @@ export const SIZE_GUIDE: SizeGuideRow[] = [
   { size: "62", lengthInches: 62, bustInches: 52, recommendedHeight: "5'11\"+" },
 ];
 
-export const FREE_SHIPPING_THRESHOLD = 1999;
-export const STANDARD_SHIPPING_FEE = 149;
+/**
+ * Single source of truth for storefront commerce rules.
+ * MUST stay in sync with the NestJS OrdersService pricing:
+ *   shippingAmount = subtotal > FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE
+ *   taxAmount      = 0 (GST is inclusive)
+ */
+export const FREE_SHIPPING_THRESHOLD = 1500;
+export const STANDARD_SHIPPING_FEE = 99;
 export const EXPRESS_SHIPPING_FEE = 299;
+
+/** Shipping fee for a given bag subtotal (all amounts in INR). */
+export function getShippingFee(subtotal: number): number {
+  if (!Number.isFinite(subtotal) || subtotal <= 0) return 0;
+  return subtotal > FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE;
+}
+
+/** Amount still needed to unlock complimentary shipping (0 once unlocked). */
+export function getAmountToFreeShipping(subtotal: number): number {
+  return Math.max(0, FREE_SHIPPING_THRESHOLD + 1 - Math.floor(subtotal));
+}
 
 export const NAV_LINKS = [
   { label: "Front Open", href: "/category/front-open" },

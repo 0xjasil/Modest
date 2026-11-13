@@ -25,7 +25,10 @@ export default function ProductCard({ product }: { product: Product }) {
   const onAdd = (e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); addItem(product); };
   const onWish = (e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(product); };
 
-  const formatPrice = (val: number) => `Rs. ${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const hasRealDiscount =
+    typeof product.originalPrice === "number" && product.originalPrice > product.price;
+  const formatPrice = (val: number) =>
+    `₹${Number(val).toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
 
   return (
     <article className="group relative flex flex-col bg-mb-surface border border-mb-border rounded-[2px] transition-all overflow-hidden select-none shadow-2xs hover:border-mb-accent/60">
@@ -34,7 +37,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-mb-surface border-b border-mb-border/60">
         
         {/* Top-Left: Badge following brand palette (2px subtle border radius) */}
-        {product.discount ? (
+        {product.discount && product.discount > 0 ? (
           <span className="absolute top-2 sm:top-2.5 left-2 sm:left-2.5 z-10 bg-mb-accent-deep text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-[2px] uppercase tracking-wider shadow-xs pointer-events-none">
             {product.discount}% OFF
           </span>
@@ -106,14 +109,14 @@ export default function ProductCard({ product }: { product: Product }) {
           </p>
 
           {/* Strikethrough Original Price */}
-          {product.originalPrice && (
+          {hasRealDiscount && (
             <p className="text-[10px] sm:text-[11px] text-mb-muted line-through leading-tight mt-0.5">
-              {formatPrice(product.originalPrice)}
+              {formatPrice(product.originalPrice as number)}
             </p>
           )}
 
           {/* Red/Rust Discount Percentage (Brand Theme --color-error / #A83A45) */}
-          {product.discount && (
+          {!!product.discount && product.discount > 0 && (
             <p className="text-[10px] sm:text-[11px] font-bold text-mb-error leading-tight mt-0.5">
               {product.discount}% OFF
             </p>

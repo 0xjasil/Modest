@@ -35,14 +35,14 @@ export default function NotificationBell() {
       {/* Bell Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-gray-700 hover:text-pink-600 transition cursor-pointer"
+        className="relative p-2 text-gray-700 hover:text-mb-primary transition cursor-pointer"
         title="Notifications"
       >
         <Icon icon="lucide:bell" className="w-6 h-6" />
 
         {/* Badge */}
         {unreadCount > 0 && (
-          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-pink-600 rounded-full">
+          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-mb-info rounded-full">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -92,7 +92,7 @@ export default function NotificationBell() {
                           {notif.title}
                         </p>
                         {!notif.read && (
-                          <span className="w-2 h-2 bg-pink-600 rounded-full flex-shrink-0 ml-2"></span>
+                          <span className="w-2 h-2 bg-mb-info rounded-full flex-shrink-0 ml-2"></span>
                         )}
                       </div>
                       <p className="text-xs text-gray-600 mt-0.5 line-clamp-2">
@@ -111,7 +111,7 @@ export default function NotificationBell() {
           {/* Footer */}
           <div className="px-4 py-3 border-t border-gray-100 flex space-x-2">
             <Link href="/notifications" className="flex-1">
-              <button className="w-full text-center text-sm text-pink-600 hover:text-pink-700 font-medium py-2 hover:bg-pink-50 rounded transition">
+              <button className="w-full text-center text-sm text-mb-primary hover:text-mb-primary-hover font-medium py-2 hover:bg-mb-surface-strong rounded transition">
                 View all
               </button>
             </Link>

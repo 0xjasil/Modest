@@ -25,7 +25,7 @@ interface CartState {
 
 type CartAction =
   | { type: "SET_ITEMS"; items: CartItem[] }
-  | { type: "ADD"; product: Product }
+  | { type: "ADD"; product: Product; qty: number }
   | { type: "REMOVE"; productId: string }
   | { type: "UPDATE"; productId: string; delta: number }
   | { type: "CLEAR" }
@@ -33,7 +33,7 @@ type CartAction =
 
 export interface CartContextValue {
   items: CartItem[];
-  addItem: (product: Product) => Promise<void>;
+  addItem: (product: Product, qty?: number) => Promise<void>;
   removeItem: (productId: string) => Promise<void>;
   updateQty: (productId: string, delta: number) => Promise<void>;
   clearCart: () => Promise<void>;
@@ -54,18 +54,19 @@ function reducer(state: CartState, action: CartAction): CartState {
       return { ...state, items: action.items, isLoading: false };
 
     case "ADD": {
+      const addQty = Math.max(1, Math.trunc(action.qty || 1));
       const exists = state.items.find((i) => i.product.id === action.product.id);
       if (exists) {
         return {
           ...state,
           items: state.items.map((i) =>
-            i.product.id === action.product.id ? { ...i, qty: i.qty + 1 } : i
+            i.product.id === action.product.id ? { ...i, qty: i.qty + addQty } : i
           ),
         };
       }
       return {
         ...state,
-        items: [...state.items, { product: action.product, qty: 1 }],
+        items: [...state.items, { product: action.product, qty: addQty }],
       };
     }
 
@@ -239,6 +240,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
     })();
   }, [isAuthenticated, refreshCart]);
 
+  /* Drop the in-memory + cached bag when the session is cleared (logout / expiry).
+     The server cart is the source of truth and is re-fetched on the next login. */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleAuthCleared = () => {
+      dispatch({ type: "SET_ITEMS", items: [] });
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        /* ignore */
+      }
+    };
+    window.addEventListener("moryelle:logout", handleAuthCleared);
+    return () => window.removeEventListener("moryelle:logout", handleAuthCleared);
+  }, []);
+
   /* Persist to localStorage on every change */
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -249,9 +266,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [state.items]);
 
+  /* Add one or more units in a single dispatch + a single server round-trip */
   const addItem = useCallback(
-    async (product: Product) => {
-      dispatch({ type: "ADD", product });
+    async (product: Product, qty: number = 1) => {
+      const safeQty = Math.max(1, Math.trunc(qty || 1));
+      dispatch({ type: "ADD", product, qty: safeQty });
       if (isAuthenticated) {
         const variantId =
           product.variantId ||
@@ -259,7 +278,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           product.backendId ||
           product.id;
         if (variantId !== undefined && variantId !== null && String(variantId).trim() !== "") {
-          await cartAPI.addItem(variantId, 1).catch(() => {});
+          await cartAPI.addItem(variantId, safeQty).catch(() => {});
           await refreshCart();
         }
       }

@@ -113,12 +113,12 @@ export default function NotificationSettings() {
     return (
       <>
         <Head>
-          <title>Notification Settings | Moryella</title>
+          <title>Notification Settings | Modest Studio</title>
         </Head>
         <Header />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600"></div>
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-mb-primary"></div>
             <p className="mt-4 text-gray-600">Loading settings...</p>
           </div>
         </div>
@@ -130,7 +130,7 @@ export default function NotificationSettings() {
   return (
     <>
       <Head>
-        <title>Notification Settings | Moryella</title>
+        <title>Notification Settings | Modest Studio</title>
         <meta name="description" content="Manage your notification preferences" />
       </Head>
       <Header />
@@ -192,7 +192,7 @@ export default function NotificationSettings() {
               />
               <ToggleItem
                 label="In-App Notifications"
-                description="Notifications within the Moryella app"
+                description="Notifications within the Modest Studio app"
                 enabled={settings.inAppNotifications}
                 onChange={() => handleToggle("inAppNotifications")}
                 icon="📱"
@@ -263,7 +263,7 @@ export default function NotificationSettings() {
                       value={freq}
                       checked={settings.digestFrequency === freq}
                       onChange={() => handleDigestChange(freq)}
-                      className="w-4 h-4 text-pink-600"
+                      className="w-4 h-4 text-mb-primary"
                     />
                     <span className="ml-3">
                       <span className="font-medium text-gray-900 block">
@@ -296,7 +296,7 @@ export default function NotificationSettings() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="flex-1 bg-pink-600 text-white px-6 py-3 rounded-lg hover:bg-pink-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition"
+              className="flex-1 bg-mb-primary text-white px-6 py-3 rounded-lg hover:bg-mb-primary-hover disabled:opacity-50 disabled:cursor-not-allowed font-medium transition"
             >
               {saving ? "Saving..." : "Save Settings"}
             </button>
@@ -354,7 +354,7 @@ function ToggleItem({
           onChange={onChange}
           className="sr-only peer"
         />
-        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-mb-border rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mb-primary"></div>
       </label>
     </div>
   );

@@ -20,14 +20,14 @@ export default function ReviewForm({ productId, productName, onSuccess }: Review
 
   if (!isAuthenticated) {
     return (
-      <div className="bg-[#F4F4F4] border border-[#CDD3D8] rounded-lg p-6 text-center">
-        <h4 className="text-base font-semibold text-[#000000] mb-2">Want to review this product?</h4>
-        <p className="text-xs text-[#595E63] mb-4">
+      <div className="bg-[#FBF7F3] border border-[#DCC1B9] rounded-lg p-6 text-center">
+        <h4 className="text-base font-semibold text-[#2D1A1F] mb-2">Want to review this product?</h4>
+        <p className="text-xs text-[#514044] mb-4">
           Please sign in to share your verified review and rating with other shoppers.
         </p>
         <Link
           href="/login"
-          className="inline-block px-5 py-2 text-xs font-semibold text-white bg-[#E80071] rounded-md hover:opacity-90 transition-opacity"
+          className="inline-block px-5 py-2 text-xs font-semibold text-white bg-[#5C1A24] rounded-md hover:opacity-90 transition-opacity"
         >
           Sign In to Review
         </Link>
@@ -81,8 +81,8 @@ export default function ReviewForm({ productId, productName, onSuccess }: Review
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 bg-[#F4F4F4] border border-[#CDD3D8] rounded-lg p-6">
-      <h3 className="text-base font-semibold text-[#000000]">Write a Review for {productName}</h3>
+    <form onSubmit={handleSubmit} className="space-y-4 bg-[#FBF7F3] border border-[#DCC1B9] rounded-lg p-6">
+      <h3 className="text-base font-semibold text-[#2D1A1F]">Write a Review for {productName}</h3>
 
       {errorMessage && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-3">
@@ -92,7 +92,7 @@ export default function ReviewForm({ productId, productName, onSuccess }: Review
 
       {/* Rating */}
       <div>
-        <label className="block text-xs font-semibold text-[#000000] mb-1.5 uppercase tracking-wide">
+        <label className="block text-xs font-semibold text-[#2D1A1F] mb-1.5 uppercase tracking-wide">
           Overall Rating
         </label>
         <div className="flex gap-2">
@@ -102,13 +102,13 @@ export default function ReviewForm({ productId, productName, onSuccess }: Review
               type="button"
               onClick={() => setRating(star)}
               className={`text-2xl transition-transform hover:scale-110 ${
-                star <= rating ? "text-[#E80071]" : "text-[#CDD3D8]"
+                star <= rating ? "text-[#5C1A24]" : "text-[#DCC1B9]"
               }`}
             >
               ★
             </button>
           ))}
-          <span className="text-xs font-medium text-[#595E63] self-center ml-2">
+          <span className="text-xs font-medium text-[#514044] self-center ml-2">
             {rating} of 5 Stars
           </span>
         </div>
@@ -116,7 +116,7 @@ export default function ReviewForm({ productId, productName, onSuccess }: Review
 
       {/* Title */}
       <div>
-        <label htmlFor="title" className="block text-xs font-semibold text-[#000000] mb-1 uppercase tracking-wide">
+        <label htmlFor="title" className="block text-xs font-semibold text-[#2D1A1F] mb-1 uppercase tracking-wide">
           Review Headline <span className="text-red-500">*</span>
         </label>
         <input
@@ -127,13 +127,13 @@ export default function ReviewForm({ productId, productName, onSuccess }: Review
           onChange={(e) => setTitle(e.target.value)}
           placeholder="e.g., Exquisite finish, lasting hydration"
           maxLength={100}
-          className="w-full px-3 py-2 border border-[#CDD3D8] rounded-md bg-white text-xs text-[#000000] placeholder-[#595E63] focus:border-[#E80071] focus:outline-none focus:ring-1 focus:ring-[#E80071]"
+          className="w-full px-3 py-2 border border-[#DCC1B9] rounded-md bg-white text-xs text-[#2D1A1F] placeholder-[#514044] focus:border-[#5C1A24] focus:outline-none focus:ring-1 focus:ring-[#5C1A24]"
         />
       </div>
 
       {/* Comment */}
       <div>
-        <label htmlFor="comment" className="block text-xs font-semibold text-[#000000] mb-1 uppercase tracking-wide">
+        <label htmlFor="comment" className="block text-xs font-semibold text-[#2D1A1F] mb-1 uppercase tracking-wide">
           Your Experience <span className="text-red-500">*</span>
         </label>
         <textarea
@@ -144,9 +144,9 @@ export default function ReviewForm({ productId, productName, onSuccess }: Review
           placeholder="Share your thoughts on texture, scent, packaging and results..."
           maxLength={500}
           rows={3}
-          className="w-full px-3 py-2 border border-[#CDD3D8] rounded-md bg-white text-xs text-[#000000] placeholder-[#595E63] focus:border-[#E80071] focus:outline-none focus:ring-1 focus:ring-[#E80071] resize-none"
+          className="w-full px-3 py-2 border border-[#DCC1B9] rounded-md bg-white text-xs text-[#2D1A1F] placeholder-[#514044] focus:border-[#5C1A24] focus:outline-none focus:ring-1 focus:ring-[#5C1A24] resize-none"
         />
-        <p className="text-[10px] text-[#595E63] mt-1">{comment.length}/500 characters</p>
+        <p className="text-[10px] text-[#514044] mt-1">{comment.length}/500 characters</p>
       </div>
 
       {/* Submit */}
@@ -154,7 +154,7 @@ export default function ReviewForm({ productId, productName, onSuccess }: Review
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-2.5 bg-[#E80071] text-white text-xs font-semibold rounded-md hover:opacity-90 disabled:opacity-50 transition-opacity"
+          className="w-full py-2.5 bg-[#5C1A24] text-white text-xs font-semibold rounded-md hover:opacity-90 disabled:opacity-50 transition-opacity"
         >
           {isSubmitting ? "Submitting Review..." : "Submit Review"}
         </button>

@@ -116,7 +116,8 @@ export default function OrdersPage() {
     return null;
   }
 
-  const selectedOrder = orders.find((o) => o.id === selectedOrderId);
+  // `orderId` arrives from the checkout redirect as a string; order ids are numbers.
+  const selectedOrder = orders.find((o) => String(o.id) === String(selectedOrderId));
 
   return (
     <>
@@ -125,9 +126,9 @@ export default function OrdersPage() {
         <div className="mx-auto max-w-content px-4 md:px-6 py-12">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-1.5 text-xs text-[#595E63]" role="list">
+            <ol className="flex items-center gap-1.5 text-xs text-[#514044]" role="list">
               <li role="listitem">
-                <Link href="/" className="hover:text-[#E80071] hover:underline">
+                <Link href="/" className="hover:text-[#5C1A24] hover:underline">
                   Home
                 </Link>
               </li>
@@ -169,18 +170,18 @@ export default function OrdersPage() {
             </div>
           )}
 
-          <h1 className="text-2xl font-semibold text-[#000000] mb-6">My Orders</h1>
+          <h1 className="text-2xl font-semibold text-[#2D1A1F] mb-6">My Orders</h1>
 
           {isLoading ? (
             <div className="text-center py-12">
-              <p className="text-[#595E63]">Loading orders from NestJS backend...</p>
+              <p className="text-[#514044]">Loading orders from NestJS backend...</p>
             </div>
           ) : orders.length === 0 ? (
-            <div className="bg-[#F4F4F4] rounded-lg p-12 text-center border border-[#CDD3D8]">
-              <p className="text-[#595E63] mb-4">You haven&apos;t placed any orders yet</p>
+            <div className="bg-[#FBF7F3] rounded-lg p-12 text-center border border-[#DCC1B9]">
+              <p className="text-[#514044] mb-4">You haven&apos;t placed any orders yet</p>
               <Link
                 href="/"
-                className="inline-block px-6 py-2.5 bg-[#E80071] text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
+                className="inline-block px-6 py-2.5 bg-[#5C1A24] text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
               >
                 Start Shopping
               </Link>
@@ -196,16 +197,16 @@ export default function OrdersPage() {
                       <div
                         key={order.id}
                         className={`border rounded-lg p-4 transition-all cursor-pointer ${
-                          selectedOrderId === order.id
-                            ? "border-[#E80071] bg-pink-50/20 shadow-sm"
-                            : "border-[#CDD3D8] hover:shadow-md"
+                          String(selectedOrderId) === String(order.id)
+                            ? "border-[#5C1A24] bg-mb-surface-strong/20 shadow-sm"
+                            : "border-[#DCC1B9] hover:shadow-md"
                         }`}
                         onClick={() => setSelectedOrderId(order.id)}
                       >
                         <div className="flex items-start justify-between mb-3">
                           <div>
-                            <h3 className="font-semibold text-[#000000]">Order #{order.id}</h3>
-                            <p className="text-xs text-[#595E63] mt-0.5">
+                            <h3 className="font-semibold text-[#2D1A1F]">Order #{order.id}</h3>
+                            <p className="text-xs text-[#514044] mt-0.5">
                               {new Date(order.createdAt).toLocaleDateString("en-IN", {
                                 day: "numeric",
                                 month: "short",
@@ -222,14 +223,14 @@ export default function OrdersPage() {
                           </span>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4 mb-3 py-3 border-y border-[#CDD3D8]">
+                        <div className="grid grid-cols-2 gap-4 mb-3 py-3 border-y border-[#DCC1B9]">
                           <div>
-                            <p className="text-xs text-[#595E63]">Items</p>
-                            <p className="font-semibold text-[#000000]">{order.items?.length || 0}</p>
+                            <p className="text-xs text-[#514044]">Items</p>
+                            <p className="font-semibold text-[#2D1A1F]">{order.items?.length || 0}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-[#595E63]">Total Amount</p>
-                            <p className="font-semibold text-[#E80071]">
+                            <p className="text-xs text-[#514044]">Total Amount</p>
+                            <p className="font-semibold text-[#5C1A24]">
                               ₹{orderTotal.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                             </p>
                           </div>
@@ -242,7 +243,7 @@ export default function OrdersPage() {
                         )}
 
                         {order.shippingAddress && (
-                          <div className="text-xs text-[#595E63] mt-1 truncate">
+                          <div className="text-xs text-[#514044] mt-1 truncate">
                             <span className="font-medium">Deliver to:</span> {order.shippingAddress}
                           </div>
                         )}
@@ -255,21 +256,21 @@ export default function OrdersPage() {
               {/* Order Details Sidebar */}
               <div>
                 {selectedOrder ? (
-                  <div className="bg-[#F4F4F4] rounded-lg p-6 border border-[#CDD3D8] sticky top-20">
-                    <h3 className="text-lg font-semibold text-[#000000] mb-4">Order Details</h3>
+                  <div className="bg-[#FBF7F3] rounded-lg p-6 border border-[#DCC1B9] sticky top-20">
+                    <h3 className="text-lg font-semibold text-[#2D1A1F] mb-4">Order Details</h3>
 
                     {/* Order Number & Date */}
-                    <div className="mb-4 pb-4 border-b border-[#CDD3D8]">
-                      <p className="text-sm text-[#595E63]">Order Number</p>
-                      <p className="font-semibold text-[#000000]">#{selectedOrder.id}</p>
-                      <p className="text-xs text-[#595E63] mt-2">
+                    <div className="mb-4 pb-4 border-b border-[#DCC1B9]">
+                      <p className="text-sm text-[#514044]">Order Number</p>
+                      <p className="font-semibold text-[#2D1A1F]">#{selectedOrder.id}</p>
+                      <p className="text-xs text-[#514044] mt-2">
                         Placed on {new Date(selectedOrder.createdAt).toLocaleDateString("en-IN")}
                       </p>
                     </div>
 
                     {/* Status */}
-                    <div className="mb-4 pb-4 border-b border-[#CDD3D8]">
-                      <p className="text-sm text-[#595E63]">Status</p>
+                    <div className="mb-4 pb-4 border-b border-[#DCC1B9]">
+                      <p className="text-sm text-[#514044]">Status</p>
                       <div className="mt-2">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -282,18 +283,23 @@ export default function OrdersPage() {
                     </div>
 
                     {/* Items */}
-                    <div className="mb-4 pb-4 border-b border-[#CDD3D8]">
-                      <p className="text-sm font-semibold text-[#000000] mb-2">
+                    <div className="mb-4 pb-4 border-b border-[#DCC1B9]">
+                      <p className="text-sm font-semibold text-[#2D1A1F] mb-2">
                         Items ({selectedOrder.items?.length || 0})
                       </p>
                       <div className="space-y-2">
                         {(selectedOrder.items || []).map((item) => (
-                          <div key={item.id} className="text-xs flex justify-between">
-                            <div>
-                              <p className="text-[#000000] font-medium">Variant #{item.variantId}</p>
-                              <p className="text-[#595E63]">Qty: {item.quantity}</p>
+                          <div key={item.id} className="text-xs flex justify-between gap-3">
+                            <div className="min-w-0">
+                              <p className="text-[#2D1A1F] font-medium truncate">
+                                {item.productName || (item.variantId ? `Variant #${item.variantId}` : "Item")}
+                              </p>
+                              {item.variantLabel && (
+                                <p className="text-[#514044] truncate">{item.variantLabel}</p>
+                              )}
+                              <p className="text-[#514044]">Qty: {item.quantity}</p>
                             </div>
-                            <p className="text-[#595E63] font-semibold">
+                            <p className="text-[#514044] font-semibold shrink-0">
                               ₹{(item.price * item.quantity).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                             </p>
                           </div>
@@ -302,10 +308,10 @@ export default function OrdersPage() {
                     </div>
 
                     {/* Amount */}
-                    <div className="mb-4 pb-4 border-b border-[#CDD3D8]">
+                    <div className="mb-4 pb-4 border-b border-[#DCC1B9]">
                       <div className="flex justify-between text-sm mb-1">
-                        <span className="text-[#595E63]">Subtotal</span>
-                        <span className="font-medium text-[#000000]">
+                        <span className="text-[#514044]">Subtotal</span>
+                        <span className="font-medium text-[#2D1A1F]">
                           ₹{(selectedOrder.subtotal || selectedOrder.total || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                         </span>
                       </div>
@@ -321,15 +327,15 @@ export default function OrdersPage() {
                           <span>-₹{selectedOrder.walletAmountUsed.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
                         </div>
                       ) : null}
-                      <div className="flex justify-between text-sm font-bold text-[#E80071] pt-2 border-t border-[#CDD3D8]">
+                      <div className="flex justify-between text-sm font-bold text-[#5C1A24] pt-2 border-t border-[#DCC1B9]">
                         <span>Total</span>
                         <span>₹{(selectedOrder.totalAmount ?? selectedOrder.total ?? 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
                       </div>
                     </div>
 
                     {/* Payment Info */}
-                    <div className="mb-4 pb-4 border-b border-[#CDD3D8]">
-                      <p className="text-sm text-[#595E63]">Payment Status</p>
+                    <div className="mb-4 pb-4 border-b border-[#DCC1B9]">
+                      <p className="text-sm text-[#514044]">Payment Status</p>
                       <p className={`text-xs mt-1 font-semibold ${
                         selectedOrder.paymentStatus === "PAID"
                           ? "text-green-600"
@@ -348,7 +354,7 @@ export default function OrdersPage() {
                         type="button"
                         onClick={() => handleDownloadInvoice(selectedOrder.id)}
                         disabled={isDownloadingInvoice}
-                        className="w-full py-2 px-3 text-sm font-medium text-[#595E63] border border-[#CDD3D8] rounded-lg hover:bg-gray-100 disabled:opacity-50 transition-colors flex items-center justify-center gap-1.5"
+                        className="w-full py-2 px-3 text-sm font-medium text-[#514044] border border-[#DCC1B9] rounded-lg hover:bg-gray-100 disabled:opacity-50 transition-colors flex items-center justify-center gap-1.5"
                       >
                         {isDownloadingInvoice ? "Generating PDF..." : "Download Invoice (PDF)"}
                       </button>
@@ -378,15 +384,15 @@ export default function OrdersPage() {
                       )}
                       <Link
                         href="/"
-                        className="block w-full py-2 px-3 text-sm font-medium text-center text-[#E80071] border border-[#E80071] rounded-lg hover:bg-[#FDE8F0] transition-colors"
+                        className="block w-full py-2 px-3 text-sm font-medium text-center text-[#5C1A24] border border-[#5C1A24] rounded-lg hover:bg-[#F5EDE6] transition-colors"
                       >
                         Continue Shopping
                       </Link>
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-[#F4F4F4] rounded-lg p-6 border border-[#CDD3D8] text-center sticky top-20">
-                    <p className="text-sm text-[#595E63]">Select an order to view details</p>
+                  <div className="bg-[#FBF7F3] rounded-lg p-6 border border-[#DCC1B9] text-center sticky top-20">
+                    <p className="text-sm text-[#514044]">Select an order to view details</p>
                   </div>
                 )}
               </div>

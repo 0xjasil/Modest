@@ -7,13 +7,19 @@ import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useOrder } from "@/context/OrderContext";
 import { useAddress } from "@/context/AddressContext";
-import { couponAPI } from "@/lib/api";
+import { cartAPI, couponAPI } from "@/lib/api";
 import { isRazorpayEnabled } from "@/lib/razorpay";
+import {
+  getAmountToFreeShipping,
+  getShippingFee,
+  FREE_SHIPPING_THRESHOLD,
+} from "@/lib/constants";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PaymentModal from "@/components/PaymentModal";
 import AddressForm from "@/components/AddressForm";
 import AddressList from "@/components/AddressList";
+import InfoNote from "@/components/InfoNote";
 import ShippingSelector from "@/components/ShippingSelector";
 
 export default function CheckoutPage() {
@@ -104,7 +110,7 @@ export default function CheckoutPage() {
   };
 
   // Exact financial values matching backend OrdersService.placeOrder:
-  // subtotal = cart subtotal; shippingAmount = subtotal > 1500 ? 0 : 99; taxAmount = 0 (GST included)
+  // subtotal = cart subtotal; shippingAmount = subtotal > threshold ? 0 : fee; taxAmount = 0 (GST included)
   const privilegeSavings = items.reduce(
     (sum, item) =>
       sum + Math.max(0, (item.product.originalPrice ?? item.product.price) - item.product.price) * item.qty,
@@ -112,9 +118,9 @@ export default function CheckoutPage() {
   );
   const totalMrp = total + privilegeSavings;
   const effectiveDiscount = appliedCoupon ? Math.min(couponDiscount, total) : 0;
-  const shippingCost = total > 1500 ? 0 : 99;
+  const shippingCost = getShippingFee(total);
   const finalTotal = Math.max(0, total + shippingCost - effectiveDiscount);
-  const freeShippingRemaining = Math.max(0, 1501 - total);
+  const freeShippingRemaining = getAmountToFreeShipping(total);
 
   const handlePlaceOrder = async () => {
     setIsProcessing(true);
@@ -140,10 +146,12 @@ export default function CheckoutPage() {
       return;
     }
 
+    let reservationId: number | string | undefined;
+
     try {
       // Step 1: Reserve inventory via POST /api/cart/reserve
       const reservation = await reserveCart();
-      const reservationId = reservation?.reservationId ?? reservation?.id;
+      reservationId = reservation?.reservationId ?? reservation?.id;
       if (!reservationId) {
         throw new Error("Unable to reserve inventory. Please try again.");
       }
@@ -168,6 +176,10 @@ export default function CheckoutPage() {
       setPaymentAmount(authoritativeTotal);
       setShowPayment(true);
     } catch (err) {
+      // Never leave stock locked if the order could not be created
+      if (reservationId !== undefined) {
+        await cartAPI.releaseReservation(reservationId).catch(() => {});
+      }
       const message = err instanceof Error ? err.message : "Failed to create order";
       setError(message);
       setIsProcessing(false);
@@ -518,9 +530,14 @@ export default function CheckoutPage() {
                 </dl>
 
                 {total > 0 && shippingCost > 0 && (
-                  <p className="mt-4 text-xs text-mb-body bg-mb-bg border border-mb-border-lite rounded-[8px] px-3 py-2">
-                    Add <span className="font-semibold text-mb-primary">₹{freeShippingRemaining.toLocaleString("en-IN")}</span> more for complimentary shipping (orders above ₹1,500).
-                  </p>
+                  <InfoNote icon="lucide:truck" className="mt-4">
+                    Add{" "}
+                    <span className="font-semibold">
+                      ₹{freeShippingRemaining.toLocaleString("en-IN")}
+                    </span>{" "}
+                    more for complimentary shipping (orders above ₹
+                    {FREE_SHIPPING_THRESHOLD.toLocaleString("en-IN")}).
+                  </InfoNote>
                 )}
 
                 {(privilegeSavings + effectiveDiscount) > 0 && (

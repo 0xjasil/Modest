@@ -42,15 +42,15 @@ export default function WalletPage() {
         <div className="mx-auto max-w-content px-4 md:px-6 py-12">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-1.5 text-xs text-[#595E63]" role="list">
+            <ol className="flex items-center gap-1.5 text-xs text-[#514044]" role="list">
               <li role="listitem">
-                <Link href="/" className="hover:text-[#E80071] hover:underline">
+                <Link href="/" className="hover:text-[#5C1A24] hover:underline">
                   Home
                 </Link>
               </li>
               <li role="listitem" aria-hidden="true">/</li>
               <li role="listitem">
-                <Link href="/profile" className="hover:text-[#E80071] hover:underline">
+                <Link href="/profile" className="hover:text-[#5C1A24] hover:underline">
                   Profile
                 </Link>
               </li>
@@ -70,10 +70,10 @@ export default function WalletPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {/* Main Content */}
             <div className="md:col-span-2">
-              <h1 className="text-2xl font-semibold text-[#000000] mb-6">My Wallet</h1>
+              <h1 className="text-2xl font-semibold text-[#2D1A1F] mb-6">My Wallet</h1>
 
               {/* Balance Card */}
-              <div className="bg-gradient-to-r from-[#E80071] to-[#d20060] text-white rounded-lg p-6 mb-6 shadow-md">
+              <div className="bg-gradient-to-r from-[#5C1A24] to-[#42121B] text-white rounded-lg p-6 mb-6 shadow-md">
                 <p className="text-sm opacity-90 mb-2">Available Balance</p>
                 <h2 className="text-4xl font-bold mb-4">
                   ₹{isLoading ? "..." : (wallet?.balance ?? 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
@@ -81,13 +81,13 @@ export default function WalletPage() {
                 <div className="flex gap-3">
                   <button
                     onClick={() => setShowAddMoneyInfo(!showAddMoneyInfo)}
-                    className="px-4 py-2 bg-white text-[#E80071] font-medium rounded-lg hover:bg-opacity-90 transition-colors text-xs sm:text-sm"
+                    className="px-4 py-2 bg-white text-[#5C1A24] font-medium rounded-lg hover:bg-opacity-90 transition-colors text-xs sm:text-sm"
                   >
                     {showAddMoneyInfo ? "Hide Top-Up Info" : "How to Add Money"}
                   </button>
                   <Link
                     href="/"
-                    className="px-4 py-2 border border-white rounded-lg font-medium hover:bg-white hover:text-[#E80071] transition-colors text-xs sm:text-sm"
+                    className="px-4 py-2 border border-white rounded-lg font-medium hover:bg-white hover:text-[#5C1A24] transition-colors text-xs sm:text-sm"
                   >
                     Shop Now
                   </Link>
@@ -101,7 +101,7 @@ export default function WalletPage() {
                     ℹ️ Direct Wallet Deposits are Not Supported
                   </h3>
                   <p className="text-xs text-amber-800 leading-relaxed mb-3">
-                    Per Moreylla payment gateway security rules, wallet top-ups cannot be made directly via card or UPI.
+                    Per Modest Studio payment gateway security rules, wallet top-ups cannot be made directly via card or UPI.
                     Wallet credits are automatically issued for:
                   </p>
                   <ul className="text-xs text-amber-800 list-disc list-inside space-y-1 mb-3">
@@ -117,41 +117,41 @@ export default function WalletPage() {
 
               {/* Wallet Stats */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                <div className="bg-[#F4F4F4] rounded-lg p-4 border border-[#CDD3D8]">
-                  <p className="text-xs font-medium text-[#595E63] uppercase tracking-wide">Total Spent</p>
-                  <p className="text-xl font-bold text-[#000000] mt-1">
+                <div className="bg-[#FBF7F3] rounded-lg p-4 border border-[#DCC1B9]">
+                  <p className="text-xs font-medium text-[#514044] uppercase tracking-wide">Total Spent</p>
+                  <p className="text-xl font-bold text-[#2D1A1F] mt-1">
                     ₹{isLoading ? "..." : (wallet?.totalSpent ?? 0).toLocaleString("en-IN")}
                   </p>
                 </div>
-                <div className="bg-[#F4F4F4] rounded-lg p-4 border border-[#CDD3D8]">
-                  <p className="text-xs font-medium text-[#595E63] uppercase tracking-wide">Total Earned</p>
-                  <p className="text-xl font-bold text-[#E80071] mt-1">
+                <div className="bg-[#FBF7F3] rounded-lg p-4 border border-[#DCC1B9]">
+                  <p className="text-xs font-medium text-[#514044] uppercase tracking-wide">Total Earned</p>
+                  <p className="text-xl font-bold text-[#5C1A24] mt-1">
                     ₹{isLoading ? "..." : (wallet?.totalEarned ?? 0).toLocaleString("en-IN")}
                   </p>
                 </div>
-                <div className="bg-[#F4F4F4] rounded-lg p-4 border border-[#CDD3D8]">
-                  <p className="text-xs font-medium text-[#595E63] uppercase tracking-wide">Transactions</p>
-                  <p className="text-xl font-bold text-[#000000] mt-1">{transactions.length}</p>
+                <div className="bg-[#FBF7F3] rounded-lg p-4 border border-[#DCC1B9]">
+                  <p className="text-xs font-medium text-[#514044] uppercase tracking-wide">Transactions</p>
+                  <p className="text-xl font-bold text-[#2D1A1F] mt-1">{transactions.length}</p>
                 </div>
               </div>
 
               {/* Transaction History */}
               <div>
-                <h3 className="text-lg font-semibold text-[#000000] mb-4">Transaction History</h3>
+                <h3 className="text-lg font-semibold text-[#2D1A1F] mb-4">Transaction History</h3>
                 {transactions.length === 0 ? (
-                  <div className="bg-[#F4F4F4] rounded-lg p-8 text-center border border-[#CDD3D8]">
-                    <p className="text-[#595E63]">No transactions yet</p>
+                  <div className="bg-[#FBF7F3] rounded-lg p-8 text-center border border-[#DCC1B9]">
+                    <p className="text-[#514044]">No transactions yet</p>
                   </div>
                 ) : (
-                  <div className="space-y-2 border border-[#CDD3D8] rounded-lg overflow-hidden">
+                  <div className="space-y-2 border border-[#DCC1B9] rounded-lg overflow-hidden">
                     {transactions.map((tx) => (
                       <div
                         key={tx.id}
-                        className="flex items-center justify-between p-4 border-b border-[#CDD3D8] last:border-b-0 hover:bg-[#F4F4F4] transition-colors"
+                        className="flex items-center justify-between p-4 border-b border-[#DCC1B9] last:border-b-0 hover:bg-[#FBF7F3] transition-colors"
                       >
                         <div className="flex-1">
-                          <p className="font-medium text-[#000000]">{tx.description}</p>
-                          <p className="text-xs text-[#595E63] mt-0.5">
+                          <p className="font-medium text-[#2D1A1F]">{tx.description}</p>
+                          <p className="text-xs text-[#514044] mt-0.5">
                             {new Date(tx.createdAt).toLocaleDateString("en-IN", {
                               year: "numeric",
                               month: "short",
@@ -164,7 +164,7 @@ export default function WalletPage() {
                         <div className="text-right">
                           <p
                             className={`font-semibold ${
-                              tx.type === "CREDIT" ? "text-green-600" : "text-[#000000]"
+                              tx.type === "CREDIT" ? "text-green-600" : "text-[#2D1A1F]"
                             }`}
                           >
                             {tx.type === "CREDIT" ? "+" : "-"}₹{Math.abs(tx.amount).toLocaleString("en-IN", {
@@ -181,30 +181,30 @@ export default function WalletPage() {
 
             {/* Sidebar */}
             <div>
-              <div className="bg-[#F4F4F4] rounded-lg p-6 border border-[#CDD3D8] sticky top-20">
-                <h3 className="text-lg font-semibold text-[#000000] mb-4">Quick Links</h3>
+              <div className="bg-[#FBF7F3] rounded-lg p-6 border border-[#DCC1B9] sticky top-20">
+                <h3 className="text-lg font-semibold text-[#2D1A1F] mb-4">Quick Links</h3>
                 <nav className="space-y-2">
                   <Link
                     href="/orders"
-                    className="block px-3 py-2.5 text-sm font-medium text-[#000000] hover:bg-white hover:text-[#E80071] rounded-lg transition-colors"
+                    className="block px-3 py-2.5 text-sm font-medium text-[#2D1A1F] hover:bg-white hover:text-[#5C1A24] rounded-lg transition-colors"
                   >
                     My Orders
                   </Link>
                   <Link
                     href="/profile"
-                    className="block px-3 py-2.5 text-sm font-medium text-[#000000] hover:bg-white hover:text-[#E80071] rounded-lg transition-colors"
+                    className="block px-3 py-2.5 text-sm font-medium text-[#2D1A1F] hover:bg-white hover:text-[#5C1A24] rounded-lg transition-colors"
                   >
                     Profile Settings
                   </Link>
                   <Link
                     href="/wishlist"
-                    className="block px-3 py-2.5 text-sm font-medium text-[#000000] hover:bg-white hover:text-[#E80071] rounded-lg transition-colors"
+                    className="block px-3 py-2.5 text-sm font-medium text-[#2D1A1F] hover:bg-white hover:text-[#5C1A24] rounded-lg transition-colors"
                   >
                     My Wishlist
                   </Link>
                   <Link
                     href="/cart"
-                    className="block px-3 py-2.5 text-sm font-medium text-[#000000] hover:bg-white hover:text-[#E80071] rounded-lg transition-colors"
+                    className="block px-3 py-2.5 text-sm font-medium text-[#2D1A1F] hover:bg-white hover:text-[#5C1A24] rounded-lg transition-colors"
                   >
                     Shopping Cart
                   </Link>

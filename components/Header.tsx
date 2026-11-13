@@ -12,6 +12,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import BrandLogo from "@/components/BrandLogo";
+import { InfoDot } from "@/components/InfoNote";
 import { categoryAPI, productAPI, mapBackendProductToProduct } from "@/lib/api";
 import type { Product } from "@/components/ProductCard";
 
@@ -176,10 +177,11 @@ export default function Header() {
         {/* ══ TIER 1: Announcement + top utility links (hidden on mobile) ═════════ */}
         <div className="hidden sm:block bg-mb-surface text-mb-primary border-b border-mb-border">
           <div className="mx-auto max-w-content px-4 md:px-6 h-8 flex items-center justify-between">
-            {/* Announcement — clickable like Modest Studio "BEAUTY BONANZA" */}
+            {/* Announcement — baby-blue notice pill (informational, not a CTA) */}
             <Link href="#"
-              className="text-[11px] font-semibold tracking-wide truncate hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-mb-accent">
-              Get Extra 20% Off on First App Order! Use Code: MODEST20
+              className="inline-flex max-w-full items-center gap-2 truncate rounded-full border border-mb-info-border bg-mb-info-bg px-3 py-0.5 text-[11px] font-semibold tracking-wide text-mb-info-deep transition-colors hover:border-mb-info hover:text-mb-info focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-mb-info">
+              <InfoDot />
+              <span className="truncate">Get Extra 20% Off on First App Order! Use Code: MODEST20</span>
             </Link>
 
             {/* Utility list — [Get App, Store & Events, Gift Card, Help] with icons and dividers */}

@@ -518,7 +518,7 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-semibold text-gray-700 uppercase tracking-wider">
-                      Select Size: <strong className="text-mb-text">{selectedSize ? `Size ${selectedSize}` : "Select"}</strong>
+                      Select Size: <strong className="text-mb-text">{selectedSize || "Select"}</strong>
                     </span>
                     {storeSettings.sizeGuideEnabled && (
                     <button
@@ -556,7 +556,9 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
                               : "border-mb-border bg-mb-surface hover:border-[#5C1A24]/60 text-mb-text hover:bg-gray-50"
                           }`}
                         >
-                          <span>Size {s}</span>
+                          {/* Only prepend "Size" for purely numeric sizes (e.g. 54).
+                              Named sizes like "L", "XL", "Free Size", "s3" are shown as-is. */}
+                          <span>{/^\d+$/.test(s) ? `Size ${s}` : s}</span>
                           {vP ? (
                             <span className={`text-[10px] font-normal mt-0.5 ${isSelected ? "text-amber-200" : "text-gray-500"}`}>
                               ₹{Number(vP).toLocaleString()}

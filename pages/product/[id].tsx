@@ -79,26 +79,49 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
 
   const variants = product?.variants || [];
 
-  // Extract unique colors and sizes like Flipkart
+  // ── Determine which dimensions this product actually uses ──────────────────
+  // The admin can create: size-only, color-only, or size+color variants.
+  // We detect which is active so we only render the relevant selectors.
+  const hasColors = useMemo(
+    () => variants.some((v: any) => v.color && v.color.trim() !== ""),
+    [variants]
+  );
+  const hasSizes = useMemo(
+    () => variants.some((v: any) => v.size && String(v.size).trim() !== ""),
+    [variants]
+  );
+
+  // ── Unique color options ───────────────────────────────────────────────────
+  // Each color entry carries the image from the FIRST variant that has that
+  // color, so the swatch shows the right photo. We use the color's own index
+  // (not the variant array index) for the product-level image fallback so
+  // each distinct color maps to a distinct gallery image.
   const colors = useMemo(() => {
+    if (!hasColors) return [];
     const list: Array<{ name: string; hex?: string | null; image?: string | null }> = [];
     const seen = new Set<string>();
-    variants.forEach((v: any, idx: number) => {
+    variants.forEach((v: any) => {
       const cName = v.color ? v.color.trim() : "";
-      if (cName && !seen.has(cName.toLowerCase())) {
-        seen.add(cName.toLowerCase());
-        const fallbackImg = (product?.images && product.images[idx % product.images.length]) || product?.image;
-        list.push({
-          name: cName,
-          hex: v.colorHex || null,
-          image: v.image || fallbackImg || null,
-        });
-      }
+      if (!cName) return;
+      if (seen.has(cName.toLowerCase())) return;
+      seen.add(cName.toLowerCase());
+      const colorIdx = list.length; // index among distinct colors
+      const fallbackImg =
+        (product?.images && product.images[colorIdx % product.images.length]) ||
+        product?.image ||
+        null;
+      list.push({
+        name: cName,
+        hex: v.colorHex || null,
+        image: v.image || fallbackImg,
+      });
     });
     return list;
-  }, [variants, product]);
+  }, [variants, hasColors, product]);
 
+  // ── Unique size options ────────────────────────────────────────────────────
   const sizes = useMemo(() => {
+    if (!hasSizes) return [];
     const list: string[] = [];
     const seen = new Set<string>();
     variants.forEach((v: any) => {
@@ -109,43 +132,77 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
       }
     });
     return list;
-  }, [variants]);
+  }, [variants, hasSizes]);
 
+  // ── Active variant from selected IDs ──────────────────────────────────────
   const activeVariant = useMemo(() => {
     if (!selectedVariantId) return variants[0] || null;
-    return variants.find((v: any) => String(v.id) === String(selectedVariantId)) || variants[0] || null;
+    return (
+      variants.find((v: any) => String(v.id) === String(selectedVariantId)) ||
+      variants[0] ||
+      null
+    );
   }, [variants, selectedVariantId]);
 
-  const selectedColor = activeVariant?.color || (colors[0]?.name ?? "");
-  const selectedSize = activeVariant?.size || (sizes[0] ?? "");
+  const selectedColor = hasColors
+    ? activeVariant?.color?.trim() || colors[0]?.name || ""
+    : "";
+  const selectedSize = hasSizes
+    ? String(activeVariant?.size ?? "").trim() || sizes[0] || ""
+    : "";
 
-  // Update variant when color is clicked
+  // ── Helper: pick the best image for a variant ─────────────────────────────
+  // Prefer the variant's own image; fall back to the product gallery image
+  // at the same position as the variant in the array (not a random index).
+  const getVariantImage = (v: any): string | null => {
+    if (v?.image) return v.image;
+    const idx = variants.indexOf(v);
+    return (
+      (product?.images && product.images[idx % Math.max(product.images.length, 1)]) ||
+      product?.image ||
+      null
+    );
+  };
+
+  // ── Color click handler ────────────────────────────────────────────────────
   const handleSelectColor = (colorName: string) => {
-    // Find matching variant with same size or fallback to first of that color
+    // Prefer a variant that also matches the currently selected size
     const match =
-      variants.find((v: any) => v.color?.toLowerCase() === colorName.toLowerCase() && String(v.size) === String(selectedSize)) ||
-      variants.find((v: any) => v.color?.toLowerCase() === colorName.toLowerCase());
+      (hasSizes
+        ? variants.find(
+            (v: any) =>
+              v.color?.trim().toLowerCase() === colorName.toLowerCase() &&
+              String(v.size).trim() === selectedSize
+          )
+        : undefined) ||
+      variants.find(
+        (v: any) => v.color?.trim().toLowerCase() === colorName.toLowerCase()
+      );
 
     if (match) {
       setSelectedVariantId(match.id);
-      const vIdx = variants.indexOf(match);
-      const vImg = match.image || (product?.images && product.images[vIdx % product.images.length]) || product?.image;
-      if (vImg) setSelectedImage(vImg);
+      const img = getVariantImage(match);
+      if (img) setSelectedImage(img);
     }
   };
 
-  // Update variant when size is clicked
+  // ── Size click handler ─────────────────────────────────────────────────────
   const handleSelectSize = (sizeName: string) => {
-    // Find matching variant with same color or fallback to first of that size
+    // Prefer a variant that also matches the currently selected color
     const match =
-      variants.find((v: any) => String(v.size) === String(sizeName) && v.color?.toLowerCase() === selectedColor.toLowerCase()) ||
-      variants.find((v: any) => String(v.size) === String(sizeName));
+      (hasColors
+        ? variants.find(
+            (v: any) =>
+              String(v.size).trim() === sizeName &&
+              v.color?.trim().toLowerCase() === selectedColor.toLowerCase()
+          )
+        : undefined) ||
+      variants.find((v: any) => String(v.size).trim() === sizeName);
 
     if (match) {
       setSelectedVariantId(match.id);
-      const vIdx = variants.indexOf(match);
-      const vImg = match.image || (product?.images && product.images[vIdx % product.images.length]) || product?.image;
-      if (vImg) setSelectedImage(vImg);
+      const img = getVariantImage(match);
+      if (img) setSelectedImage(img);
     }
   };
 
@@ -477,8 +534,16 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
                   <div className="flex flex-wrap gap-2">
                     {sizes.map((s) => {
                       const isSelected = String(s) === String(selectedSize);
-                      // Find variant for price difference preview
-                      const vMatch = variants.find((v: any) => String(v.size) === String(s));
+                      // Find variant for price preview — prefer one matching the active color
+                      const vMatch =
+                        (hasColors
+                          ? variants.find(
+                              (v: any) =>
+                                String(v.size).trim() === s &&
+                                v.color?.trim().toLowerCase() === selectedColor.toLowerCase()
+                            )
+                          : undefined) ||
+                        variants.find((v: any) => String(v.size).trim() === s);
                       const vP = vMatch?.offerPrice ?? vMatch?.price;
                       return (
                         <button

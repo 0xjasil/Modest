@@ -48,7 +48,7 @@ export default function NotificationsPage() {
   };
 
   const typeColors: Record<string, string> = {
-    info: "border-mb-info bg-mb-info-bg",
+    info: "border-mb-primary/30 bg-[#F5EDE6]",
     success: "border-green-200 bg-green-50",
     warning: "border-yellow-200 bg-yellow-50",
     error: "border-red-200 bg-red-50",
@@ -87,8 +87,8 @@ export default function NotificationsPage() {
               <h1 className="text-3xl font-bold text-gray-900 mb-1">
                 Notifications
               </h1>
-              <p className="mt-2 inline-flex items-center gap-2 rounded-full border border-mb-info-border bg-mb-info-bg px-3 py-1 text-xs font-semibold text-mb-info-deep">
-                <span className="inline-block size-1.5 rounded-full bg-mb-info" aria-hidden="true" />
+              <p className="mt-2 inline-flex items-center gap-2 rounded-full border border-mb-border bg-mb-surface px-3 py-1 text-xs font-semibold text-mb-primary">
+                <span className="inline-block size-1.5 rounded-full bg-mb-primary" aria-hidden="true" />
                 {unreadCount > 0 ? `${unreadCount} unread` : "You are all caught up"}
               </p>
             </div>

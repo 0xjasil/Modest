@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { useNotification } from "@/context/NotificationContext";
+import { useStoreSettings } from "@/lib/useStoreSettings";
 
 export default function NotificationBell() {
   const { notifications, unreadCount, fetchNotifications, markAsRead } =
     useNotification();
+  const settings = useStoreSettings();
   const [isOpen, setIsOpen] = useState(false);
   const [recentNotifications, setRecentNotifications] = useState(
     notifications.slice(0, 3)
@@ -40,9 +42,12 @@ export default function NotificationBell() {
       >
         <Icon icon="lucide:bell" className="w-6 h-6" />
 
-        {/* Badge */}
+        {/* Badge — color driven by admin settings */}
         {unreadCount > 0 && (
-          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-mb-info rounded-full">
+          <span
+            className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 rounded-full"
+            style={{ backgroundColor: settings.notificationBadgeColor }}
+          >
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -72,9 +77,8 @@ export default function NotificationBell() {
               {recentNotifications.map((notif) => (
                 <div
                   key={notif.id}
-                  className={`px-4 py-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition ${
-                    !notif.read ? "bg-blue-50" : ""
-                  }`}
+                  className="px-4 py-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition"
+                  style={!notif.read ? { backgroundColor: settings.notificationUnreadBg } : {}}
                   onClick={() => {
                     handleNotificationClick(notif.id);
                     if (notif.action) {
@@ -92,7 +96,10 @@ export default function NotificationBell() {
                           {notif.title}
                         </p>
                         {!notif.read && (
-                          <span className="w-2 h-2 bg-mb-info rounded-full flex-shrink-0 ml-2"></span>
+                          <span
+                            className="w-2 h-2 rounded-full flex-shrink-0 ml-2"
+                            style={{ backgroundColor: settings.notificationDotColor }}
+                          />
                         )}
                       </div>
                       <p className="text-xs text-gray-600 mt-0.5 line-clamp-2">

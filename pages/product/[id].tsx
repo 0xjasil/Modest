@@ -156,7 +156,7 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
         <main className="min-h-[60vh] flex flex-col items-center justify-center p-8 text-center bg-mb-bg">
           <h1 className="text-xl font-serif font-bold text-mb-text mb-2">Product Not Found</h1>
           <p className="text-sm text-mb-muted mb-6">The requested product could not be located in our catalog.</p>
-          <Link href="/category/all" className="px-5 py-2.5 bg-[#5C1A24] text-white text-xs font-semibold rounded-lg hover:bg-[#42121B] transition-colors">
+          <Link href={storeSettings.notFoundCategoryHref} className="px-5 py-2.5 bg-[#5C1A24] text-white text-xs font-semibold rounded-lg hover:bg-[#42121B] transition-colors">
             Return to All Collections
           </Link>
         </main>
@@ -463,6 +463,7 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
                     <span className="font-semibold text-gray-700 uppercase tracking-wider">
                       Select Size: <strong className="text-mb-text">{selectedSize ? `Size ${selectedSize}` : "Select"}</strong>
                     </span>
+                    {storeSettings.sizeGuideEnabled && (
                     <button
                       type="button"
                       onClick={() => setShowSizeGuide(!showSizeGuide)}
@@ -470,6 +471,7 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
                     >
                       Size Chart &amp; Guide
                     </button>
+                    )}
                   </div>
 
                   <div className="flex flex-wrap gap-2">
@@ -500,17 +502,14 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
                     })}
                   </div>
 
-                  {/* Size Guide Collapsible Modal */}
-                  {showSizeGuide && (
+                  {/* Size Guide Collapsible */}
+                  {showSizeGuide && storeSettings.sizeGuideEnabled && (
                     <div className="p-3 bg-mb-surface rounded-[2px] border border-mb-border text-xs space-y-1.5 animate-in fade-in duration-200">
                       <p className="font-bold text-gray-900">Abaya Length Recommendation Guide:</p>
                       <ul className="grid grid-cols-2 gap-1 text-[11px] text-gray-600">
-                        <li>• Size 50: Height 5&apos;0&quot; - 5&apos;1&quot;</li>
-                        <li>• Size 52: Height 5&apos;2&quot; - 5&apos;3&quot;</li>
-                        <li>• Size 54: Height 5&apos;4&quot; - 5&apos;5&quot;</li>
-                        <li>• Size 56: Height 5&apos;6&quot; - 5&apos;7&quot;</li>
-                        <li>• Size 58: Height 5&apos;8&quot; - 5&apos;9&quot;</li>
-                        <li>• Size 60: Height 5&apos;10&quot;+</li>
+                        {storeSettings.sizeGuideRows.map((row) => (
+                          <li key={row.size}>• Size {row.size}: Height {row.heightRange}</li>
+                        ))}
                       </ul>
                     </div>
                   )}
@@ -623,25 +622,29 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
 
               {/* Description & Specifications Table (Brand Theme) */}
               <div className="border-t border-mb-border pt-4 space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-mb-text">Product Specifications</h3>
-                <div className="border border-mb-border rounded-[2px] overflow-hidden text-xs">
-                  <div className="grid grid-cols-3 p-2.5 bg-mb-surface-strong/30 border-b border-mb-border">
-                    <span className="text-mb-muted">Fabric</span>
-                    <span className="col-span-2 font-medium text-mb-text capitalize">{product.fabric || "Premium Crepe / Linen"}</span>
-                  </div>
-                  <div className="grid grid-cols-3 p-2.5 bg-mb-surface border-b border-mb-border">
-                    <span className="text-mb-muted">Style / Category</span>
-                    <span className="col-span-2 font-medium text-mb-text capitalize">{product.category}</span>
-                  </div>
-                  <div className="grid grid-cols-3 p-2.5 bg-mb-surface-strong/30 border-b border-mb-border">
-                    <span className="text-mb-muted">Colorway</span>
-                    <span className="col-span-2 font-medium text-mb-text capitalize">{selectedColor || "Standard"}</span>
-                  </div>
-                  <div className="grid grid-cols-3 p-2.5 bg-mb-surface">
-                    <span className="text-mb-muted">Care Instructions</span>
-                    <span className="col-span-2 font-medium text-mb-text">Dry Clean or Gentle Machine Wash</span>
-                  </div>
-                </div>
+                {storeSettings.specsTableEnabled && (
+                  <>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-mb-text">Product Specifications</h3>
+                    <div className="border border-mb-border rounded-[2px] overflow-hidden text-xs">
+                      <div className="grid grid-cols-3 p-2.5 bg-mb-surface-strong/30 border-b border-mb-border">
+                        <span className="text-mb-muted">Fabric</span>
+                        <span className="col-span-2 font-medium text-mb-text capitalize">{product.fabric || storeSettings.fabricFallback}</span>
+                      </div>
+                      <div className="grid grid-cols-3 p-2.5 bg-mb-surface border-b border-mb-border">
+                        <span className="text-mb-muted">Style / Category</span>
+                        <span className="col-span-2 font-medium text-mb-text capitalize">{product.category}</span>
+                      </div>
+                      <div className="grid grid-cols-3 p-2.5 bg-mb-surface-strong/30 border-b border-mb-border">
+                        <span className="text-mb-muted">Colorway</span>
+                        <span className="col-span-2 font-medium text-mb-text capitalize">{selectedColor || "Standard"}</span>
+                      </div>
+                      <div className="grid grid-cols-3 p-2.5 bg-mb-surface">
+                        <span className="text-mb-muted">Care Instructions</span>
+                        <span className="col-span-2 font-medium text-mb-text">{storeSettings.careInstructions}</span>
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 {product.description && (
                   <div className="text-xs text-mb-body leading-relaxed pt-2">
@@ -659,10 +662,10 @@ export default function ProductDetail({ initialProduct = null }: { initialProduc
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-mb-border-lite">
               <div>
                 <h2 className="font-serif text-xl sm:text-2xl font-semibold text-mb-text">
-                  Customer Reviews ({reviews.length})
+                  {storeSettings.reviewsSectionTitle} ({reviews.length})
                 </h2>
                 <p className="text-xs text-mb-muted mt-0.5">
-                  Verified impressions from connoisseurs of Modest Studio.
+                  {storeSettings.reviewsSectionSubtitle}
                 </p>
               </div>
               <button
